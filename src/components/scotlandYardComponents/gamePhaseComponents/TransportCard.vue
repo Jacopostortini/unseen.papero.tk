@@ -24,10 +24,10 @@ export default {
 
 .transport-card__main-panel{
 
-  border-radius: 10px;
-  width: 100px;
-  height: 50px;
-  margin: 10px;
+  border-radius: 5px;
+  width: 50px;
+  height: 25px;
+  margin: 5px;
   display: flex;
   align-items: center;
   justify-content: center;

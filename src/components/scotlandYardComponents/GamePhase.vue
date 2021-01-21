@@ -1,7 +1,7 @@
 <template>
   <div class="game-phase__main-panel">
     <MapManager class="game-phase__map-manager"/>
-    <GameSideBarNormal class="game-phase__game-stats" :game="game" :user="user"/>
+    <GameSideBarNormal class="game-phase__game-stats" v-if="!user.is_mister_x" :game="game" :user="user"/>
   </div>
 </template>
 
@@ -25,12 +25,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/global";
 
 .game-phase__main-panel{
   display: grid;
   grid-template-columns: 1.35fr 0.65fr;
   width: 100%;
   height: 100%;
+  background: linear-gradient($theme-color-light, $theme-color-dark);
+  color: white;
 }
 
 </style>

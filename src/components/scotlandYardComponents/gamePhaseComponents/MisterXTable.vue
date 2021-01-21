@@ -26,6 +26,7 @@ export default {
 <style lang="scss" scoped>
 
 .mister-x-table__main-panel{
+  width: fit-content;
   display: grid;
   grid-template-columns: auto auto auto;
   grid-auto-flow: column;
@@ -39,6 +40,7 @@ export default {
     flex-flow: row;
     align-items: center;
     justify-content: space-evenly;
+    width: fit-content;
 
     .mister-x-table__turn-number{
       color: white;
@@ -57,8 +59,8 @@ export default {
     .mister-x-table__turn-transport{
       background-color: white;
       margin: 5px;
-      width: 70px;
-      height: 40px;
+      width: 50px;
+      height: 25px;
       border-radius: 10px;
     }
   }

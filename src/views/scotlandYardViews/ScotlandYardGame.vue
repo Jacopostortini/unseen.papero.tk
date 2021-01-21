@@ -1,6 +1,9 @@
 <template>
   <div class="scotland-yard-game__main-panel">
-    <PregamePhase v-if="game.status===0" :game="game"/>
+    <PregamePhase v-if="game.status===0"
+                  :players="game.players"
+                  :user="currentUser"
+                  :admin-id="game.admin_user_id"/>
     <GamePhase v-else-if="game.status===1" :game="game" :user="currentUser"/>
     <PostGamePhase v-else-if="game.status===2" :game="game"/>
   </div>

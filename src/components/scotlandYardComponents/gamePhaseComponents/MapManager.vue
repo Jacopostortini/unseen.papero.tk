@@ -92,10 +92,10 @@ export default {
 
 <style lang="scss" scoped>
 .map-manager__main-panel{
-  border: 1px solid black;
   overflow: hidden;
   width: 100%;
   height: 100%;
+  border-radius: 0 20px 20px 0;
   .map-manager__map{
     vertical-align: top;
   }

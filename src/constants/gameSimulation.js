@@ -5,8 +5,8 @@ export default {
     admin_user_id: "b",
     players: [
         {
-            id : "a",
-            name: "jacopo",
+            user_id : "a",
+            username: "Jacopo",
             is_mister_x: true,
             position: 0,
             color: 0,
@@ -15,18 +15,18 @@ export default {
             used_underground: null
         },
         {
-            id : "b",
-            name: "rami",
+            user_id : "b",
+            username: "Rami",
             is_mister_x: false,
             position: 0,
             color: 1,
-            used_taxi: 7,
-            used_bus: 3,
-            used_underground: 2
+            used_taxi: 0,
+            used_bus: 0,
+            used_underground: 0
         },
         {
-            id : "c",
-            name: "rubbo",
+            user_id : "c",
+            username: "Rubbo",
             is_mister_x: false,
             position: 0,
             color: 2,
@@ -34,6 +34,16 @@ export default {
             used_bus: 2,
             used_underground: 0
         },
+        {
+            user_id : "c",
+            username: "Vaiani",
+            is_mister_x: false,
+            position: 0,
+            color: 3,
+            used_taxi: 5,
+            used_bus: 2,
+            used_underground: 0
+        }
     ],
     total_moves: 4,// used to see who's turn it is, if x2 has been used ...,
     mister_x:{
