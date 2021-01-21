@@ -36,7 +36,7 @@ export default {
         },
         {
             user_id : "c",
-            username: "Vaiani",
+            username: "Tave",
             is_mister_x: false,
             position: 0,
             color: 3,
