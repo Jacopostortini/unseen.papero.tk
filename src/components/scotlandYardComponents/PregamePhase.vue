@@ -72,7 +72,7 @@ export default {
 @import "../../styles/global.scss";
 
 .pregame-phase__main-panel{
-  background: linear-gradient($theme-color-light, $theme-color-dark);
+  background: linear-gradient(-30deg, $theme-color-light, $theme-color-dark);
   display: grid;
   justify-items: center;
   align-items: center;
