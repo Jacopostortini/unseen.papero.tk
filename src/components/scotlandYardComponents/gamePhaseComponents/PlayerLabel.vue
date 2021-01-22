@@ -1,11 +1,11 @@
 <template>
   <div class="player-label__main-panel">
-    <div class="player-label__player-information">
+    <div class="player-label__player-information" :class="{'player-label__playing-player': isPlaying}">
       <div class="player-label__color-badge" :style="{backgroundColor: colors[color]}"></div>
       <strong>{{ username }}</strong>
       <img v-if="isMisterX" src="/assets/misterx_icon.png">
     </div>
-    <div class="player-label__playing-badge" v-if="isPlaying"></div>
+    <div class="player-label__playing-badge" v-if="false"></div>
   </div>
 </template>
 
@@ -71,6 +71,10 @@ export default {
     img{
       height: 1.5em;
     }
+  }
+
+  .player-label__playing-player{
+    transform: scale(1.5);
   }
 
   .player-label__playing-badge{

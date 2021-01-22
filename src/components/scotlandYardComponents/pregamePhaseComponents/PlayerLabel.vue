@@ -3,8 +3,8 @@
     <img :src="'/assets/pedina_'+color+'.png'">
     <strong>{{ player.username }}</strong>
     <button v-if="isAdmin && !isYou">Kick</button>
-    <p v-if="isYou">You</p>
-    <p v-if="player.isAdmin" class="player-label__admin-badge">Admin</p>
+    <div v-if="isYou">You</div>
+    <div v-if="player.isAdmin" class="player-label__admin-badge">Admin</div>
   </div>
 </template>
 
@@ -38,16 +38,17 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
-  margin: 10px;
   font-size: 2em;
-  height: fit-content;
+  height: 40%;
+  margin: 1%;
+  padding: 1%;
 
   img{
-    width: 30px;
+    height: 30%;
   }
 
   button{
-    margin: 10px;
+    margin: 10%;
     color: white;
     background: none;
     border: none;
@@ -63,8 +64,8 @@ export default {
     }
   }
 
-  p{
-    margin: 10px;
+  div{
+    margin: 10%;
     color: white;
     background: none;
     border: none;
@@ -79,6 +80,5 @@ export default {
 .player-label__admin-player{
   border: 1px dashed white;
   border-radius: 10px;
-  padding: 5px;
 }
 </style>

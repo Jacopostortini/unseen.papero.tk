@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     currentUser: function() {
-      return game.players[1];
+      return game.players[0];
     }
   }
 }

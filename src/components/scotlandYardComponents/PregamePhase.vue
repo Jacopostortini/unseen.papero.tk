@@ -19,13 +19,13 @@
     </div>
     <div class="pregame-phase__information-panel">
       <div class="pregame-phase__copy-url">
-        <label for="pregame-phase__url">Copy the url and share it!</label>
+        <label for="pregame-phase__url">Copy the url and share it with your friends!</label>
         <br>
         <input id="pregame-phase__url" readonly :value="url">
         <button v-clipboard:copy="url">Copy</button>
       </div>
       <div class="pregame-phase__copy-tag">
-        <label for="pregame-phase__tag">Or send them this tag</label>
+        <label for="pregame-phase__tag">Or send them this tag!</label>
         <br>
         <p id="pregame-phase__tag">{{ tag }}</p>
         <button v-clipboard:copy="tag">Copy</button>
@@ -72,48 +72,46 @@ export default {
 @import "../../styles/global.scss";
 
 .pregame-phase__main-panel{
-  background: linear-gradient($theme-color-dark, $theme-color-light);
+  background: linear-gradient($theme-color-light, $theme-color-dark);
   display: grid;
   justify-items: center;
+  align-items: center;
   grid-template-columns: 1fr 1fr auto;
-  grid-template-rows: 100px auto auto;
+  grid-template-rows: 20% 50% 30%;
+  grid-template-areas: "header header header" "players players info" "footer footer footer";
   height: 100%;
-  padding-top: 20px;
+  padding-right: 5%;
 
   .pregame-phase__header{
-    grid-column-start: 1;
-    grid-column-end: 4;
+    grid-area: header;
     color: white;
     font-weight: bolder;
     font-size: 2em;
   }
 
   .pregame-phase__players{
+    grid-area: players;
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
     justify-content: center;
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 2;
     color: white;
-    padding-left: 100px;
-    padding-right: 100px;
+    height: 100%;
+    padding: 10%;
   }
 
   .pregame-phase__buttons{
-    grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 3;
+    grid-area: footer;
     display: flex;
     flex-flow: row;
+    width: 100%;
+    justify-content: space-evenly;
 
     button{
-      margin: 20px;
       font-size: 2em;
       border: none;
       border-radius: 20px;
-      padding: 20px;
+      padding: 2%;
       color: $theme-color-dark;
       box-shadow: 1px 1px 5px gray;
       height: fit-content;
@@ -130,10 +128,8 @@ export default {
   }
 
   .pregame-phase__information-panel{
-    grid-column-start: 3;
-    grid-row-start: 2;
+    grid-area: info;
     color: white;
-    margin-right: 50px;
 
     .pregame-phase__copy-url{
 

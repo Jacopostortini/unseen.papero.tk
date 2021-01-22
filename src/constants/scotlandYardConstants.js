@@ -1,7 +1,7 @@
 const zoomFunctionBase = 1.1;
 const mouseWheelReductionFactor = 100;
 const keyScrollSpeed = 5;
-const colors = ["red", "blue", "black", "green"];
+const colors = ["red", "blue", "black", "green", "yellow", "white"];
 const gameConfig = {
     taxi: 12,
     bus: 8,

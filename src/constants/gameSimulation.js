@@ -1,6 +1,6 @@
 export default {
     game_tag: "away",
-    status: 1, //lobby, game, end
+    status: 0, //lobby, game, end
     players_order: ["a", "b", "c"], //mister x will be first
     admin_user_id: "b",
     players: [
@@ -46,7 +46,7 @@ export default {
         },
         {
             user_id : "c",
-            username: "Tave",
+            username: "Tacco",
             is_mister_x: false,
             position: 0,
             color: 3,
@@ -56,7 +56,7 @@ export default {
         },
         {
             user_id : "c",
-            username: "Tave",
+            username: "Mercu",
             is_mister_x: false,
             position: 0,
             color: 3,
@@ -65,7 +65,7 @@ export default {
             used_underground: 0
         }
     ],
-    total_moves: 4,// used to see who's turn it is, if x2 has been used ...,
+    total_moves: 5,// used to see who's turn it is, if x2 has been used ...,
     mister_x:{
         double_turns_used: 0,
         secret_moves_used: 0
