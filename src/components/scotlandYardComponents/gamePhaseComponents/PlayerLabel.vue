@@ -43,12 +43,11 @@ export default {
 <style lang="scss" scoped>
 
 .player-label__main-panel{
-  margin: 10px;
+  margin: 1%;
   display: flex;
   flex-flow: row;
   align-items: center;
   justify-content: space-between;
-  padding-right: 20px;
 
   .player-label__player-information{
     display: flex;
@@ -58,17 +57,19 @@ export default {
     .player-label__color-badge{
       border-radius: 50%;
       border: 2px solid white;
-      width: 20px;
-      height: 20px;
-      margin: 10px;
+      max-width: 20px;
+      max-height: 20px;
+      width: 1em;
+      height: 1em;
+      margin-right: 10px;
     }
 
     strong{
-      font-size: 1.5em;
+      font-size: 1em;
     }
 
     img{
-      width: 50px;
+      height: 1.5em;
     }
   }
 

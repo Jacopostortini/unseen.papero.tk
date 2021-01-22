@@ -23,11 +23,9 @@ export default {
 <style lang="scss" scoped>
 
 .transport-card__main-panel{
-
+  margin: 2%;
+  width: 10%;
   border-radius: 5px;
-  width: 50px;
-  height: 25px;
-  margin: 5px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -43,6 +43,26 @@ export default {
             used_taxi: 5,
             used_bus: 2,
             used_underground: 0
+        },
+        {
+            user_id : "c",
+            username: "Tave",
+            is_mister_x: false,
+            position: 0,
+            color: 3,
+            used_taxi: 5,
+            used_bus: 2,
+            used_underground: 0
+        },
+        {
+            user_id : "c",
+            username: "Tave",
+            is_mister_x: false,
+            position: 0,
+            color: 3,
+            used_taxi: 5,
+            used_bus: 2,
+            used_underground: 0
         }
     ],
     total_moves: 4,// used to see who's turn it is, if x2 has been used ...,

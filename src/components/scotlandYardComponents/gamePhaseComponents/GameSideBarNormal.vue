@@ -9,26 +9,28 @@
                    :color="player.color"/>
     </div>
     <div class="game-sidebar-normal__transport-cards">
-      <div>
+      <div class="game-sidebar-normal__transport-wrapper">
         <TransportCard v-for="n in gameConfig.taxi-user.used_taxi"
                       :key="n"
                       src="/assets/taxi_icon.png"
                       color="yellow"/>
       </div>
-      <div>
+      <div class="game-sidebar-normal__transport-wrapper">
         <TransportCard v-for="n in gameConfig.bus-user.used_bus"
                       :key="n"
                       src="/assets/bus_icon.png"
                       color="blue"/>
       </div>
-      <div>
+      <div class="game-sidebar-normal__transport-wrapper">
         <TransportCard v-for="n in gameConfig.underground-user.used_underground"
                       :key="n"
                       src="/assets/underground_icon.svg"
                       color="red"/>
       </div>
     </div>
-    <MisterXTable/>
+    <div class="game-sidebar-normal__misterx-table">
+      <MisterXTable/>
+    </div>
   </div>
 </template>
 
@@ -59,26 +61,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .game-sidebar-normal__main-panel{
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-rows: auto 1fr 1fr;
+  row-gap: 3%;
+  justify-content: space-evenly;
+
+  div{
+    //border: 1px solid white;
+  }
 
   .game-sidebar-normal__players{
-    margin: 5px;
-    align-self: start;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
+
   .game-sidebar-normal__transport-cards{
     display: flex;
     flex-flow: column;
 
-    div{
+    .game-sidebar-normal__transport-wrapper{
+      margin: 2%;
       display: flex;
       flex-flow: row;
       flex-wrap: wrap;
     }
+  }
+
+  .game-sidebar-normal__misterx-table{
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>
