@@ -26,8 +26,7 @@ export default {
 
   border-radius: 5px;
   width: 10%;
-  height: 5%;
-  margin: 5px;
+  margin: 1%;
   display: flex;
   align-items: center;
   justify-content: center;

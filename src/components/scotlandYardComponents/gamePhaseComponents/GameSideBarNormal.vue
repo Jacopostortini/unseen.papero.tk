@@ -63,7 +63,7 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 
   .game-sidebar-normal__players{
     margin: 5px;
