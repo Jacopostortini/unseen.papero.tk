@@ -68,18 +68,16 @@ export default {
   row-gap: 3%;
   justify-content: space-evenly;
 
-  div{
-    //border: 1px solid white;
-  }
-
   .game-sidebar-normal__players{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    padding-top: 5%;
   }
 
   .game-sidebar-normal__transport-cards{
     display: flex;
     flex-flow: column;
+    justify-content: space-evenly;
 
     .game-sidebar-normal__transport-wrapper{
       margin: 2%;
