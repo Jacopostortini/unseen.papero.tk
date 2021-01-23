@@ -2,15 +2,17 @@
   <div class="game-phase__main-panel">
     <MapManager class="game-phase__map-manager"/>
     <GameSideBarNormal class="game-phase__game-stats" v-if="!user.is_mister_x" :game="game" :user="user"/>
+    <GameSideBarMisterX class="game-phase__game-stats" v-else :game="game" :user="user"/>
   </div>
 </template>
 
 <script>
 import MapManager from "./gamePhaseComponents/MapManager";
 import GameSideBarNormal from "./gamePhaseComponents/GameSideBarNormal";
+import GameSideBarMisterX from "./gamePhaseComponents/GameSideBarMisterX";
 export default {
   name: "GamePhase",
-  components: {GameSideBarNormal, MapManager},
+  components: {GameSideBarNormal, GameSideBarMisterX, MapManager},
   props: {
     game: {
       type: Object,
@@ -25,7 +27,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/global";
+@import "../styles/global";
 
 .game-phase__main-panel{
   display: grid;

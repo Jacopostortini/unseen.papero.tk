@@ -37,7 +37,7 @@
 <script>
 import PlayerLabel from "./PlayerLabel";
 import TransportCard from "./TransportCard";
-import { gameConfig } from "@/constants/scotlandYardConstants"
+import { gameConfig } from "../../constants/constants";
 import MisterXTable from "./MisterXTable";
 export default {
   name: "GameSideBarNormal",

@@ -1,6 +1,6 @@
 export default {
     game_tag: "away",
-    status: 0, //lobby, game, end
+    status: 1, //lobby, game, end
     players_order: ["a", "b", "c"], //mister x will be first
     admin_user_id: "b",
     players: [

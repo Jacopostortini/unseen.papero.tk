@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {colors} from "../../../constants/scotlandYardConstants";
+import {colors} from "../../constants/constants";
 
 export default {
   name: "PlayerLabel",

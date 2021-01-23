@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { zoomFunctionBase, mouseWheelReductionFactor, keyScrollSpeed } from "../../../constants/scotlandYardConstants";
+import { zoomFunctionBase, mouseWheelReductionFactor, keyScrollSpeed } from "../../constants/constants";
 export default {
   name: "MapManager",
   data(){

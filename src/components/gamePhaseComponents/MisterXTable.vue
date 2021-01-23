@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { gameConfig } from "../../../constants/scotlandYardConstants";
+import { gameConfig } from "../../constants/constants";
 
 export default {
   name: "MisterXTable",

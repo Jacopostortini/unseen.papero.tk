@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/global.scss";
+@import "../styles/global";
 
 .pregame-phase__main-panel{
   background: linear-gradient(-30deg, $theme-color-light, $theme-color-dark);

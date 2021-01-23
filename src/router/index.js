@@ -1,7 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import ScotlandYardHome from "../views/scotlandYardViews/ScotlandYardHome";
-import ScotlandYardGame from "../views/scotlandYardViews/ScotlandYardGame";
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from "../views/Home";
+import Game from "../views/Game";
 
 const routes = [
   {
@@ -10,20 +9,15 @@ const routes = [
     component: Home
   },
   {
-    path: '/scotland-yard',
-    name: 'ScotlandYardHome',
-    component: ScotlandYardHome
-  },
-  {
-    path: '/scotland-yard/:gameTag',
-    name: 'ScotlandYardGame',
-    component: ScotlandYardGame
+    path: '/:gameTag',
+    name: 'Game',
+    component: Game
   }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
-})
+});
 
 export default router
