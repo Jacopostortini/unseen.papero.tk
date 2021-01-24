@@ -1,5 +1,5 @@
 <template>
-  <div class="game__main-panel" @click="send">
+  <div class="game__main-panel">
     <PregamePhase v-if="game.status===0"
                   :players="game.players"
                   :user="currentUser"
@@ -14,26 +14,28 @@ import PregamePhase from "../components/PregamePhase";
 import GamePhase from "../components/GamePhase";
 import PostGamePhase from "../components/PostGamePhase";
 import game from "../constants/gameSimulation";
-import { computed } from "vue";
+import {computed} from "vue";
+import {useRoute} from "vue-router";
+import {useStore} from "vuex";
+
 
 export default {
   name: "Game",
   components: {PostGamePhase, GamePhase, PregamePhase},
   setup(){
-    const currentUser = computed(() => game.players[1]);
-
+    const gameTag = useRoute().params.gameTag;
+    const store = useStore();
     const io = require("socket.io-client");
     const socket = io("http://localhost:3000");
-    function send(){
-      socket.emit('connect-to-game');
-      console.log("sent")
-    }
+    socket.emit('connect-to-game', {user_id: "aaaaaa", gameTag: gameTag, username: "Jacopo"}, data => {
+      store.dispatch("setStatus", data.status);
+    });
 
+    const currentUser = computed(() => game.players[1]);
 
     return {
       game,
-      currentUser,
-      send
+      currentUser
     }
   }
 }
