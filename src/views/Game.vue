@@ -1,11 +1,10 @@
 <template>
   <div class="game__main-panel">
-    <PregamePhase v-if="game.status===0"
-                  :players="game.players"
-                  :user="currentUser"
-                  :admin-id="game.admin_user_id"/>
-    <GamePhase v-else-if="game.status===1" :game="game" :user="currentUser"/>
-    <PostGamePhase v-else-if="game.status===2" :game="game"/>
+    <PregamePhase v-if="status===0"
+                  :players="players"
+                  :current-player="currentPlayer"/>
+    <GamePhase v-else-if="status===1"/>
+    <PostGamePhase v-else-if="status===2"/>
   </div>
 </template>
 
@@ -13,35 +12,58 @@
 import PregamePhase from "../components/PregamePhase";
 import GamePhase from "../components/GamePhase";
 import PostGamePhase from "../components/PostGamePhase";
-import game from "../constants/gameSimulation";
 import {webSocketUrl} from "../constants/constants";
-import {computed} from "vue";
+import events from "../constants/webSocketEvents";
 import {useRoute} from "vue-router";
-import {useStore} from "vuex";
 import io from "socket.io-client";
+import {ref} from "@vue/reactivity";
 
 
 export default {
   name: "Game",
   components: {PostGamePhase, GamePhase, PregamePhase},
   setup(){
-    const store = useStore();
+
     const socket = io(webSocketUrl);
 
-    const gameTag = useRoute().params.gameTag;
+    const gameId = useRoute().params.gameId;
+    const status = ref(undefined);
+    const currentPlayer = ref(undefined);
+    const players = ref([]);
+    const playingPlayer = ref("");
+    const isRevelation = ref(false);
+    const lastMisterXKnownPosition = ref(undefined);
+    const misterXMoves = ref([]);
 
     //TODO: LOGIC FOR FETCHING USER ID FROM FLASK AND USERNAME
-
-    socket.emit('connect-to-game', {user_id: "aaaaaa", gameTag: gameTag, username: "Jacopo"}, data => {
-      store.dispatch("setStatus", data.status);
+    let id = prompt("id:")
+    socket.emit(events.CONNECT_TO_GAME, {user_id: id, game_id: gameId, username: "Jacopo"});
+    socket.on(events.CONNECT_TO_GAME, (data) => {
+      status.value = data.status;
+      if(data.your_local_id!=null){
+        data.players.forEach(player => {
+          if(player.local_id===data.your_local_id){
+            currentPlayer.value = player;
+          }
+        })
+      }
+      players.value = data.players;
+      playingPlayer.value = data.players_turn;
+      isRevelation.value = data.is_revelation_turn;
+      lastMisterXKnownPosition.value = data.last_known_position;
+      misterXMoves.value = data.mister_x_moves;
     });
 
-    const currentUser = computed(() => game.players[1]);
-
     return {
-      game,
-      currentUser
+      status,
+      currentPlayer,
+      players,
+      playingPlayer,
+      isRevelation,
+      lastMisterXKnownPosition,
+      misterXMoves
     }
+
   }
 }
 </script>

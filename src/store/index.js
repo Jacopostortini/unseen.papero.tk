@@ -2,15 +2,31 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    status: null,
-    currentPlayer: null,
-    players: null,
-    playingPlayer: null,
-    isRevelation: false,
-    lastMisterXKnownPosition: null
+    status: {
+      type: Number
+    },
+    currentPlayer: {
+      type: Object
+    },
+    players: {
+      type: Array
+    },
+    playingPlayer: {
+      type: String
+    },
+    isRevelation: {
+      type: Boolean
+    },
+    lastMisterXKnownPosition: {
+      type: Number
+    },
+    misterXMoves: {
+      type: Array
+    }
   },
 
   mutations: {
+
     SET_STATUS(state, status){
       state.status = status;
     },
@@ -28,6 +44,9 @@ export default createStore({
     },
     SET_LAST_MISTER_X_KNOWN_POSITION(state, position){
       state.lastMisterXKnownPosition = position;
+    },
+    SET_MISTER_X_MOVES(state, moves){
+      state.misterXMoves = moves;
     }
 
   },
@@ -50,6 +69,9 @@ export default createStore({
     },
     setLastMisterXKnownPosition({ commit }, position){
       commit("SET_LAST_MISTER_X_KNOWN_POSITION", position);
+    },
+    setMisterXMoves({ commit }, moves){
+      commit("SET_MISTER_X_MOVES", moves);
     }
   },
 

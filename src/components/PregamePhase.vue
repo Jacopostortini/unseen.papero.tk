@@ -4,18 +4,16 @@
       Scotland Yard
     </header>
     <div class="pregame-phase__players">
-      <PlayerLabel v-for="(player, index) in players"
-                   :key="index"
-                   :player="{username: player.username, isAdmin: player.user_id===adminId}"
-                   :color="player.color"
-                   :is-admin="isAdmin"
-                   :is-you="player.user_id===user.user_id"/>
+      <PlayerLabel v-for="player in players"
+                   :key="player.local_id"
+                   :player="player"
+                   :current-player="currentPlayer"/>
     </div>
     <div class="pregame-phase__buttons">
-      <button v-if="players.includes(user)">Change your color</button>
-      <button v-if="!players.includes(user)">Join game</button>
-      <button v-if="isAdmin">Start game</button>
-      <button v-if="isAdmin">Choose Mister X</button>
+      <button v-if="currentPlayer">Change your color</button>
+      <button v-if="!currentPlayer">Join game</button>
+      <button v-if="currentPlayer && currentPlayer.is_admin">Start game</button>
+      <button v-if="currentPlayer && currentPlayer.is_admin">Choose Mister X</button>
     </div>
     <div class="pregame-phase__information-panel">
       <div class="pregame-phase__copy-url">
@@ -27,8 +25,8 @@
       <div class="pregame-phase__copy-tag">
         <label for="pregame-phase__tag">Or send them this tag!</label>
         <br>
-        <p id="pregame-phase__tag">{{ tag }}</p>
-        <button v-clipboard:copy="tag">Copy</button>
+        <p id="pregame-phase__tag">{{ id }}</p>
+        <button v-clipboard:copy="id">Copy</button>
       </div>
     </div>
   </div>
@@ -45,24 +43,16 @@ export default {
       type: Array,
       required: true
     },
-    user: {
-      type: Object,
-      required: true
-    },
-    adminId: {
-      type: String,
+    currentPlayer: {
       required: true
     }
   },
   computed: {
-    isAdmin: function() {
-      return this.user ? this.user.user_id===this.adminId : false;
-    },
     url: function() {
       return window.location;
     },
-    tag: function() {
-      return useRoute().params.gameTag;
+    id: function() {
+      return useRoute().params.gameId;
     }
   }
 }

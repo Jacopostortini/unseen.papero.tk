@@ -1,10 +1,10 @@
 <template>
-  <div class="player-label__main-panel" :class="{'player-label__admin-player': player.isAdmin}">
-    <img :src="'/assets/pedina_'+color+'.png'">
+  <div class="player-label__main-panel" :class="{'player-label__admin-player': player.is_admin}">
+    <img :src="'/assets/pedina_'+player.color+'.png'">
     <strong>{{ player.username }}</strong>
-    <button v-if="isAdmin && !isYou">Kick</button>
+    <button v-if="currentPlayer && currentPlayer.is_admin && !isYou">Kick</button>
     <div v-if="isYou">You</div>
-    <div v-if="player.isAdmin" class="player-label__admin-badge">Admin</div>
+    <div v-if="player.is_admin" class="player-label__admin-badge">Admin</div>
   </div>
 </template>
 
@@ -16,17 +16,15 @@ export default {
       type: Object,
       required: true
     },
-    color: {
-      type: Number,
+    currentPlayer: {
       required: true
-    },
-    isAdmin: {
-      type: Boolean,
-      required: true
-    },
-    isYou: {
-      type: Boolean,
-      required: true
+    }
+  },
+  computed: {
+    isYou: function(){
+      if(this.currentPlayer){
+        return this.currentPlayer.local_id === this.player.local_id;
+      } else return false;
     }
   }
 }
