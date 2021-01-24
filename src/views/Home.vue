@@ -1,7 +1,7 @@
 <template>
 <div>
   Scotland yard home
-  <router-link :to="{name: 'Game', params: {gameTag: '855855'}}">Go to game</router-link>
+  <router-link :to="{name: 'Game', params: {gameId: '855855'}}">Go to game</router-link>
 </div>
 </template>
 

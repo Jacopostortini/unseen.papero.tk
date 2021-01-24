@@ -3,7 +3,10 @@
     <PregamePhase v-if="status===0"
                   :players="players"
                   :current-player="currentPlayer"/>
-    <GamePhase v-else-if="status===1"/>
+    <GamePhase v-else-if="status===1"
+               :players="players"
+               :current-player="currentPlayer"
+               :game="game"/>
     <PostGamePhase v-else-if="status===2"/>
   </div>
 </template>
@@ -30,10 +33,7 @@ export default {
     const status = ref(undefined);
     const currentPlayer = ref(undefined);
     const players = ref([]);
-    const playingPlayer = ref("");
-    const isRevelation = ref(false);
-    const lastMisterXKnownPosition = ref(undefined);
-    const misterXMoves = ref([]);
+    const game = ref({});
 
     //TODO: LOGIC FOR FETCHING USER ID FROM FLASK AND USERNAME
     let id = prompt("id:")
@@ -48,20 +48,19 @@ export default {
         })
       }
       players.value = data.players;
-      playingPlayer.value = data.players_turn;
-      isRevelation.value = data.is_revelation_turn;
-      lastMisterXKnownPosition.value = data.last_known_position;
-      misterXMoves.value = data.mister_x_moves;
+      game.value = {
+        playingPlayer: data.players_turn,
+        isRevelation: data.is_revelation_turn,
+        lastMisterXKnownPosition: data.last_known_position,
+        misterXMoves: data.mister_x_moves
+      }
     });
 
     return {
       status,
       currentPlayer,
       players,
-      playingPlayer,
-      isRevelation,
-      lastMisterXKnownPosition,
-      misterXMoves
+      game
     }
 
   }

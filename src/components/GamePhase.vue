@@ -1,8 +1,14 @@
 <template>
   <div class="game-phase__main-panel">
     <MapManager class="game-phase__map-manager"/>
-    <GameSideBarNormal class="game-phase__game-stats" v-if="!user.is_mister_x" :game="game" :user="user"/>
-    <GameSideBarMisterX class="game-phase__game-stats" v-else :game="game" :user="user"/>
+    <GameSideBarNormal class="game-phase__game-stats" v-if="!currentPlayer.is_mister_x"
+                       :players="players"
+                       :current-player="currentPlayer"
+                       :game="game"/>
+    <GameSideBarMisterX class="game-phase__game-stats" v-else
+                        :players="players"
+                        :current-player="currentPlayer"
+                        :game="game"/>
   </div>
 </template>
 
@@ -14,11 +20,14 @@ export default {
   name: "GamePhase",
   components: {GameSideBarNormal, GameSideBarMisterX, MapManager},
   props: {
-    game: {
-      type: Object,
+    players: {
+      type: Array,
       required: true
     },
-    user: {
+    currentPlayer: {
+      required: true
+    },
+    game: {
       type: Object,
       required: true
     }

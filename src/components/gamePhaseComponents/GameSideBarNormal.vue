@@ -1,28 +1,26 @@
 <template>
   <div class="game-sidebar-normal__main-panel">
     <div class="game-sidebar-normal__players">
-      <PlayerLabel v-for="(player, index) in game.players"
-                   :key="index"
-                   :username="player.username"
-                   :is-mister-x="player.is_mister_x"
-                   :is-playing="index===game.total_moves%game.players.length"
-                   :color="player.color"/>
+      <PlayerLabel v-for="player in players"
+                   :key="player.local_id"
+                   :player="player"
+                   :is-playing="player.local_id===game.playingPlayer"/>
     </div>
     <div class="game-sidebar-normal__transport-cards">
       <div class="game-sidebar-normal__transport-wrapper">
-        <TransportCard v-for="n in gameConfig.taxi-user.used_taxi"
+        <TransportCard v-for="n in remainingTaxis"
                       :key="n"
                       src="/assets/taxi_icon.png"
                       color="yellow"/>
       </div>
       <div class="game-sidebar-normal__transport-wrapper">
-        <TransportCard v-for="n in gameConfig.bus-user.used_bus"
+        <TransportCard v-for="n in remainingBuses"
                       :key="n"
                       src="/assets/bus_icon.png"
                       color="blue"/>
       </div>
       <div class="game-sidebar-normal__transport-wrapper">
-        <TransportCard v-for="n in gameConfig.underground-user.used_underground"
+        <TransportCard v-for="n in remainingUndergrounds"
                       :key="n"
                       src="/assets/underground_icon.svg"
                       color="red"/>
@@ -43,18 +41,27 @@ export default {
   name: "GameSideBarNormal",
   components: {MisterXTable, TransportCard, PlayerLabel},
   props: {
-    game: {
-      type: Object,
+    players: {
+      type: Array,
       required: true
     },
-    user: {
+    currentPlayer: {
+      required: true
+    },
+    game: {
       type: Object,
       required: true
     }
   },
-  data(){
-    return {
-      gameConfig
+  computed: {
+    remainingTaxis: function (){
+      return gameConfig.taxi-this.currentPlayer.used_taxi;
+    },
+    remainingBuses: function (){
+      return gameConfig.bus-this.currentPlayer.used_bus;
+    },
+    remainingUndergrounds: function (){
+      return gameConfig.underground-this.currentPlayer.used_underground;
     }
   }
 }

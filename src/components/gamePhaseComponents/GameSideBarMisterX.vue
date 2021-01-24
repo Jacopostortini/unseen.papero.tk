@@ -1,12 +1,10 @@
 <template>
   <div class="game-sidebar-normal__main-panel">
     <div class="game-sidebar-normal__players">
-      <PlayerLabel v-for="(player, index) in game.players"
-                   :key="index"
-                   :username="player.username"
-                   :is-mister-x="player.is_mister_x"
-                   :is-playing="index===game.total_moves%game.players.length"
-                   :color="player.color"/>
+      <PlayerLabel v-for="player in game.players"
+                   :key="player.local_id"
+                   :player="player"
+                   :is-playing="player.local_id===game.playingPlayer"/>
     </div>
     <div class="game-sidebar-normal__transport-cards">
       <div class="game-sidebar-normal__transport-wrapper">
@@ -31,24 +29,21 @@
 <script>
 import PlayerLabel from "./PlayerLabel";
 import TransportCard from "./TransportCard";
-import { gameConfig } from "../../constants/constants";
 import MisterXTable from "./MisterXTable";
 export default {
   name: "GameSideBarNormal",
   components: {MisterXTable, TransportCard, PlayerLabel},
   props: {
+    players: {
+      type: Array,
+      required: true
+    },
+    currentPlayer: {
+      required: true
+    },
     game: {
       type: Object,
       required: true
-    },
-    user: {
-      type: Object,
-      required: true
-    }
-  },
-  data(){
-    return {
-      gameConfig
     }
   }
 }

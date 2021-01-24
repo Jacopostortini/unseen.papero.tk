@@ -1,11 +1,10 @@
 <template>
   <div class="player-label__main-panel">
     <div class="player-label__player-information" :class="{'player-label__playing-player': isPlaying}">
-      <div class="player-label__color-badge" :style="{backgroundColor: colors[color]}"></div>
-      <strong>{{ username }}</strong>
-      <img v-if="isMisterX" src="/assets/misterx_icon.png">
+      <div class="player-label__color-badge" :style="{backgroundColor: playerColor}"></div>
+      <strong>{{ player.username }}</strong>
+      <img v-if="player.is_mister_x" src="/assets/misterx_icon.png">
     </div>
-    <div class="player-label__playing-badge" v-if="false"></div>
   </div>
 </template>
 
@@ -15,26 +14,18 @@ import {colors} from "../../constants/constants";
 export default {
   name: "PlayerLabel",
   props: {
-    username: {
-      type: String,
-      required: true
-    },
-    isMisterX: {
-      type: Boolean,
+    player: {
+      type: Object,
       required: true
     },
     isPlaying: {
       type: Boolean,
       required: true
-    },
-    color: {
-      type: Number,
-      required: true
     }
   },
-  data() {
-    return {
-      colors
+  computed: {
+    playerColor: function (){
+      return colors[this.player.color];
     }
   }
 }
@@ -75,14 +66,6 @@ export default {
 
   .player-label__playing-player{
     transform: scale(1.5);
-  }
-
-  .player-label__playing-badge{
-    border-top: 2px solid white;
-    border-left: 2px solid white;
-    width: 10px;
-    height: 10px;
-    transform: rotate(-45deg);
   }
 }
 </style>
