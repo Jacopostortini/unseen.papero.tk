@@ -11,5 +11,15 @@ const gameConfig = {
     number_of_total_turns: 24,
     mister_x_is_visible_turns: [3, 8, 13, 18, 23]
 }
+const webSocketUrl = "http://localhost:3000";
+const flaskServerUrl = "";
 
-export { zoomFunctionBase, mouseWheelReductionFactor, keyScrollSpeed, colors, gameConfig };
+export {
+    zoomFunctionBase,
+    mouseWheelReductionFactor,
+    keyScrollSpeed,
+    colors,
+    gameConfig,
+    webSocketUrl,
+    flaskServerUrl
+};

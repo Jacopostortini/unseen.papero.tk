@@ -14,19 +14,24 @@ import PregamePhase from "../components/PregamePhase";
 import GamePhase from "../components/GamePhase";
 import PostGamePhase from "../components/PostGamePhase";
 import game from "../constants/gameSimulation";
+import {webSocketUrl} from "../constants/constants";
 import {computed} from "vue";
 import {useRoute} from "vue-router";
 import {useStore} from "vuex";
+import io from "socket.io-client";
 
 
 export default {
   name: "Game",
   components: {PostGamePhase, GamePhase, PregamePhase},
   setup(){
-    const gameTag = useRoute().params.gameTag;
     const store = useStore();
-    const io = require("socket.io-client");
-    const socket = io("http://localhost:3000");
+    const socket = io(webSocketUrl);
+
+    const gameTag = useRoute().params.gameTag;
+
+    //TODO: LOGIC FOR FETCHING USER ID FROM FLASK AND USERNAME
+
     socket.emit('connect-to-game', {user_id: "aaaaaa", gameTag: gameTag, username: "Jacopo"}, data => {
       store.dispatch("setStatus", data.status);
     });
