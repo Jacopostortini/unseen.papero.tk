@@ -7,13 +7,15 @@
       <PlayerLabel v-for="player in players"
                    :key="player.local_id"
                    :player="player"
-                   :current-player="currentPlayer"/>
+                   :current-player="currentPlayer"
+                   @kickplayer="$emit('kickplayer', $event)"/>
     </div>
     <div class="pregame-phase__buttons">
       <button v-if="currentPlayer">Change your color</button>
-      <button v-if="!currentPlayer">Join game</button>
+      <button v-if="!currentPlayer" @click="$emit('joingame')">Join game</button>
       <button v-if="currentPlayer && currentPlayer.is_admin">Start game</button>
       <button v-if="currentPlayer && currentPlayer.is_admin">Choose Mister X</button>
+      <button v-if="currentPlayer && players.length!==1" @click="$emit('quitgame')">Quit game</button>
     </div>
     <div class="pregame-phase__information-panel">
       <div class="pregame-phase__copy-url">
@@ -87,6 +89,7 @@ export default {
     justify-content: center;
     color: white;
     height: 100%;
+    width: 100%;
     padding: 10%;
   }
 

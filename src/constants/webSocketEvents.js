@@ -1,6 +1,9 @@
 export default {
     CONNECT_TO_GAME: "connect-to-game", //tutto a chi a chiesto, se mister-x bla bla
     JOIN_GAME: "join-game", //mando tutti i giocatori
+    QUIT_GAME: "quit-game",
+    KICK_PLAYER: "kick-from-game",
+    LOBBY_MODIFIED: "lobby-modified",
     CHANGE_COLOR: "change-color", //{user_id: color}
     CHANGE_MISTER_X: "change-mister-x", //mando tutti i giocatori
 

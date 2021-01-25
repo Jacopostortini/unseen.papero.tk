@@ -2,7 +2,10 @@
   <div class="game__main-panel">
     <PregamePhase v-if="status===0"
                   :players="players"
-                  :current-player="currentPlayer"/>
+                  :current-player="currentPlayer"
+                  @joingame="joinGame"
+                  @quitgame="quitGame"
+                  @kickplayer="kickPlayer"/>
     <GamePhase v-else-if="status===1"
                :players="players"
                :current-player="currentPlayer"
@@ -17,7 +20,7 @@ import GamePhase from "../components/GamePhase";
 import PostGamePhase from "../components/PostGamePhase";
 import {webSocketUrl} from "../constants/constants";
 import events from "../constants/webSocketEvents";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import io from "socket.io-client";
 import {ref} from "@vue/reactivity";
 
@@ -28,6 +31,7 @@ export default {
   setup(){
 
     const socket = io(webSocketUrl);
+    const router = useRouter();
 
     const gameId = useRoute().params.gameId;
     const status = ref(undefined);
@@ -37,8 +41,10 @@ export default {
 
     //TODO: LOGIC FOR FETCHING USER ID FROM FLASK AND USERNAME
     let id = prompt("id:")
-    socket.emit(events.CONNECT_TO_GAME, {user_id: id, game_id: gameId, username: "Jacopo"});
+    let username = prompt("username:")
+    socket.emit(events.CONNECT_TO_GAME, {user_id: id, game_id: gameId, username: username});
     socket.on(events.CONNECT_TO_GAME, (data) => {
+      console.log(data)
       status.value = data.status;
       if(data.your_local_id!=null){
         data.players.forEach(player => {
@@ -56,11 +62,50 @@ export default {
       }
     });
 
+    function joinGame() {
+      socket.emit(events.JOIN_GAME);
+    }
+
+    function quitGame() {
+      socket.emit(events.QUIT_GAME);
+    }
+
+    function kickPlayer(localId){
+      socket.emit(events.KICK_PLAYER, localId);
+    }
+
+    socket.on(events.LOBBY_MODIFIED, data => {
+      if (data.status === 3){
+        router.push({name: 'Home'});
+      }
+      console.log(data)
+      status.value = data.status;
+      if(data.your_local_id!=null){
+        data.players.forEach(player => {
+          if(player.local_id===data.your_local_id){
+            currentPlayer.value = player;
+          }
+        })
+      } else{
+        currentPlayer.value = undefined;
+      }
+      players.value = data.players;
+      game.value = {
+        playingPlayer: data.players_turn,
+        isRevelation: data.is_revelation_turn,
+        lastMisterXKnownPosition: data.last_known_position,
+        misterXMoves: data.mister_x_moves
+      }
+    });
+
     return {
       status,
       currentPlayer,
       players,
-      game
+      game,
+      joinGame,
+      quitGame,
+      kickPlayer
     }
 
   }

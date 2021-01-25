@@ -2,7 +2,8 @@
   <div class="player-label__main-panel" :class="{'player-label__admin-player': player.is_admin}">
     <img :src="'/assets/pedina_'+player.color+'.png'">
     <strong>{{ player.username }}</strong>
-    <button v-if="currentPlayer && currentPlayer.is_admin && !isYou">Kick</button>
+    <button v-if="currentPlayer && currentPlayer.is_admin && !isYou"
+            @click="$emit('kickplayer', player.local_id)">Kick</button>
     <div v-if="isYou">You</div>
     <div v-if="player.is_admin" class="player-label__admin-badge">Admin</div>
   </div>
