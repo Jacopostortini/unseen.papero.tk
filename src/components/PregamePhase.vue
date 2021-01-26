@@ -4,6 +4,7 @@
       Scotland Yard
     </header>
     <div class="pregame-phase__players">
+      <div class="pregame-phase__players-table"/>
       <PlayerLabel v-for="player in players"
                    :key="player.local_id"
                    :player="player"
@@ -29,6 +30,10 @@
         <br>
         <p id="pregame-phase__tag">{{ id }}</p>
         <button v-clipboard:copy="id">Copy</button>
+      </div>
+      <div class="pregame-phase__admin-and-mister-x">
+        <p>The admin of this lobby is: <strong>{{ adminUsername }}</strong></p>
+        <p>Mister X is: <strong>{{ misterXUsername }}</strong></p>
       </div>
     </div>
     <div class="pregame-phase__change-color-popup" v-if="showChangeColorPopup" @click="showChangeColorPopup=false">
@@ -64,6 +69,19 @@ export default {
     },
     id: function() {
       return useRoute().params.gameId;
+    },
+    adminUsername: function() {
+      for (let i=0; i<this.players.length; i++){
+        console.log(this.players)
+        if(this.players[i].is_admin) return this.players[i].username;
+      }
+      return null
+    },
+    misterXUsername: function() {
+      for (let i=0; i<this.players.length; i++){
+        if(this.players[i].is_mister_x) return this.players[i].username;
+      }
+      return null
     }
   }
 }
@@ -92,14 +110,26 @@ export default {
 
   .pregame-phase__players{
     grid-area: players;
+    color: white;
+    position: relative;
     display: flex;
     flex-flow: row;
-    flex-wrap: wrap;
     justify-content: center;
-    color: white;
-    height: 100%;
-    width: 100%;
-    padding: 10%;
+    min-width: 30%;
+    height: 50%;
+    padding-left: 5%;
+
+
+    .pregame-phase__players-table{
+      position: absolute;
+      top: 45%;
+      left: 0;
+      width: 120%;
+      height: 12%;
+      background-color: white;
+      transform: skewX(80deg);
+    }
+
   }
 
   .pregame-phase__buttons{
@@ -132,6 +162,10 @@ export default {
   .pregame-phase__information-panel{
     grid-area: info;
     color: white;
+
+    strong{
+      color: $anti-theme-color;
+    }
 
     .pregame-phase__copy-url{
 

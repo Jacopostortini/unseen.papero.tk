@@ -1,11 +1,11 @@
 <template>
   <div class="player-label__main-panel" :class="{'player-label__admin-player': player.is_admin}">
     <img :src="'/assets/pedina_'+player.color+'.png'">
-    <strong>{{ player.username }}</strong>
-    <button v-if="currentPlayer && currentPlayer.is_admin && !isYou"
-            @click="$emit('kickplayer', player.local_id)">Kick</button>
-    <div v-if="isYou">You</div>
-    <div v-if="player.is_admin" class="player-label__admin-badge">Admin</div>
+
+    <div class="player-label__info-labels">
+      <strong class="player-label__username-label">{{player.username}}</strong>
+      <strong class="player-label__is-you-label" v-if="isYou">You</strong>
+    </div>
   </div>
 </template>
 
@@ -33,51 +33,46 @@ export default {
 
 <style lang="scss" scoped>
 
-.player-label__main-panel{
+.player-label__main-panel {
+
   display: flex;
   flex-flow: column;
+  flex-wrap: wrap;
   align-items: center;
-  font-size: 2em;
-  height: 40%;
-  margin: 1%;
-  padding: 1%;
+  justify-content: space-between;
+  width: fit-content;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  margin: 0 2% 0 2%;
 
-  img{
-    height: 30%;
-  }
 
-  button{
-    margin: 10%;
-    color: white;
-    background: none;
-    border: none;
-    font-size: 0.5em;
-    text-decoration: underline;
+  img {
+    height: 50%;
+    transition: transform 0.25s;
 
-    &:focus{
-      outline: none;
-    }
-
-    &:active{
-      outline: auto;
+    &:hover{
+      transform: scale(1.2);
     }
   }
 
-  div{
-    margin: 10%;
-    color: white;
-    background: none;
-    border: none;
-    font-size: 0.5em;
+  .player-label__info-labels{
+    height: 40%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: start;
+
+
+    &>*{
+      margin-bottom: 10%;
+    }
+
+    .player-label__is-you-label{
+      color: red;
+    }
   }
 
-  .player-label__admin-badge{
-    color: red;
-  }
 }
 
-.player-label__admin-player{
-  border: 1px dashed white;
-  border-radius: 10px;
-}
 </style>

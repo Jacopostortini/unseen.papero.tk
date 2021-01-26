@@ -29,7 +29,6 @@ export default {
       for (let i=0; i<colors.length; i++){
         if(!colorsUnavailable.includes(i)) colorsAvailable.push(i);
       }
-      console.log(colorsAvailable);
       return colorsAvailable;
     }
   }
@@ -61,8 +60,10 @@ export default {
   .change-color-popup__available-pawns{
     z-index: 1000;
     padding-bottom: 2%;
+
     img{
       width: 10%;
+      margin-right: 5%;
       transition: transform 0.25s;
 
       &:hover{
