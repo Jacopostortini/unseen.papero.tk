@@ -5,7 +5,8 @@
                   :current-player="currentPlayer"
                   @joingame="joinGame"
                   @quitgame="quitGame"
-                  @kickplayer="kickPlayer"/>
+                  @kickplayer="kickPlayer"
+                  @changecolor="changeColor"/>
     <GamePhase v-else-if="status===1"
                :players="players"
                :current-player="currentPlayer"
@@ -40,11 +41,10 @@ export default {
     const game = ref({});
 
     //TODO: LOGIC FOR FETCHING USER ID FROM FLASK AND USERNAME
-    let id = prompt("id:")
-    let username = prompt("username:")
-    socket.emit(events.CONNECT_TO_GAME, {user_id: id, game_id: gameId, username: username});
+    // let id = prompt("id:")
+    // let username = prompt("username:")
+    socket.emit(events.CONNECT_TO_GAME, {user_id: "id", game_id: gameId, username: "username"});
     socket.on(events.CONNECT_TO_GAME, (data) => {
-      console.log(data)
       status.value = data.status;
       if(data.your_local_id!=null){
         data.players.forEach(player => {
@@ -74,11 +74,14 @@ export default {
       socket.emit(events.KICK_PLAYER, localId);
     }
 
+    function changeColor(newColor){
+      socket.emit(events.CHANGE_COLOR, newColor);
+    }
+
     socket.on(events.LOBBY_MODIFIED, data => {
       if (data.status === 3){
         router.push({name: 'Home'});
       }
-      console.log(data)
       status.value = data.status;
       if(data.your_local_id!=null){
         data.players.forEach(player => {
@@ -105,7 +108,8 @@ export default {
       game,
       joinGame,
       quitGame,
-      kickPlayer
+      kickPlayer,
+      changeColor
     }
 
   }

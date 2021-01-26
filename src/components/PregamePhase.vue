@@ -11,7 +11,7 @@
                    @kickplayer="$emit('kickplayer', $event)"/>
     </div>
     <div class="pregame-phase__buttons">
-      <button v-if="currentPlayer">Change your color</button>
+      <button v-if="currentPlayer" @click="showChangeColorPopup=true">Change your pawn</button>
       <button v-if="!currentPlayer" @click="$emit('joingame')">Join game</button>
       <button v-if="currentPlayer && currentPlayer.is_admin">Start game</button>
       <button v-if="currentPlayer && currentPlayer.is_admin">Choose Mister X</button>
@@ -31,15 +31,19 @@
         <button v-clipboard:copy="id">Copy</button>
       </div>
     </div>
+    <div class="pregame-phase__change-color-popup" v-if="showChangeColorPopup" @click="showChangeColorPopup=false">
+      <ChangeColorPopup :players="players" @changecolor="$emit('changecolor', $event)"/>
+    </div>
   </div>
 </template>
 
 <script>
 import PlayerLabel from "./pregamePhaseComponents/PlayerLabel";
 import {useRoute} from "vue-router";
+import ChangeColorPopup from "./pregamePhaseComponents/ChangeColorPopup";
 export default {
   name: "PregamePhase",
-  components: {PlayerLabel},
+  components: {ChangeColorPopup, PlayerLabel},
   props: {
     players: {
       type: Array,
@@ -47,6 +51,11 @@ export default {
     },
     currentPlayer: {
       required: true
+    }
+  },
+  data(){
+    return {
+      showChangeColorPopup: false
     }
   },
   computed: {
@@ -149,8 +158,19 @@ export default {
         display: inline-block;
       }
     }
+  }
 
-
+  .pregame-phase__change-color-popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>
