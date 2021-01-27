@@ -53,7 +53,7 @@ export default {
     }
 
     .mister-x-table__revelation-turn-number{
-      //border: 1px solid white;
+      border: 1px solid white;
     }
 
     .mister-x-table__turn-transport{
