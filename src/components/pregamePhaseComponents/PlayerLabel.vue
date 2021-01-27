@@ -1,6 +1,6 @@
 <template>
   <div class="player-label__main-panel" :class="{'player-label__admin-player': player.is_admin}">
-    <img :src="'/assets/pedina_'+player.color+'.png'">
+    <img :src="player.is_mister_x ? '/assets/pawn_mister_x.png' : '/assets/pawn_'+player.color+'.png'">
 
     <div class="player-label__info-labels">
       <strong class="player-label__username-label">{{player.username}}</strong>
@@ -32,6 +32,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/global";
 
 .player-label__main-panel {
 
@@ -52,7 +53,7 @@ export default {
     transition: transform 0.25s;
 
     &:hover{
-      transform: scale(1.2);
+      transform: scale(1.1);
     }
   }
 
@@ -69,7 +70,7 @@ export default {
     }
 
     .player-label__is-you-label{
-      color: red;
+      color: $anti-theme-color;
     }
   }
 

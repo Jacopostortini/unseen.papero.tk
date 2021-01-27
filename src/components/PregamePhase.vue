@@ -15,7 +15,7 @@
       <button v-if="currentPlayer" @click="showChangeColorPopup=true">Change your pawn</button>
       <button v-if="!currentPlayer" @click="$emit('joingame')">Join game</button>
       <button v-if="currentPlayer && currentPlayer.is_admin">Start game</button>
-      <button v-if="currentPlayer && currentPlayer.is_admin">Choose Mister X</button>
+      <button v-if="currentPlayer && currentPlayer.is_admin" @click="showChangeMisterXPopup=true">Choose Mister X</button>
       <button v-if="currentPlayer && players.length!==1" @click="$emit('quitgame')">Quit game</button>
     </div>
     <div class="pregame-phase__information-panel">
@@ -36,8 +36,11 @@
         <p>Mister X is: <strong>{{ misterXUsername }}</strong></p>
       </div>
     </div>
-    <div class="pregame-phase__change-color-popup" v-if="showChangeColorPopup" @click="showChangeColorPopup=false">
+    <div class="pregame-phase__popup" v-if="showChangeColorPopup" @click="showChangeColorPopup=false">
       <ChangeColorPopup :players="players" @changecolor="$emit('changecolor', $event)"/>
+    </div>
+    <div class="pregame-phase__popup" v-if="showChangeMisterXPopup" @click="showChangeMisterXPopup=false">
+      <ChangeMisterXPopup :players="players" :current-player="currentPlayer" @changemisterx="$emit('changemisterx', $event)"/>
     </div>
   </div>
 </template>
@@ -46,9 +49,10 @@
 import PlayerLabel from "./pregamePhaseComponents/PlayerLabel";
 import {useRoute} from "vue-router";
 import ChangeColorPopup from "./pregamePhaseComponents/ChangeColorPopup";
+import ChangeMisterXPopup from "./pregamePhaseComponents/ChangeMisterXPopup";
 export default {
   name: "PregamePhase",
-  components: {ChangeColorPopup, PlayerLabel},
+  components: {ChangeMisterXPopup, ChangeColorPopup, PlayerLabel},
   props: {
     players: {
       type: Array,
@@ -60,7 +64,8 @@ export default {
   },
   data(){
     return {
-      showChangeColorPopup: false
+      showChangeColorPopup: false,
+      showChangeMisterXPopup: false
     }
   },
   computed: {
@@ -72,7 +77,6 @@ export default {
     },
     adminUsername: function() {
       for (let i=0; i<this.players.length; i++){
-        console.log(this.players)
         if(this.players[i].is_admin) return this.players[i].username;
       }
       return null
@@ -118,6 +122,7 @@ export default {
     min-width: 30%;
     height: 50%;
     padding-left: 5%;
+    margin-right: 25%;
 
 
     .pregame-phase__players-table{
@@ -126,7 +131,7 @@ export default {
       left: 0;
       width: 120%;
       height: 12%;
-      background-color: white;
+      background-color: $anti-theme-color;
       transform: skewX(80deg);
     }
 
@@ -194,7 +199,7 @@ export default {
     }
   }
 
-  .pregame-phase__change-color-popup{
+  .pregame-phase__popup{
     position: fixed;
     top: 0;
     left: 0;

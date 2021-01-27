@@ -2,33 +2,30 @@
   <div class="change-popup__main-panel">
     <div class="change-popup__table-panel"/>
     <div class="change-popup__available-pawns">
-      <img :src="'/assets/pawn_'+n+'.png'" v-for="n in colorsAvailable" :key="n" @click="$emit('changecolor', n)">
+      <PlayerLabel v-for="player in players"
+                   :key="player.local_id"
+                   v-show="!player.is_mister_x"
+                   :player="player"
+                   :current-player="currentPlayer"
+                   @kickplayer="$emit('kickplayer', $event)"
+                   @click="$emit('changemisterx', player.local_id)"/>
     </div>
   </div>
 </template>
 
 <script>
-import { colors } from "../../constants/constants";
+import PlayerLabel from "./PlayerLabel";
 
 export default {
-  name: "ChangeColorPopup",
+  name: "ChangeMisterXPopup",
+  components: {PlayerLabel},
   props: {
     players: {
       type: Array,
       required: true
-    }
-  },
-  computed: {
-    colorsAvailable: function (){
-      let colorsUnavailable = [];
-      for (let i=0; i<this.players.length; i++){
-        colorsUnavailable.push(this.players[i].color);
-      }
-      let colorsAvailable = [];
-      for (let i=0; i<colors; i++){
-        if(!colorsUnavailable.includes(i)) colorsAvailable.push(i);
-      }
-      return colorsAvailable;
+    },
+    currentPlayer: {
+      required: true
     }
   }
 }
@@ -39,7 +36,7 @@ export default {
 
 .change-popup__main-panel{
   width: 50%;
-  height: fit-content;
+  height: 40%;
   position: relative;
   color: white;
   text-align: center;
@@ -60,16 +57,10 @@ export default {
   .change-popup__available-pawns{
     z-index: 1000;
     padding-bottom: 2%;
-
-    img{
-      width: 10%;
-      margin-right: 5%;
-      transition: transform 0.25s;
-
-      &:hover{
-        transform: scale(1.1);
-      }
-    }
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
   }
 
 }

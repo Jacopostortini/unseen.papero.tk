@@ -6,7 +6,8 @@
                   @joingame="joinGame"
                   @quitgame="quitGame"
                   @kickplayer="kickPlayer"
-                  @changecolor="changeColor"/>
+                  @changecolor="changeColor"
+                  @changemisterx="changeMisterX"/>
     <GamePhase v-else-if="status===1"
                :players="players"
                :current-player="currentPlayer"
@@ -21,7 +22,7 @@ import GamePhase from "../components/GamePhase";
 import PostGamePhase from "../components/PostGamePhase";
 import {webSocketUrl} from "../constants/constants";
 import events from "../constants/webSocketEvents";
-import {useRoute, useRouter} from "vue-router";
+import {useRoute} from "vue-router";
 import io from "socket.io-client";
 import {ref} from "@vue/reactivity";
 
@@ -32,7 +33,6 @@ export default {
   setup(){
 
     const socket = io(webSocketUrl);
-    const router = useRouter();
 
     const gameId = useRoute().params.gameId;
     const status = ref(undefined);
@@ -44,7 +44,9 @@ export default {
     let id = prompt("id:")
     let username = prompt("username:")
     socket.emit(events.CONNECT_TO_GAME, {user_id: id, game_id: gameId, username: username});
-    socket.on(events.CONNECT_TO_GAME, (data) => {
+
+    function setupData(data){
+      console.log(data);
       status.value = data.status;
       if(data.your_local_id!=null){
         data.players.forEach(player => {
@@ -60,6 +62,13 @@ export default {
         lastMisterXKnownPosition: data.last_known_position,
         misterXMoves: data.mister_x_moves
       }
+    }
+    socket.on(events.CONNECT_TO_GAME, (data) => {
+      setupData(data);
+    });
+
+    socket.on(events.LOBBY_MODIFIED, data => {
+      setupData(data);
     });
 
     function joinGame() {
@@ -78,28 +87,10 @@ export default {
       socket.emit(events.CHANGE_COLOR, newColor);
     }
 
-    socket.on(events.LOBBY_MODIFIED, data => {
-      if (data.status === 3){
-        router.push({name: 'Home'});
-      }
-      status.value = data.status;
-      if(data.your_local_id!=null){
-        data.players.forEach(player => {
-          if(player.local_id===data.your_local_id){
-            currentPlayer.value = player;
-          }
-        })
-      } else{
-        currentPlayer.value = undefined;
-      }
-      players.value = data.players;
-      game.value = {
-        playingPlayer: data.players_turn,
-        isRevelation: data.is_revelation_turn,
-        lastMisterXKnownPosition: data.last_known_position,
-        misterXMoves: data.mister_x_moves
-      }
-    });
+    function changeMisterX(newMisterX){
+      console.log("changed", newMisterX);
+      socket.emit(events.CHANGE_MISTER_X, newMisterX);
+    }
 
     return {
       status,
@@ -109,7 +100,8 @@ export default {
       joinGame,
       quitGame,
       kickPlayer,
-      changeColor
+      changeColor,
+      changeMisterX
     }
 
   }
