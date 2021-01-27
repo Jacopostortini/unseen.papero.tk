@@ -120,7 +120,7 @@ export default {
     flex-flow: row;
     justify-content: center;
     min-width: 30%;
-    height: 50%;
+    height: 70%;
     padding-left: 5%;
     margin-right: 25%;
 
