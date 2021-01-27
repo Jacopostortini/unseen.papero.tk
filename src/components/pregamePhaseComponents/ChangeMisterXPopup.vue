@@ -5,6 +5,7 @@
       <div class="change-popup__player-label"
            :class="{'player-label__admin-player': player.is_admin}"
            v-for="player in players"
+           v-show="!player.is_mister_x"
            :key="player.local_id">
         <img :src="player.is_mister_x ? '/assets/pawn_mister_x.png' : '/assets/pawn_'+player.color+'.png'">
 

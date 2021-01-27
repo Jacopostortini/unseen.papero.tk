@@ -1,6 +1,8 @@
 <template>
   <div class="player-label__main-panel" :class="{'player-label__admin-player': player.is_admin}">
-    <img :src="player.is_mister_x ? '/assets/pawn_mister_x.png' : '/assets/pawn_'+player.color+'.png'">
+    <img :src="player.is_mister_x ? '/assets/pawn_mister_x.png' : '/assets/pawn_'+player.color+'.png'"
+         :class="{'kicked-player': fadeOut}"
+         @click="kickPlayer">
 
     <div class="player-label__info-labels">
       <strong class="player-label__username-label">{{player.username}}</strong>
@@ -19,6 +21,22 @@ export default {
     },
     currentPlayer: {
       required: true
+    }
+  },
+  data(){
+    return {
+      fadeOut: false
+    }
+  },
+  methods: {
+    kickPlayer(){
+      if (!this.isYou && this.currentPlayer.is_admin){
+        this.fadeOut = true;
+        const sleep = (s) => {
+          return new Promise(resolve => setTimeout(resolve, (s*1000)))
+        }
+        sleep(2).then(()=>{this.$emit("kickplayer", this.player.local_id)});
+      }
     }
   },
   computed: {
@@ -55,6 +73,15 @@ export default {
     &:hover{
       transform: scale(1.1);
     }
+  }
+
+  .kicked-player{
+    animation: spin-and-zoom-out 2s ease-out;
+  }
+
+  @keyframes spin-and-zoom-out {
+    0% {}
+    100% {transform: translateY(-200px) rotate(1000deg) scale(0)}
   }
 
   .player-label__info-labels{

@@ -7,7 +7,8 @@
                   @quitgame="quitGame"
                   @kickplayer="kickPlayer"
                   @changecolor="changeColor"
-                  @changemisterx="changeMisterX"/>
+                  @changemisterx="changeMisterX"
+                  @startgame="startGame"/>
     <GamePhase v-else-if="status===1"
                :players="players"
                :current-player="currentPlayer"
@@ -54,6 +55,8 @@ export default {
             currentPlayer.value = player;
           }
         })
+      } else {
+        currentPlayer.value = null;
       }
       players.value = data.players;
       game.value = {
@@ -87,6 +90,10 @@ export default {
       socket.emit(events.CHANGE_COLOR, newColor);
     }
 
+    function startGame(){
+      socket.emit(events.START_GAME);
+    }
+
     function changeMisterX(newMisterX){
       console.log("changed", newMisterX);
       socket.emit(events.CHANGE_MISTER_X, newMisterX);
@@ -101,7 +108,8 @@ export default {
       quitGame,
       kickPlayer,
       changeColor,
-      changeMisterX
+      changeMisterX,
+      startGame
     }
 
   }
