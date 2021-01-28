@@ -3,7 +3,6 @@
     <img :src="player.is_mister_x ? '/assets/pawn_mister_x.png' : '/assets/pawn_'+player.color+'.png'"
          :class="{'kicked-player': fadeOut, 'hover-animation': hoverPlayerAnimation}"
          @click="kickPlayer">
-
     <div class="player-label__info-labels">
       <strong class="player-label__username-label">{{player.username}}</strong>
       <strong class="player-label__is-you-label" v-if="isYou">You</strong>
@@ -67,9 +66,8 @@ export default {
   position: relative;
   margin: 0 2% 0 2%;
 
-
   img {
-    height: 50%;
+    height: 60%;
     transition: transform 0.25s;
 
     &.hover-animation:hover{
@@ -82,12 +80,11 @@ export default {
   }
 
   @keyframes spin-and-zoom-out {
-    0% {}
     100% {transform: translateY(-200px) rotate(1000deg) scale(0)}
   }
 
   .player-label__info-labels{
-    height: 40%;
+    height: 35%;
     display: flex;
     flex-flow: column;
     align-items: center;

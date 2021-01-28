@@ -158,14 +158,14 @@ export default {
     flex-flow: row;
     justify-content: center;
     min-width: 30%;
-    height: 70%;
+    height: 100%;
     padding-left: 5%;
     margin-right: 25%;
 
 
     .pregame-phase__players-table{
       position: absolute;
-      top: 47%;
+      top: 56%;
       left: 0;
       width: 120%;
       height: 8%;
