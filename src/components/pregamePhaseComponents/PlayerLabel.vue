@@ -69,7 +69,7 @@ export default {
 
 
   img {
-    height: 50%;
+    height: 60%;
     transition: transform 0.25s;
 
     &.hover-animation:hover{
@@ -87,7 +87,7 @@ export default {
   }
 
   .player-label__info-labels{
-    height: 40%;
+    height: 35%;
     display: flex;
     flex-flow: column;
     align-items: center;
