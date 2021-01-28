@@ -12,23 +12,30 @@
                    @kickplayer="$emit('kickplayer', $event)"/>
     </div>
     <div class="pregame-phase__buttons">
-      <button v-if="currentPlayer && !currentPlayer.is_mister_x" @click="showChangeColorPopup=true">Change your pawn</button>
-      <button v-if="!currentPlayer" @click="$emit('joingame')">Join game</button>
-      <button v-if="currentPlayer && currentPlayer.is_admin" @click="$emit('startgame')">Start game</button>
-      <button v-if="currentPlayer && currentPlayer.is_admin" @click="showChangeMisterXPopup=true">Choose Mister X</button>
-      <button v-if="currentPlayer && players.length!==1" @click="$emit('quitgame')">Quit game</button>
+      <button v-if="currentPlayer && !currentPlayer.is_mister_x"
+              @click="showChangeColorPopup=true">Change your pawn</button>
+      <button class="pregame-phase__buttons__join-game"
+              v-if="!currentPlayer"
+              @click="$emit('joingame')">Join game</button>
+      <button v-if="currentPlayer && currentPlayer.is_admin"
+              @click="startGame">Start game</button>
+      <button :class="{'pregame-phase__buttons__change-mister-x': !misterXUsername, 'pulse-mister-x': pulseMisterXButton}"
+              v-if="currentPlayer && currentPlayer.is_admin"
+              @click="showChangeMisterXPopup=true">Choose Mister X</button>
+      <button v-if="currentPlayer && players.length!==1"
+              @click="$emit('quitgame')">Quit game</button>
     </div>
     <div class="pregame-phase__information-panel">
-      <div class="pregame-phase__copy-url" @mouseover="hoverUrl=true" @mouseleave="hoverUrl=false">
+      <div class="pregame-phase__copy-container" @mouseover="hoverUrl=true" @mouseleave="hoverUrl=false">
         <label for="pregame-phase__url">Copy the url and share it with your friends!</label>
         <br>
-        <input id="pregame-phase__url" readonly :value="url">
+        <p id="pregame-phase__url" class="pregame-phase__copy">{{ url.toString() }}</p>
         <button v-clipboard:copy="url" :class="{'copy-hover': hoverUrl}" @click="onCopiedUrl">Copy<span :class="{'copied': copiedUrl}">Copied</span></button>
       </div>
-      <div class="pregame-phase__copy-tag" @mouseover="hoverTag=true" @mouseleave="hoverTag=false">
+      <div class="pregame-phase__copy-container" @mouseover="hoverTag=true" @mouseleave="hoverTag=false">
         <label for="pregame-phase__tag">Or send them this tag!</label>
         <br>
-        <p id="pregame-phase__tag">{{ id }}</p>
+        <p id="pregame-phase__tag" class="pregame-phase__copy">{{ id }}</p>
         <button v-clipboard:copy="id" :class="{'copy-hover': hoverTag}" @click="onCopiedTag">Copy<span :class="{'copied': copiedTag}">Copied</span></button>
       </div>
       <div class="pregame-phase__admin-and-mister-x">
@@ -68,7 +75,8 @@ export default {
       hoverUrl: false,
       hoverTag: false,
       copiedUrl: false,
-      copiedTag: false
+      copiedTag: false,
+      pulseMisterXButton: false
     }
   },
   methods: {
@@ -77,14 +85,25 @@ export default {
       const sleep = (s) => {
         return new Promise(resolve => setTimeout(resolve, (s*1000)))
       }
-      sleep(1.5).then(()=>{this.copiedUrl=false});
+      sleep(1).then(()=>{this.copiedUrl=false});
     },
     onCopiedTag(){
       this.copiedTag=true;
       const sleep = (s) => {
         return new Promise(resolve => setTimeout(resolve, (s*1000)))
       }
-      sleep(1.5).then(()=>{this.copiedTag=false});
+      sleep(1).then(()=>{this.copiedTag=false});
+    },
+    startGame(){
+      if(this.misterXUsername){
+        this.$emit("startGame");
+      } else {
+        this.pulseMisterXButton = true;
+        const sleep = (s) => {
+          return new Promise(resolve => setTimeout(resolve, (s*1000)))
+        }
+        sleep(1).then(()=>{this.pulseMisterXButton = false});
+      }
     }
   },
   computed: {
@@ -97,6 +116,12 @@ export default {
     adminUsername: function() {
       for (let i=0; i<this.players.length; i++){
         if(this.players[i].is_admin) return this.players[i].username;
+      }
+      return null
+    },
+    misterXUsername: function() {
+      for (let i=0; i<this.players.length; i++){
+        if(this.players[i].is_mister_x) return this.players[i].username;
       }
       return null
     }
@@ -158,13 +183,20 @@ export default {
     justify-content: space-evenly;
 
     button{
-      font-size: 2em;
       border: 1px solid white;
       padding: 1%;
+      font-size: 1.5em;
       color: white;
       background: none;
       height: fit-content;
-      text-shadow: 10px 10px 5px grey;
+      margin: 1%;
+      transition: all 0.5s;
+
+      &:hover{
+        background-color: white;
+        color: $theme-color-light;
+        animation-play-state: paused;
+      }
 
       &:active{
         transform: translate(1px);
@@ -175,6 +207,40 @@ export default {
         outline: none;
       }
     }
+
+    .pregame-phase__buttons__join-game{
+      animation: button-anim 2s infinite linear;
+    }
+
+    .pregame-phase__buttons__change-mister-x{
+      animation: button-anim 2s infinite linear;
+    }
+
+    .pulse-mister-x{
+      animation: pulse 1s;
+    }
+
+    @keyframes button-anim {
+      0% {transform: rotate(0deg)}
+      40% {transform: rotate(0deg)}
+      42% {transform: rotate(5deg)}
+      44% {transform: rotate(0deg)}
+      46% {transform: rotate(-5deg)}
+      48% {transform: rotate(0deg)}
+      100% {transform: rotate(0deg)}
+    }
+
+    @keyframes pulse {
+      0% {transform: rotate(0deg) scale(1); background-color: white; color: $theme-color-light}
+      10% {transform: rotate(0deg) scale(1.1); background-color: white; color: $theme-color-light}
+      30% {transform: rotate(0deg) scale(1.1); background-color: white; color: $theme-color-light}
+      40% {transform: rotate(5deg) scale(1.1); background-color: white; color: $theme-color-light}
+      50% {transform: rotate(0deg) scale(1.1); background-color: white; color: $theme-color-light}
+      60% {transform: rotate(-5deg) scale(1.1); background-color: white; color: $theme-color-light}
+      70% {transform: rotate(0deg) scale(1.1); background-color: white; color: $theme-color-light}
+      90% {transform: rotate(0deg) scale(1.1); background-color: white; color: $theme-color-light}
+      100% {transform: rotate(0deg) scale(1); background-color: white; color: $theme-color-light}
+    }
   }
 
   .pregame-phase__information-panel{
@@ -182,17 +248,17 @@ export default {
     color: white;
 
     .copy-hover:not(span){
-      color: rgba(255, 255, 255, 255);
+      color: white;
     }
 
     .copied{
-      animation: copied 1.5s;
+      animation: copied 1s;
     }
 
     button {
       background: none;
       border: none;
-      color: rgba(255, 255, 255, 0);
+      color: transparent;
       font-weight: bold;
       font-size: 0.7em;
       transition: color 0.5s;
@@ -201,7 +267,7 @@ export default {
       span{
         position: absolute;
         left: 0;
-        color: rgba(255, 255, 255, 0);
+        color: transparent;
       }
 
       &:focus{
@@ -220,7 +286,7 @@ export default {
       }
       100% {
         transform: translateY(-20px) scale(1);
-        color: rgba(255, 255, 255, 0);
+        color: transparent;
       }
     }
 
@@ -228,25 +294,16 @@ export default {
       color: $anti-theme-color;
     }
 
-    .pregame-phase__copy-url{
-
-      input{
-        margin-top: 10px;
-        margin-right: 10px;
-        width: 300px;
-        color: $theme-color-dark;
-      }
-    }
-
-    .pregame-phase__copy-tag{
+    .pregame-phase__copy-container{
       margin-top: 50px;
 
-      p {
+      .pregame-phase__copy {
         display: inline-block;
         color: white;
         border: 2px solid white;
         padding: 10px;
         margin-right: 10px;
+        font-variant: normal;
       }
     }
   }

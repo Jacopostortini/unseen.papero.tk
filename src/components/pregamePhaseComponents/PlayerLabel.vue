@@ -1,7 +1,7 @@
 <template>
   <div class="player-label__main-panel" :class="{'player-label__admin-player': player.is_admin}">
     <img :src="player.is_mister_x ? '/assets/pawn_mister_x.png' : '/assets/pawn_'+player.color+'.png'"
-         :class="{'kicked-player': fadeOut}"
+         :class="{'kicked-player': fadeOut, 'hover-animation': hoverPlayerAnimation}"
          @click="kickPlayer">
 
     <div class="player-label__info-labels">
@@ -25,13 +25,15 @@ export default {
   },
   data(){
     return {
-      fadeOut: false
+      fadeOut: false,
+      hoverPlayerAnimation: true
     }
   },
   methods: {
     kickPlayer(){
       if (!this.isYou && this.currentPlayer.is_admin){
         this.fadeOut = true;
+        this.hoverPlayerAnimation = false;
         const sleep = (s) => {
           return new Promise(resolve => setTimeout(resolve, (s*1000)))
         }
@@ -70,7 +72,7 @@ export default {
     height: 50%;
     transition: transform 0.25s;
 
-    &:hover{
+    &.hover-animation:hover{
       transform: scale(1.1);
     }
   }
