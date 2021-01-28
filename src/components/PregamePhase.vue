@@ -19,17 +19,17 @@
       <button v-if="currentPlayer && players.length!==1" @click="$emit('quitgame')">Quit game</button>
     </div>
     <div class="pregame-phase__information-panel">
-      <div class="pregame-phase__copy-url">
+      <div class="pregame-phase__copy-url" @mouseover="hoverUrl=true" @mouseleave="hoverUrl=false">
         <label for="pregame-phase__url">Copy the url and share it with your friends!</label>
         <br>
         <input id="pregame-phase__url" readonly :value="url">
-        <button v-clipboard:copy="url">Copy</button>
+        <button v-clipboard:copy="url" :class="{'copy-hover': hoverUrl}" @click="onCopiedUrl">Copy<span :class="{'copied': copiedUrl}">Copied</span></button>
       </div>
-      <div class="pregame-phase__copy-tag">
+      <div class="pregame-phase__copy-tag" @mouseover="hoverTag=true" @mouseleave="hoverTag=false">
         <label for="pregame-phase__tag">Or send them this tag!</label>
         <br>
         <p id="pregame-phase__tag">{{ id }}</p>
-        <button v-clipboard:copy="id">Copy</button>
+        <button v-clipboard:copy="id" :class="{'copy-hover': hoverTag}" @click="onCopiedTag">Copy<span :class="{'copied': copiedTag}">Copied</span></button>
       </div>
       <div class="pregame-phase__admin-and-mister-x">
         <p>The admin of this lobby is: <strong>{{ adminUsername }}</strong></p>
@@ -64,7 +64,27 @@ export default {
   data(){
     return {
       showChangeColorPopup: false,
-      showChangeMisterXPopup: false
+      showChangeMisterXPopup: false,
+      hoverUrl: false,
+      hoverTag: false,
+      copiedUrl: false,
+      copiedTag: false
+    }
+  },
+  methods: {
+    onCopiedUrl(){
+      this.copiedUrl=true;
+      const sleep = (s) => {
+        return new Promise(resolve => setTimeout(resolve, (s*1000)))
+      }
+      sleep(1.5).then(()=>{this.copiedUrl=false});
+    },
+    onCopiedTag(){
+      this.copiedTag=true;
+      const sleep = (s) => {
+        return new Promise(resolve => setTimeout(resolve, (s*1000)))
+      }
+      sleep(1.5).then(()=>{this.copiedTag=false});
     }
   },
   computed: {
@@ -139,12 +159,12 @@ export default {
 
     button{
       font-size: 2em;
-      border: none;
-      border-radius: 20px;
-      padding: 2%;
-      color: $theme-color-dark;
-      box-shadow: 1px 1px 5px gray;
+      border: 1px solid white;
+      padding: 1%;
+      color: white;
+      background: none;
       height: fit-content;
+      text-shadow: 10px 10px 5px grey;
 
       &:active{
         transform: translate(1px);
@@ -160,6 +180,49 @@ export default {
   .pregame-phase__information-panel{
     grid-area: info;
     color: white;
+
+    .copy-hover:not(span){
+      color: rgba(255, 255, 255, 255);
+    }
+
+    .copied{
+      animation: copied 1.5s;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0);
+      font-weight: bold;
+      font-size: 0.7em;
+      transition: color 0.5s;
+      position: relative;
+
+      span{
+        position: absolute;
+        left: 0;
+        color: rgba(255, 255, 255, 0);
+      }
+
+      &:focus{
+        outline: none;
+      }
+    }
+
+    @keyframes copied {
+      0% {
+        color: white;
+        transform: translateY(0) scale(0);
+      }
+      75%{
+        transform: translateY(-15px) scale(1);
+        color: rgba(255, 255, 255, 200);
+      }
+      100% {
+        transform: translateY(-20px) scale(1);
+        color: rgba(255, 255, 255, 0);
+      }
+    }
 
     strong{
       color: $anti-theme-color;
@@ -180,14 +243,10 @@ export default {
 
       p {
         display: inline-block;
-        color: $theme-color-dark;
-        background-color: white;
+        color: white;
+        border: 2px solid white;
         padding: 10px;
         margin-right: 10px;
-      }
-
-      button{
-        display: inline-block;
       }
     }
   }
