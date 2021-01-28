@@ -12,9 +12,9 @@
                    @kickplayer="$emit('kickplayer', $event)"/>
     </div>
     <div class="pregame-phase__buttons">
-      <button v-if="currentPlayer" @click="showChangeColorPopup=true">Change your pawn</button>
+      <button v-if="currentPlayer && !currentPlayer.is_mister_x" @click="showChangeColorPopup=true">Change your pawn</button>
       <button v-if="!currentPlayer" @click="$emit('joingame')">Join game</button>
-      <button v-if="currentPlayer && currentPlayer.is_admin">Start game</button>
+      <button v-if="currentPlayer && currentPlayer.is_admin" @click="$emit('startgame')">Start game</button>
       <button v-if="currentPlayer && currentPlayer.is_admin" @click="showChangeMisterXPopup=true">Choose Mister X</button>
       <button v-if="currentPlayer && players.length!==1" @click="$emit('quitgame')">Quit game</button>
     </div>
@@ -33,7 +33,6 @@
       </div>
       <div class="pregame-phase__admin-and-mister-x">
         <p>The admin of this lobby is: <strong>{{ adminUsername }}</strong></p>
-        <p>Mister X is: <strong>{{ misterXUsername }}</strong></p>
       </div>
     </div>
     <div class="pregame-phase__popup" v-if="showChangeColorPopup" @click="showChangeColorPopup=false">
@@ -80,12 +79,6 @@ export default {
         if(this.players[i].is_admin) return this.players[i].username;
       }
       return null
-    },
-    misterXUsername: function() {
-      for (let i=0; i<this.players.length; i++){
-        if(this.players[i].is_mister_x) return this.players[i].username;
-      }
-      return null
     }
   }
 }
@@ -127,10 +120,10 @@ export default {
 
     .pregame-phase__players-table{
       position: absolute;
-      top: 45%;
+      top: 47%;
       left: 0;
       width: 120%;
-      height: 12%;
+      height: 8%;
       background-color: $anti-theme-color;
       transform: skewX(80deg);
     }
