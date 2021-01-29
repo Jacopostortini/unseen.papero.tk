@@ -1,8 +1,6 @@
 <template>
   <div class="pregame-phase__main-panel">
-    <header class="pregame-phase__header">
-      Scotland Yard
-    </header>
+    <header class="pregame-phase__header">Scotland Yard</header>
     <div class="pregame-phase__players">
       <div class="pregame-phase__players-table"/>
       <PlayerLabel v-for="player in players"
@@ -20,7 +18,7 @@
       <button v-if="currentPlayer && currentPlayer.is_admin"
               @click="startGame">Start game</button>
       <button :class="{'pregame-phase__buttons__change-mister-x': !misterXUsername, 'pulse-mister-x': pulseMisterXButton}"
-              v-if="currentPlayer && currentPlayer.is_admin"
+              v-if="currentPlayer && currentPlayer.is_admin && !(players.length===1 && currentPlayer.is_mister_x)"
               @click="showChangeMisterXPopup=true">Choose Mister X</button>
       <button v-if="currentPlayer && players.length!==1"
               @click="$emit('quitgame')">Quit game</button>
@@ -96,7 +94,7 @@ export default {
     },
     startGame(){
       if(this.misterXUsername){
-        this.$emit("startGame");
+        this.$emit("startgame");
       } else {
         this.pulseMisterXButton = true;
         const sleep = (s) => {

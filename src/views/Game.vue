@@ -66,11 +66,16 @@ export default {
         misterXMoves: data.mister_x_moves
       }
     }
+
     socket.on(events.CONNECT_TO_GAME, (data) => {
       setupData(data);
     });
 
     socket.on(events.LOBBY_MODIFIED, data => {
+      setupData(data);
+    });
+
+    socket.on(events.START_GAME, data => {
       setupData(data);
     });
 
@@ -95,7 +100,6 @@ export default {
     }
 
     function changeMisterX(newMisterX){
-      console.log("changed", newMisterX);
       socket.emit(events.CHANGE_MISTER_X, newMisterX);
     }
 
