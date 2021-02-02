@@ -11,7 +11,7 @@ const gameConfig = {
     number_of_total_turns: 24,
     mister_x_is_visible_turns: [3, 8, 13, 18, 23]
 }
-const webSocketUrl = "http://api.unseen.papero.tk";
+const webSocketUrl = "http://localhost:3000"//"http://api.unseen.papero.tk";
 const flaskServerUrl = "";
 
 export {

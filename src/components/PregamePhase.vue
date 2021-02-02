@@ -1,6 +1,6 @@
 <template>
   <div class="pregame-phase__main-panel">
-    <header class="pregame-phase__header">Scotland Yard</header>
+    <header class="pregame-phase__header">Unseen</header>
     <div class="pregame-phase__players">
       <div class="pregame-phase__players-table"/>
       <PlayerLabel v-for="player in players"
@@ -131,7 +131,11 @@ export default {
 @import "../styles/global";
 
 .pregame-phase__main-panel{
-  background: linear-gradient(-30deg, $theme-color-light, $theme-color-dark);
+  //background: linear-gradient(-30deg, $theme-color-light, $theme-color-dark);
+  background-image: url("../../public/assets/unseen_icon.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: bottom;
   display: grid;
   justify-items: center;
   align-items: center;
