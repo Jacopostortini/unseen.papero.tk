@@ -131,9 +131,8 @@ export default {
 @import "../styles/global";
 
 .pregame-phase__main-panel{
-  //background: linear-gradient(-30deg, $theme-color-light, $theme-color-dark);
   background-image: url("../../public/assets/unseen_icon.jpg");
-  background-size: 100%;
+  background-size: auto 100vh;
   background-repeat: no-repeat;
   background-position: bottom;
   display: grid;

@@ -4,12 +4,12 @@ import Game from "../views/Game";
 
 const routes = [
   {
-    path: '/',
+    path: '/unseen',
     name: 'Home',
     component: Home
   },
   {
-    path: '/:gameId',
+    path: '/unseen/:gameId',
     name: 'Game',
     component: Game
   }

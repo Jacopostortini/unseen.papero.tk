@@ -13,6 +13,34 @@ const gameConfig = {
 }
 const webSocketUrl = "http://api.unseen.papero.tk";
 const flaskServerUrl = "";
+const myGames = [
+    {
+        gameId: 0,
+        date: "01/02/2003",
+        name: "coccodrillococcodrillo"
+    },
+    {
+        gameId: 0,
+        date: "01/02/2003",
+        name: "gallogallo"
+    },
+    {
+        gameId: 0,
+        date: "01/02/2003",
+        name: "gallogallo"
+    },
+    {
+        gameId: 0,
+        date: "01/02/2003",
+        name: "gallogallo"
+    },
+    {
+        gameId: 0,
+        date: "01/02/2003",
+        name: "gallogallo"
+    }
+]
+
 
 export {
     zoomFunctionBase,
@@ -21,5 +49,6 @@ export {
     colors,
     gameConfig,
     webSocketUrl,
-    flaskServerUrl
+    flaskServerUrl,
+    myGames
 };
