@@ -1,6 +1,8 @@
 <template>
   <div class="game__main-panel">
-    <h1>{{game.name}}</h1>
+    <div class="name-container" :id="game.gameId+'container'">
+      <h1 :id="game.gameId+'name'" :class="{'overflows': overflows}">{{game.name}}</h1>
+    </div>
     <span>{{game.date}}</span>
   </div>
 </template>
@@ -12,6 +14,18 @@ export default {
     game: {
       type: Object,
       required: true
+    }
+  },
+  data(){
+    return {
+      overflows: false
+    }
+  },
+  mounted() {
+    let name = document.getElementById(this.game.gameId+"name");
+    let container = document.getElementById(this.game.gameId+"container")
+    if(name){
+      this.overflows =  container.clientWidth<name.scrollWidth;
     }
   }
 }
@@ -30,18 +44,22 @@ export default {
   justify-content: center;
   transition: all 0.5s;
 
-  h1{
-    font-size: 1.5vw;
-    font-weight: normal;
-    margin-right: 5%;
+  .name-container{
     width: 50%;
+    height: 100%;
     overflow: hidden;
+    margin-right: 5%;
     text-align: left;
-    direction: ltr;
-    transition: direction 2s;
+    white-space: nowrap;
 
-    &:hover{
-      direction: rtl;
+    h1{
+      font-size: 1.5vw;
+      font-weight: normal;
+      width: fit-content;
+    }
+
+    .overflows:hover{
+      animation: scroll-text 5s linear infinite;
     }
   }
 
@@ -49,5 +67,15 @@ export default {
     background-color: white;
     color: $theme-color-dark;
   }
+}
+
+@keyframes scroll-text {
+  0%{
+    transform: translate(0, 0);
+  }
+  100%{
+    transform: translate(-100%, 0);
+  }
+
 }
 </style>

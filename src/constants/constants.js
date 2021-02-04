@@ -17,25 +17,25 @@ const myGames = [
     {
         gameId: 0,
         date: "01/02/2003",
-        name: "coccodrillococcodrillo"
+        name: "Questa è una partita con un nome lunghissimo"
     },
     {
-        gameId: 0,
+        gameId: 1,
         date: "01/02/2003",
         name: "gallogallo"
     },
     {
-        gameId: 0,
+        gameId: 2,
         date: "01/02/2003",
         name: "gallogallo"
     },
     {
-        gameId: 0,
+        gameId: 3,
         date: "01/02/2003",
         name: "gallogallo"
     },
     {
-        gameId: 0,
+        gameId: 4,
         date: "01/02/2003",
         name: "gallogallo"
     }
