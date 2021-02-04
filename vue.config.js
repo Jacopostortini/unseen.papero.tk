@@ -1,4 +1,5 @@
 module.exports = {
+    publicPath: "/unseen/",
     css: {
         loaderOptions: {
             sass: {
