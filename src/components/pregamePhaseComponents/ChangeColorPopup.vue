@@ -2,7 +2,7 @@
   <div class="change-popup__main-panel">
     <div class="change-popup__table-panel"/>
     <div class="change-popup__available-pawns">
-      <img :src="'/assets/pawn_'+n+'.png'" v-for="n in colorsAvailable" :key="n" @click="$emit('changecolor', n)">
+      <img :src="require('@/assets/pawns/pawn_'+n+'.png')" v-for="n in colorsAvailable" :key="n" @click="$emit('changecolor', n)">
     </div>
   </div>
 </template>

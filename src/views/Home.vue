@@ -17,12 +17,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$home-theme-color-dark: #8a3434;
-$home-theme-color-light: #b78080;
-$home-anti-theme-color: white;
 
 .main-panel{
-  background-image: url("../../public/assets/unseen_icon.jpg");
+  background-image: url("../assets/background_image.jpg");
   background-size: auto auto;
   background-repeat: no-repeat;
   background-position: bottom;

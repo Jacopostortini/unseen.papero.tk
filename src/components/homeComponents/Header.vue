@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     login(){
-      window.location.href = 'http://papero.tk/auth/google';
+      window.location.pathname = '/auth/google';
     }
   }
 }

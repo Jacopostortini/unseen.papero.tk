@@ -131,7 +131,7 @@ export default {
 @import "../styles/global";
 
 .pregame-phase__main-panel{
-  background-image: url("../../public/assets/unseen_icon.jpg");
+  background-image: url("../assets/background_image.jpg");
   background-size: auto auto;
   background-repeat: no-repeat;
   background-position: bottom;

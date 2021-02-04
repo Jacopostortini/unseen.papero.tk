@@ -1,6 +1,6 @@
 <template>
   <div class="player-label__main-panel" :class="{'player-label__admin-player': player.is_admin}">
-    <img :src="player.is_mister_x ? '/assets/pawn_mister_x.png' : '/assets/pawn_'+player.color+'.png'"
+    <img :src="player.is_mister_x ? require('@/assets/pawns/pawn_mister_x.png') : require('@/assets/pawns/pawn_'+player.color+'.png')"
          :class="{'kicked-player': fadeOut, 'hover-animation': hoverPlayerAnimation}"
          @click="kickPlayer">
     <div class="player-label__info-labels">

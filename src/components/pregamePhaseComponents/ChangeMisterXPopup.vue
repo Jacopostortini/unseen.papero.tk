@@ -7,7 +7,7 @@
            v-for="player in players"
            v-show="!player.is_mister_x"
            :key="player.local_id">
-        <img :src="player.is_mister_x ? '/assets/pawn_mister_x.png' : '/assets/pawn_'+player.color+'.png'" @click="$emit('changemisterx', player.local_id)">
+        <img :src="player.is_mister_x ? require('@/assets/pawns/pawn_mister_x.png') : require('@/assets/pawns/pawn_'+player.color+'.png')" @click="$emit('changemisterx', player.local_id)">
 
         <div class="player-label__info-labels">
           <strong class="player-label__username-label">{{player.username}}</strong>
