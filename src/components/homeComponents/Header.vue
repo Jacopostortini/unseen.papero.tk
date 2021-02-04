@@ -1,7 +1,7 @@
 <template>
   <div class="header__main-panel">
     <h1>Unseen</h1>
-    <button v-if="!googleLogged">Login</button>
+    <button v-if="!googleLogged" @click="login">Login</button>
   </div>
 </template>
 
@@ -11,6 +11,11 @@ export default {
   data(){
     return {
       googleLogged: false
+    }
+  },
+  methods: {
+    login(){
+      window.location.href = "/auth/google";
     }
   }
 }

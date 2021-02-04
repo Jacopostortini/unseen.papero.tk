@@ -132,7 +132,7 @@ export default {
 
 .pregame-phase__main-panel{
   background-image: url("../../public/assets/unseen_icon.jpg");
-  background-size: auto 100vh;
+  background-size: auto auto;
   background-repeat: no-repeat;
   background-position: bottom;
   display: grid;
