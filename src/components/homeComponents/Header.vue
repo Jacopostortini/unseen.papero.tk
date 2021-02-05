@@ -15,7 +15,8 @@ export default {
   },
   methods: {
     login(){
-      window.location.pathname = '/auth/google';
+      let from_location = window.location;
+      window.location.href = '/auth/google?from_location='+from_location;
     }
   }
 }
