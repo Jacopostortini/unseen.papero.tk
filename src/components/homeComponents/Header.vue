@@ -30,18 +30,23 @@ export default {
   color: white;
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  justify-content: space-between;
+  text-align: center;
+  position: relative;
 
   h1{
-    margin: 0 0 0 2%;
+    margin: 0;
+    justify-self: center;
+    font-weight: normal;
+    font-family: Eutemia;
+    font-size: 10vw;
   }
 
   button{
-    padding: 1%;
-    margin-right: 2%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1% 3% 1% 3%;
+    margin: 2%;
     background: none;
     border: 2px solid white;
     color: white;

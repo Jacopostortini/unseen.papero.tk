@@ -67,6 +67,10 @@ export default {
     background-color: white;
     color: $theme-color-dark;
   }
+
+  span{
+    font-size: 1.5vw;
+  }
 }
 
 @keyframes scroll-text {
