@@ -1,16 +1,17 @@
 <template>
   <div class="header__main-panel">
     <h1>Unseen</h1>
-    <button v-if="!googleLogged" @click="login">Login</button>
+    <button v-if="!logged" @click="login">Login</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "Header",
-  data(){
-    return {
-      googleLogged: false
+  props: {
+    logged: {
+      type: Boolean,
+      required: true
     }
   },
   methods: {

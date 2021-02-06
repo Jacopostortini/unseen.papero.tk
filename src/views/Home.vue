@@ -1,6 +1,6 @@
 <template>
 <div class="main-panel">
-  <Header/>
+  <Header :logged="logged"/>
   <MyGames/>
   <ManageNewGame/>
 </div>
@@ -10,9 +10,20 @@
 import Header from "@/components/homeComponents/Header";
 import MyGames from "@/components/homeComponents/MyGames";
 import ManageNewGame from "@/components/homeComponents/ManageNewGame";
+import axios from "axios";
 export default {
   name: "Home",
   components: {ManageNewGame, MyGames, Header},
+  data(){
+    return {
+      logged: null
+    }
+  },
+  mounted() {
+    axios
+        .get("http://papero.tk/user/get_info")
+        .then((response)=>{this.logged = !!response.data})
+  }
 }
 </script>
 
