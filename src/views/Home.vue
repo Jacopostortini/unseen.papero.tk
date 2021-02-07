@@ -17,7 +17,7 @@ export default {
   components: {ManageNewGame, MyGames, Header},
   data(){
     return {
-      logged: null
+      logged: true
     }
   },
   mounted() {
