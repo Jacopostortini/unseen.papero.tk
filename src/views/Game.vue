@@ -46,6 +46,9 @@ export default {
     socket.emit(events.CONNECT_TO_GAME, {user_id: id, game_id: gameId, username: username});
 
     console.log(socket);
+    socket.on("error", (...args)=>{
+      console.log(args);
+    })
     function setupData(data){
       status.value = data.status;
       if(data.your_local_id!=null){
