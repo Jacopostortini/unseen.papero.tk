@@ -34,7 +34,6 @@ export default {
   setup(){
 
     const socket = io(webSocketUrl);
-
     const gameId = useRoute().params.gameId;
     const status = ref(undefined);
     const currentPlayer = ref(undefined);
@@ -46,6 +45,7 @@ export default {
     let username = prompt("username:")
     socket.emit(events.CONNECT_TO_GAME, {user_id: id, game_id: gameId, username: username});
 
+    console.log(socket);
     function setupData(data){
       status.value = data.status;
       if(data.your_local_id!=null){
