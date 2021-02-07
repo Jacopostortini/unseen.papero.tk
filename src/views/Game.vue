@@ -32,8 +32,9 @@ export default {
   name: "Game",
   components: {PostGamePhase, GamePhase, PregamePhase},
   setup(){
-
-    const socket = io(webSocketUrl);
+    const socket = io(webSocketUrl, {
+      path: "/unseen/socket.io/"
+    });
     const gameId = useRoute().params.gameId;
     const status = ref(undefined);
     const currentPlayer = ref(undefined);
