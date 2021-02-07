@@ -42,9 +42,9 @@ export default {
     const game = ref({});
 
     //TODO: LOGIC FOR FETCHING USER ID FROM FLASK AND USERNAME
-    let id = prompt("id:")
-    let username = prompt("username:")
-    socket.emit(events.CONNECT_TO_GAME, {user_id: id, game_id: gameId, username: username});
+    /*let id = prompt("id:")
+    let username = prompt("username:")*/
+    socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});//{user_id: id, game_id: gameId, username: username});
 
     function setupData(data){
       status.value = data.status;
