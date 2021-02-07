@@ -32,19 +32,19 @@ export default {
   name: "Game",
   components: {PostGamePhase, GamePhase, PregamePhase},
   setup(){
+
+    const socket = io(webSocketUrl);
+
     const gameId = useRoute().params.gameId;
-
-    const socket = io(webSocketUrl+gameId);
-
     const status = ref(undefined);
     const currentPlayer = ref(undefined);
     const players = ref([]);
     const game = ref({});
 
     //TODO: LOGIC FOR FETCHING USER ID FROM FLASK AND USERNAME
-    /*let id = prompt("id:")
-    let username = prompt("username:")*/
-    socket.emit(events.CONNECT_TO_GAME);
+    let id = prompt("id:")
+    let username = prompt("username:")
+    socket.emit(events.CONNECT_TO_GAME, {user_id: id, game_id: gameId, username: username});
 
     function setupData(data){
       status.value = data.status;
