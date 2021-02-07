@@ -10,7 +10,8 @@
 import Header from "@/components/homeComponents/Header";
 import MyGames from "@/components/homeComponents/MyGames";
 import ManageNewGame from "@/components/homeComponents/ManageNewGame";
-import axios from "axios";
+import axios from "vue-axios";
+import {getLoginInfoUrl} from "../constants/constants";
 export default {
   name: "Home",
   components: {ManageNewGame, MyGames, Header},
@@ -21,7 +22,7 @@ export default {
   },
   mounted() {
     axios
-        .get("http://papero.tk/user/get_info")
+        .get(getLoginInfoUrl)
         .then((response)=>{this.logged = !!response.data})
   }
 }

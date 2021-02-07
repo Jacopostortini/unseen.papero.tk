@@ -12,7 +12,7 @@ const gameConfig = {
     mister_x_is_visible_turns: [3, 8, 13, 18, 23]
 }
 const webSocketUrl = "https://papero.tk/unseen";
-const flaskServerUrl = "";
+const getLoginInfoUrl = "https://papero.tk/user/get_info";
 const myGames = [
     {
         gameId: 0,
@@ -49,6 +49,6 @@ export {
     colors,
     gameConfig,
     webSocketUrl,
-    flaskServerUrl,
+    getLoginInfoUrl,
     myGames
 };
