@@ -147,7 +147,7 @@ export default {
   .pregame-phase__header{
     grid-area: header;
     color: white;
-    font-weight: bolder;
+    font-weight: normal;
     font-size: 10vw;
     font-family: Eutemia;
   }
