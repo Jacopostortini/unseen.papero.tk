@@ -150,6 +150,7 @@ export default {
     font-weight: normal;
     font-size: 10vw;
     font-family: Eutemia;
+    margin-top: 10px;
   }
 
   .pregame-phase__players{
@@ -262,7 +263,7 @@ export default {
       border: none;
       color: transparent;
       font-weight: bold;
-      font-size: 0.7em;
+      font-size: 2vw;
       transition: color 0.5s;
       position: relative;
 
@@ -305,7 +306,6 @@ export default {
         border: 2px solid white;
         padding: 10px;
         margin-right: 10px;
-        font-variant: normal;
       }
     }
   }
