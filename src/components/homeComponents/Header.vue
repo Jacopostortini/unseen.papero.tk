@@ -39,29 +39,15 @@ export default {
     justify-self: center;
     font-weight: normal;
     font-family: Eutemia;
-    font-size: 10vw;
+    font-size: 20vh;
   }
 
   button{
     position: absolute;
     top: 0;
     right: 0;
-    padding: 1% 3% 1% 3%;
-    margin: 2%;
-    background: none;
-    border: 2px solid white;
-    color: white;
-    font-size: 2vw;
-    transition: all 0.5s;
-
-    &:hover{
-      background-color: white;
-      color: $theme-color-dark;
-    }
-
-    &:focus{
-      outline: none;
-    }
+    margin: 5vh 3vw 0 0;
+    font-size: 5vh;
   }
 }
 </style>

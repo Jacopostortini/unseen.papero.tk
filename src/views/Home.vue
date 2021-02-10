@@ -1,20 +1,20 @@
 <template>
 <div class="main-panel">
   <Header :logged="logged"/>
-  <MyGames :games="games"/>
-  <ManageNewGame/>
+  <GameHistory :games="games"/>
+  <GameButtons :logged="logged"/>
 </div>
 </template>
 
 <script>
 import Header from "@/components/homeComponents/Header";
-import MyGames from "@/components/homeComponents/MyGames";
-import ManageNewGame from "@/components/homeComponents/ManageNewGame";
+import GameHistory from "@/components/homeComponents/GameHistory";
+import GameButtons from "@/components/homeComponents/GameButtons";
 import axios from "axios";
 import {getAllGamesUrl, getLoginInfoUrl} from "../constants/constants";
 export default {
   name: "Home",
-  components: {ManageNewGame, MyGames, Header},
+  components: {GameButtons, GameHistory, Header},
   data(){
     return {
       logged: true,
@@ -32,7 +32,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import "../styles/global";
 
 .main-panel{
   background-image: url("../assets/background_image.jpg");
@@ -42,10 +43,27 @@ export default {
   display: grid;
   justify-items: center;
   align-items: center;
-  grid-template-rows: 20% 1fr;
-  grid-template-columns: 40% 60%;
+  grid-template-rows: 20vh 80vh;
+  grid-template-columns: 40vw 60vw;
   grid-template-areas: "header header" "my-games x";
   height: 100%;
+}
+
+button {
+  color: white;
+  padding: 2% 3% 2% 3%;
+  background: transparent;
+  border: 2px solid white;
+  transition: all 0.5s;
+
+  &:hover{
+    background-color: white;
+    color: $theme-color-dark;
+  }
+
+  &:focus{
+    outline: none;
+  }
 }
 
 

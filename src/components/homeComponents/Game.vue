@@ -3,7 +3,7 @@
     <div class="name-container" :id="game.game_id+'container'">
       <h1 :id="game.game_id+'name'" :class="{'overflows': overflows}">{{game.game_id}}</h1>
     </div>
-    <span>{{game.date}}</span>
+    <div class="game__date-container">{{game.date}}</div>
   </div>
 </template>
 
@@ -38,17 +38,15 @@ export default {
   margin: 2%;
   border: 1.5px solid white;
   color: white;
-  display: flex;
-  flex-flow: row;
+  display: grid;
+  grid-template-columns: 60% 40%;
   align-items: baseline;
   justify-content: center;
   transition: all 0.5s;
 
   .name-container{
-    width: 50%;
-    height: 100%;
     overflow: hidden;
-    margin-right: 5%;
+    margin: 0 5% 0 5%;
     text-align: left;
     white-space: nowrap;
 
@@ -68,8 +66,9 @@ export default {
     color: $theme-color-dark;
   }
 
-  span{
+  .game__date-container{
     font-size: 1.5vw;
+    text-align: left;
   }
 }
 

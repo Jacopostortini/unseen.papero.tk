@@ -14,7 +14,7 @@ const gameConfig = {
 const webSocketUrl = "https://papero.tk";
 const getLoginInfoUrl = "https://papero.tk/user/get_info";
 const getAllGamesUrl = "https://papero.tk/server/unseen/games/all";
-
+const getGameStatusUrl = "https://papero.tk/server/unseen/games/status_by_id";
 
 export {
     zoomFunctionBase,
@@ -24,5 +24,6 @@ export {
     gameConfig,
     webSocketUrl,
     getLoginInfoUrl,
-    getAllGamesUrl
+    getAllGamesUrl,
+    getGameStatusUrl
 };
