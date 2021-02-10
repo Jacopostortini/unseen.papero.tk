@@ -1,6 +1,6 @@
 <template>
-  <div class="my-games__main-panel" v-if="games && games.length>0">
-    <span>Active games</span>
+  <div class="my-games__main-panel">
+    <span v-if="games && games.length>0">Active games</span>
     <Game v-for="game in games" :key="game.game_id" :game="game"/>
   </div>
 </template>

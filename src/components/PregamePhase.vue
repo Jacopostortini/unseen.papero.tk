@@ -148,7 +148,8 @@ export default {
     grid-area: header;
     color: white;
     font-weight: bolder;
-    font-size: 2em;
+    font-size: 10vw;
+    font-family: Eutemia;
   }
 
   .pregame-phase__players{
