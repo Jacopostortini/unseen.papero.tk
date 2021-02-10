@@ -29,7 +29,11 @@ router.beforeEach((to, from, next)=>{
         .get(getLoginInfoUrl)
         .then((response)=>{
           if(!response.data){
-            axios.get(createLocalAccountUrl);
+            axios
+                .get(createLocalAccountUrl)
+                .then(()=>{
+                  next();
+                });
           }
           next();
         })
