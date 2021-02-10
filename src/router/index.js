@@ -25,20 +25,27 @@ const router = createRouter({
 
 router.beforeEach((to, from, next)=>{
   if(to.name==="Game"){
+    console.log("going on a game page")
     axios
         .get(getLoginInfoUrl)
         .then((response)=>{
           if(!response.data){
+            console.log("user not logged")
             axios
                 .get(createLocalAccountUrl)
                 .then(()=>{
+                  console.log("new local user created")
                   next();
                 });
+          } else {
+            console.log("user logged")
+            next();
           }
-          next();
         })
+  } else {
+    console.log("not going to game page")
+    next();
   }
-  next();
 })
 
 export default router
