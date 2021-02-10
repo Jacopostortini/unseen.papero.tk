@@ -250,7 +250,8 @@ export default {
     grid-area: info;
     color: white;
     font-size: 2vw;
-    margin-top: 40px;
+    //margin-top: 40px;
+    align-self: end;
 
     .copy-hover:not(span){
       color: white;
