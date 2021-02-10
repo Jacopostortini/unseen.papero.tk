@@ -249,6 +249,7 @@ export default {
   .pregame-phase__information-panel{
     grid-area: info;
     color: white;
+    font-size: 2vw;
 
     .copy-hover:not(span){
       color: white;
@@ -263,7 +264,7 @@ export default {
       border: none;
       color: transparent;
       font-weight: bold;
-      font-size: 2vw;
+      font-size: 1.5vw;
       transition: color 0.5s;
       position: relative;
 
