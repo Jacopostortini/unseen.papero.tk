@@ -250,7 +250,7 @@ export default {
     grid-area: info;
     color: white;
     font-size: 2vw;
-    margin-top: 30px;
+    margin-top: 40px;
 
     .copy-hover:not(span){
       color: white;
@@ -300,7 +300,7 @@ export default {
     }
 
     .pregame-phase__copy-container{
-      margin-top: 20px;
+      margin-top: 10px;
 
       .pregame-phase__copy {
         display: inline-block;
