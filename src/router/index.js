@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from "../views/Home";
 import Game from "../views/Game";
+import axios from "axios";
+import {createLocalAccountUrl, getLoginInfoUrl} from "../constants/constants";
 
 const routes = [
   {
@@ -20,5 +22,19 @@ const router = createRouter({
   base: "unseen",
   routes
 });
+
+router.beforeEach((to, from, next)=>{
+  if(to.name==="Game"){
+    axios
+        .get(getLoginInfoUrl)
+        .then((response)=>{
+          if(!response.data){
+            axios.get(createLocalAccountUrl);
+          }
+          next();
+        })
+  }
+  next();
+})
 
 export default router
