@@ -251,7 +251,7 @@ export default {
     color: white;
     font-size: 2vw;
     //margin-top: 40px;
-    align-self: end;
+    align-self: flex-end;
 
     .copy-hover:not(span){
       color: white;
