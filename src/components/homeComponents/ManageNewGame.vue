@@ -59,6 +59,7 @@ export default {
   align-items: center;
   justify-content: start;
   justify-self: start;
+  z-index: 100;
 
   button{
     animation: fade-in 0.5s;
