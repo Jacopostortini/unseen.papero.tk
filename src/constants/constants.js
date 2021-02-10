@@ -13,33 +13,7 @@ const gameConfig = {
 }
 const webSocketUrl = "https://papero.tk";
 const getLoginInfoUrl = "https://papero.tk/user/get_info";
-const myGames = [
-    {
-        gameId: 0,
-        date: "01/02/2003",
-        name: "Questa è una partita con un nome lunghissimo"
-    },
-    {
-        gameId: 1,
-        date: "01/02/2003",
-        name: "gallogallo"
-    },
-    {
-        gameId: 2,
-        date: "01/02/2003",
-        name: "gallogallo"
-    },
-    {
-        gameId: 3,
-        date: "01/02/2003",
-        name: "gallogallo"
-    },
-    {
-        gameId: 4,
-        date: "01/02/2003",
-        name: "gallogallo"
-    }
-]
+const getAllGamesUrl = "https://papero.tk/server/unseen/games/all";
 
 
 export {
@@ -50,5 +24,5 @@ export {
     gameConfig,
     webSocketUrl,
     getLoginInfoUrl,
-    myGames
+    getAllGamesUrl
 };

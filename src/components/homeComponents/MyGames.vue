@@ -1,20 +1,20 @@
 <template>
-  <div class="my-games__main-panel">
+  <div class="my-games__main-panel" v-if="games && games.length>0">
     <span>Active games</span>
-    <Game v-for="game in myGames" :key="game.gameId" :game="game"/>
+    <Game v-for="game in games" :key="game.game_id" :game="game"/>
   </div>
 </template>
 
 <script>
 import Game from "@/components/homeComponents/Game";
-import { myGames } from "@/constants/constants";
 
 export default {
   name: "MyGames",
   components: {Game},
-  data() {
-    return{
-      myGames
+  props: {
+    games: {
+      type: Array,
+      required: true
     }
   }
 }

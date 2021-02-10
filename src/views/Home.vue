@@ -1,7 +1,7 @@
 <template>
 <div class="main-panel">
   <Header :logged="logged"/>
-  <MyGames/>
+  <MyGames :games="games"/>
   <ManageNewGame/>
 </div>
 </template>
@@ -11,19 +11,23 @@ import Header from "@/components/homeComponents/Header";
 import MyGames from "@/components/homeComponents/MyGames";
 import ManageNewGame from "@/components/homeComponents/ManageNewGame";
 import axios from "axios";
-import {getLoginInfoUrl} from "../constants/constants";
+import {getAllGamesUrl, getLoginInfoUrl} from "../constants/constants";
 export default {
   name: "Home",
   components: {ManageNewGame, MyGames, Header},
   data(){
     return {
-      logged: true
+      logged: true,
+      games: null
     }
   },
   mounted() {
     axios
         .get(getLoginInfoUrl)
-        .then((response)=>{this.logged = !!response.data})
+        .then((response)=>{this.logged = !!response.data});
+    axios
+        .get(getAllGamesUrl)
+        .then((response)=>{this.games = response.data})
   }
 }
 </script>

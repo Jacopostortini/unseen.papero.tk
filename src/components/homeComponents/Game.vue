@@ -1,7 +1,7 @@
 <template>
   <div class="game__main-panel">
-    <div class="name-container" :id="game.gameId+'container'">
-      <h1 :id="game.gameId+'name'" :class="{'overflows': overflows}">{{game.name}}</h1>
+    <div class="name-container" :id="game.game_id+'container'">
+      <h1 :id="game.game_id+'name'" :class="{'overflows': overflows}">{{game.game_id}}</h1>
     </div>
     <span>{{game.date}}</span>
   </div>
@@ -22,8 +22,8 @@ export default {
     }
   },
   mounted() {
-    let name = document.getElementById(this.game.gameId+"name");
-    let container = document.getElementById(this.game.gameId+"container")
+    let name = document.getElementById(this.game.game_id+"name");
+    let container = document.getElementById(this.game.game_id+"container")
     if(name){
       this.overflows =  container.clientWidth<name.scrollWidth;
     }
