@@ -45,9 +45,9 @@ export default {
       choice: null,
       gameToJoin: null,
       gameToCreate: null,
-      showPopup: true,
-      popupMessage: "This game does not exist",
-      popupConfirmButton: "Create it now",
+      showPopup: false,
+      popupMessage: "",
+      popupConfirmButton: "",
       popupGame: null
     }
   },
