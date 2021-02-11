@@ -28,6 +28,7 @@ export default {
   justify-self: start;
   width: 60%;
   text-align: right;
+  z-index: 100;
 
   span{
     color: white;

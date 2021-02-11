@@ -3,6 +3,7 @@
   <Header :logged="logged"/>
   <GameHistory :games="games"/>
   <GameButtons :logged="logged"/>
+  <UserHamburgerMenu :login="{username: username}"/>
 </div>
 </template>
 
@@ -12,19 +13,21 @@ import GameHistory from "@/components/homeComponents/GameHistory";
 import GameButtons from "@/components/homeComponents/GameButtons";
 import axios from "axios";
 import {getAllGamesUrl, getLoginInfoUrl} from "../constants/constants";
+import UserHamburgerMenu from "../components/UserHamburgerMenu";
 export default {
   name: "Home",
-  components: {GameButtons, GameHistory, Header},
+  components: {UserHamburgerMenu, GameButtons, GameHistory, Header},
   data(){
     return {
       logged: true,
-      games: null
+      games: null,
+      username: null
     }
   },
   mounted() {
     axios
         .get(getLoginInfoUrl)
-        .then((response)=>{this.logged = !!response.data});
+        .then((response)=>{this.logged = !!response.data; this.username=response.data.username});
     axios
         .get(getAllGamesUrl)
         .then((response)=>{this.games = response.data})
