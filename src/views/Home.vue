@@ -3,7 +3,7 @@
   <Header :logged="logged"/>
   <GameHistory :games="games"/>
   <GameButtons :logged="logged"/>
-  <UserHamburgerMenu :login="{username: username}"/>
+  <UserHamburgerMenu :login="{username: username, logged: logged}"/>
 </div>
 </template>
 
@@ -27,7 +27,14 @@ export default {
   mounted() {
     axios
         .get(getLoginInfoUrl)
-        .then((response)=>{this.logged = !!response.data; this.username=response.data.username});
+        .then((response)=>{
+          if(response.data){
+            this.logged = response.data.google_signed_in;
+            this.username = response.data.username;
+          } else {
+            this.logged = false;
+          }
+        });
     axios
         .get(getAllGamesUrl)
         .then((response)=>{this.games = response.data})
