@@ -45,9 +45,9 @@ export default {
       choice: null,
       gameToJoin: null,
       gameToCreate: null,
-      showPopup: false,
-      popupMessage: "",
-      popupConfirmButton: "",
+      showPopup: true,
+      popupMessage: "This game does not exist",
+      popupConfirmButton: "Create it now",
       popupGame: null
     }
   },
@@ -177,14 +177,14 @@ export default {
     justify-content: center;
 
     .game-buttons__popup{
-      width: 25%;
-      height: 25%;
+      width: 20%;
+      height: 20%;
       border: 2px solid white;
       text-align: center;
       display: flex;
       flex-flow: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-evenly;
     }
 
     h1{
@@ -198,11 +198,11 @@ export default {
       flex-flow: row;
       align-items: center;
       justify-content: space-around;
-      width: 100%;
+      width: 90%;
 
       button{
         width: 50%;
-        font-size: 3vh;
+        font-size: 2.5vh;
       }
     }
   }
