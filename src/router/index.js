@@ -3,7 +3,8 @@ import Home from "../views/Home";
 import Game from "../views/Game";
 import axios from "axios";
 import {createLocalAccountUrl} from "../constants/constants";
-import store from "../store/index";
+import store from "../store";
+
 
 const routes = [
   {
@@ -24,8 +25,9 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to, from, next)=>{
+router.beforeEach(async (to, from, next)=>{
   if(to.name==="Game"){ //Se è diretto ad una partita
+    console.log(store);
     if(store.state.username) next(); //se è loggato con account local o con google
     else { //se non è loggato nè con google nè con account local
       axios
