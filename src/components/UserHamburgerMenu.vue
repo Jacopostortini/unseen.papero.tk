@@ -5,7 +5,7 @@
       <div class="logged-menu" v-if="username">
         <div>
           <p>Username: <strong>{{username}}</strong></p>
-          <button>Logout</button>
+          <button @click="logout">Logout</button>
         </div>
         <button class="procede-with-google" v-if="!logged" @click="redirectToGoogle">Activate sync with google</button>
       </div>
@@ -22,6 +22,8 @@
 
 <script>
 import {useStore} from "vuex";
+import {logoutUrl} from "../constants/constants";
+import axios from "axios";
 
 export default {
   name: "UserHamburgerMenu",
@@ -53,6 +55,11 @@ export default {
     redirectToGoogle(){
       let from_location = window.location;
       window.location.href = '/auth/google?from_location='+from_location;
+    },
+    logout(){
+      axios.get(logoutUrl);
+      this.store.dispatch("setLogged", false);
+      this.store.dispatch("setUsername", null);
     }
   }
 }
@@ -98,6 +105,7 @@ $theme-color-light: #4abf6f;
       width: 100%;
 
       div{
+        margin: 15px;
         width: 100%;
         display: flex;
         justify-content: space-evenly;
