@@ -6,7 +6,7 @@
         <RegularMessage v-else :message="message"/>
       </div>
     </div>
-    <form class="chat__input"  @submit.prevent="$emit('send-message', {message: message})">
+    <form class="chat__input"  @submit.prevent="$emit('send-message', {message: message}); message=''">
       <input placeholder="Type a message" v-model="message">
       <button>Send</button>
     </form>
