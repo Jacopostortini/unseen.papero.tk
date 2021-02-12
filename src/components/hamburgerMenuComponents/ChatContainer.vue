@@ -53,12 +53,15 @@ export default {
   .chat__input{
     position: absolute;
     bottom: 0;
-    display: flex;
-    flex-flow: row;
+    display: grid;
+    grid-template-columns: 1fr auto;
 
     input{
       font-size: 3vh;
       border-radius: 10px;
+      width: 100%;
+      border: 1px solid black;
+      padding: 5px;
 
       &:focus{
         outline: none;
