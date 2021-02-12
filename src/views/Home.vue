@@ -3,7 +3,7 @@
   <Header/>
   <GameHistory :games="games"/>
   <GameButtons/>
-  <UserHamburgerMenu/>
+  <UserHamburgerMenu show-chat="true"/>
 </div>
 </template>
 
