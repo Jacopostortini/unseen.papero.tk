@@ -50,6 +50,7 @@ export default {
 
   .chat__container{
     margin: 10% 10% 10px 10%;
+    padding-top: 10px;
     height: 80%;
     background-color: white;
     overflow-y: auto;

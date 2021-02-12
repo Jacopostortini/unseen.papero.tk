@@ -122,7 +122,8 @@ export default {
       message.color = findColorByLocalId(data._from);
       message.fromYou = data._from === currentPlayer.value.local_id;
       messages.value.push(message);
-      ctx.$refs["chat-container"].scrollTop = ctx.$refs["chat-container"].scrollHeight;
+      console.log(ctx);
+      //ctx.$refs["chat-container"].scrollTop = ctx.$refs["chat-container"].scrollHeight;
     }
 
     function findUsernameByLocalId(id){
