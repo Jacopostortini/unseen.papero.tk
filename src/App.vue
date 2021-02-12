@@ -19,12 +19,7 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 0;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: $papero-color-dark;
-  border-radius: 10px;
-}
 </style>
