@@ -102,6 +102,11 @@ $theme-color-light: #4abf6f;
         display: flex;
         justify-content: space-evenly;
         align-items: center;
+        flex-wrap: wrap;
+
+        p{
+          white-space: nowrap;
+        }
       }
     }
 
