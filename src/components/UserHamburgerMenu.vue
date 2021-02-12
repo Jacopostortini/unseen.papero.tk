@@ -13,6 +13,7 @@
         <p>You are currently not logged in</p>
         <button class="procede-with-google" @click="redirectToGoogle">Sign in now with google</button>
       </div>
+      <ChatContainer v-if="showChat" :messages="messages"/>
     </div>
     <div class="user-hamburger-menu__icon" @click="show=!show" :class="{'rotated': show}">
       <img src="@/assets/hamburger_icon.png">
@@ -24,12 +25,14 @@
 import {useStore} from "vuex";
 import {logoutUrl} from "../constants/constants";
 import axios from "axios";
+import ChatContainer from "./hamburgerMenuComponents/ChatContainer";
 
 export default {
   name: "UserHamburgerMenu",
+  components: {ChatContainer},
   props: {
     showChat: Boolean,
-    game: Object
+    messages: Array
   },
   data(){
     return{
@@ -66,8 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$theme-color-dark: #86e970;
-$theme-color-light: #4abf6f;
+@import "../styles/global";
 
 .user-hamburger-menu__main-panel{
   position: fixed;
@@ -87,7 +89,7 @@ $theme-color-light: #4abf6f;
   .user-hamburger-menu__menu{
     width: 25vw;
     height: 100vh;
-    background: linear-gradient(-45deg, $theme-color-dark, $theme-color-light);
+    background: linear-gradient(-45deg, $papero-color-dark, $papero-color-light);
     overflow: hidden;
     display: flex;
     flex-flow: column;

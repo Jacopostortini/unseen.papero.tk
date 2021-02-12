@@ -172,7 +172,7 @@ export default {
       left: 0;
       width: 120%;
       height: 8%;
-      background-color: $anti-theme-color;
+      background-color: white;
       transform: skewX(80deg);
     }
 
@@ -296,7 +296,7 @@ export default {
     }
 
     strong{
-      color: $anti-theme-color;
+      color: white;
     }
 
     .pregame-phase__copy-container{

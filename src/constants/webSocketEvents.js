@@ -6,6 +6,7 @@ export default {
     LOBBY_MODIFIED: "lobby-modified",
     CHANGE_COLOR: "change-color", //{user_id: color}
     CHANGE_MISTER_X: "change-mister-x", //mando tutti i giocatori
+    CHAT: "chat",
 
     START_GAME: "start-game", //status...tutte le info
     MOVE: "move", //{user_id: x, position: y,  players_turn: z}

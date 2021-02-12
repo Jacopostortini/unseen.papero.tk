@@ -53,7 +53,7 @@ export default {
     left: 0;
     width: 100%;
     height: 12%;
-    background-color: $anti-theme-color;
+    background-color: white;
     transform: skewX(80deg);
   }
 
@@ -101,7 +101,7 @@ export default {
         }
 
         .player-label__is-you-label{
-          color: $anti-theme-color;
+          color: white;
         }
       }
 

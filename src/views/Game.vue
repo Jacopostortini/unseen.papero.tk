@@ -1,7 +1,8 @@
 <template>
   <div class="game__main-panel">
-    <UserHamburgerMenu :show-chat=true
-                       :game="game"/>
+    <UserHamburgerMenu :show-chat="true"
+                       :messages="messages"
+                       @send-message="sendMessage"/>
     <PregamePhase v-if="status===0"
                   :players="players"
                   :current-player="currentPlayer"
@@ -23,16 +24,16 @@
 import PregamePhase from "../components/PregamePhase";
 import GamePhase from "../components/GamePhase";
 import PostGamePhase from "../components/PostGamePhase";
-import {webSocketUrl} from "../constants/constants";
+import {colorCorrispectives, webSocketUrl} from "../constants/constants";
 import events from "../constants/webSocketEvents";
 import {useRoute} from "vue-router";
 import io from "socket.io-client";
 import {ref} from "@vue/reactivity";
-
+import UserHamburgerMenu from "../components/UserHamburgerMenu";
 
 export default {
   name: "Game",
-  components: {PostGamePhase, GamePhase, PregamePhase},
+  components: {PostGamePhase, GamePhase, PregamePhase, UserHamburgerMenu},
   setup(){
     const socket = io(webSocketUrl, {
       path: "/unseen/socket.io/"
@@ -42,6 +43,7 @@ export default {
     const currentPlayer = ref(undefined);
     const players = ref([]);
     const game = ref({});
+    const messages = ref([]);
 
     socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});
 
@@ -77,6 +79,10 @@ export default {
       setupData(data);
     });
 
+    socket.on(events.CHAT, data => {
+      appendMessage(data);
+    })
+
     function joinGame() {
       socket.emit(events.JOIN_GAME);
     }
@@ -101,17 +107,53 @@ export default {
       socket.emit(events.CHANGE_MISTER_X, newMisterX);
     }
 
+    function sendMessage(message){
+      let msg = message;
+      msg._from = this.currentPlayer.value.local_id;
+      socket.emit(events.CHAT, msg);
+    }
+
+    function appendMessage(data){
+      let message = {};
+      message.localId = data._from;
+      message.username = findUsernameByLocalId(data._from);
+      message.body = data.message;
+      message.color = findColorByLocalId(data._from);
+      message.fromYou = data._from === this.currentPlayer.value.local_id;
+      this.messages.push(message);
+    }
+
+    function findUsernameByLocalId(id){
+      for(let i = 0; i < this.players.value.length; i++){
+        if(this.players.value[i].local_id===id){
+          return this.players.value[i].username;
+        }
+      }
+      return null;
+    }
+
+    function findColorByLocalId(id){
+      for(let i = 0; i < this.players.value.length; i++){
+        if(this.players.value[i].local_id===id){
+          return colorCorrispectives[this.players.value[i].color];
+        }
+      }
+      return null;
+    }
+
     return {
       status,
       currentPlayer,
       players,
       game,
+      messages,
       joinGame,
       quitGame,
       kickPlayer,
       changeColor,
       changeMisterX,
-      startGame
+      startGame,
+      sendMessage
     }
 
   }

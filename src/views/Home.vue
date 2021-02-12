@@ -21,7 +21,39 @@ export default {
   data(){
     return {
       games: null,
-      store: useStore()
+      store: useStore(),
+      messages: [
+        {
+          localId: 0,
+          username: 'Jacopo',
+          body: 'First message',
+          fromYou: true,
+          color: "red"
+        },
+        {
+          localId: -1,
+          body: 'Matteo has joined'
+        },
+        {
+          localId: 0,
+          username: 'Jacopo',
+          body: 'First message'
+        },
+        {
+          localId: -1,
+          body: 'Matteo has joined'
+        },
+        {
+          localId: 0,
+          username: 'Jacopo',
+          body: 'First message'
+        },
+        {
+          localId: 0,
+          username: 'Jacopo',
+          body: 'First message'
+        }
+      ]
     }
   },
   mounted() {

@@ -51,7 +51,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/global";
 
 .player-label__main-panel {
 
@@ -96,7 +95,7 @@ export default {
     }
 
     .player-label__is-you-label{
-      color: $anti-theme-color;
+      color: white;
     }
   }
 
