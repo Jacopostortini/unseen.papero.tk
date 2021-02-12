@@ -109,7 +109,7 @@ export default {
 
     function sendMessage(message){
       let msg = message;
-      msg._from = this.currentPlayer.value.local_id;
+      msg._from = currentPlayer.value.local_id;
       socket.emit(events.CHAT, msg);
     }
 
@@ -119,23 +119,23 @@ export default {
       message.username = findUsernameByLocalId(data._from);
       message.body = data.message;
       message.color = findColorByLocalId(data._from);
-      message.fromYou = data._from === this.currentPlayer.value.local_id;
-      this.messages.push(message);
+      message.fromYou = data._from === currentPlayer.value.local_id;
+      messages.push(message);
     }
 
     function findUsernameByLocalId(id){
-      for(let i = 0; i < this.players.value.length; i++){
-        if(this.players.value[i].local_id===id){
-          return this.players.value[i].username;
+      for(let i = 0; i < players.value.length; i++){
+        if(players.value[i].local_id===id){
+          return players.value[i].username;
         }
       }
       return null;
     }
 
     function findColorByLocalId(id){
-      for(let i = 0; i < this.players.value.length; i++){
-        if(this.players.value[i].local_id===id){
-          return colorCorrispectives[this.players.value[i].color];
+      for(let i = 0; i < players.value.length; i++){
+        if(players.value[i].local_id===id){
+          return colorCorrispectives[players.value[i].color];
         }
       }
       return null;
