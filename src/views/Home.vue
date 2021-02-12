@@ -29,10 +29,10 @@ export default {
         .get(getLoginInfoUrl)
         .then((response)=>{
           if(response.data){
-            this.store.commit("setLogged", response.data.google_signed_in);
-            this.store.commit("setUsername", response.data.username);
+            this.store.dispatch("setLogged", response.data.google_signed_in);
+            this.store.dispatch("setUsername", response.data.username);
           } else {
-            this.store.commit("setLogged", false);
+            this.store.dispatch("setLogged", false);
           }
         });
     axios

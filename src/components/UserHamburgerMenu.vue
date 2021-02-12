@@ -45,7 +45,6 @@ export default {
   },
   mounted() {
     window.addEventListener("click", ()=>{this.show=false});
-    console.log(this.logged, this.username)
   },
   methods: {
     redirectToHome(){
