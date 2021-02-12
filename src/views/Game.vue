@@ -2,6 +2,7 @@
   <div class="game__main-panel">
     <UserHamburgerMenu :show-chat="true"
                        :messages="messages"
+                       :disable-logout="true"
                        @send-message="sendMessage"/>
     <PregamePhase v-if="status===0"
                   :players="players"

@@ -27,7 +27,6 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next)=>{
   if(to.name==="Game"){ //Se è diretto ad una partita
-    console.log(store);
     if(store.state.username) next(); //se è loggato con account local o con google
     else { //se non è loggato nè con google nè con account local
       axios

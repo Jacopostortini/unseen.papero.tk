@@ -5,7 +5,7 @@
       <div class="logged-menu" v-if="username">
         <div>
           <p>Username: <strong>{{username}}</strong></p>
-          <button @click="logout">Logout</button>
+          <button @click="logout" v-if="!disableLogout">Logout</button>
         </div>
         <button class="procede-with-google" v-if="!logged" @click="redirectToGoogle">Activate sync with google</button>
       </div>
@@ -32,7 +32,8 @@ export default {
   components: {ChatContainer},
   props: {
     showChat: Boolean,
-    messages: Array
+    messages: Array,
+    disableLogout: Boolean
   },
   data(){
     return{
