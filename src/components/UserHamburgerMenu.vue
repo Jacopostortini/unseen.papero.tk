@@ -2,12 +2,12 @@
   <div class="user-hamburger-menu__main-panel" @click.stop="" :class="{'hidden': !show}">
     <div class="user-hamburger-menu__menu">
       <img class="home-button" src="@/assets/logo.gif" @click="redirectToHome">
-      <div class="logged-menu" v-if="login.username">
+      <div class="logged-menu" v-if="username">
         <div>
-          <p>Username: <strong>{{login.username}}</strong></p>
+          <p>Username: <strong>{{username}}</strong></p>
           <button>Logout</button>
         </div>
-        <button class="procede-with-google" v-if="!login.logged" @click="redirectToGoogle">Activate sync with google</button>
+        <button class="procede-with-google" v-if="!logged" @click="redirectToGoogle">Activate sync with google</button>
       </div>
       <div class="not-logged-menu" v-else>
         <p>You are currently not logged in</p>
@@ -21,24 +21,35 @@
 </template>
 
 <script>
+import {useStore} from "vuex";
+
 export default {
   name: "UserHamburgerMenu",
   props: {
-    login: {
-      required: true
-    }
+    showChat: Boolean,
+    game: Object
   },
   data(){
     return{
+      store: useStore(),
       show: false
+    }
+  },
+  computed: {
+    logged: function(){
+      return this.store.state.logged;
+    },
+    username: function (){
+      return this.store.state.username;
     }
   },
   mounted() {
     window.addEventListener("click", ()=>{this.show=false});
+    console.log(this.logged, this.username)
   },
   methods: {
     redirectToHome(){
-      window.location = "https://papero.tk";
+      window.location.href = "/";
     },
     redirectToGoogle(){
       let from_location = window.location;

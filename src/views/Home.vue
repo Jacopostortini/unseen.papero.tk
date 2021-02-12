@@ -1,9 +1,9 @@
 <template>
 <div class="main-panel">
-  <Header :logged="logged"/>
+  <Header/>
   <GameHistory :games="games"/>
-  <GameButtons :logged="logged"/>
-  <UserHamburgerMenu :login="{username: username, logged: logged}"/>
+  <GameButtons/>
+  <UserHamburgerMenu/>
 </div>
 </template>
 
@@ -14,14 +14,14 @@ import GameButtons from "@/components/homeComponents/GameButtons";
 import axios from "axios";
 import {getAllGamesUrl, getLoginInfoUrl} from "../constants/constants";
 import UserHamburgerMenu from "../components/UserHamburgerMenu";
+import {useStore} from "vuex";
 export default {
   name: "Home",
   components: {UserHamburgerMenu, GameButtons, GameHistory, Header},
   data(){
     return {
-      logged: true,
       games: null,
-      username: null
+      store: useStore()
     }
   },
   mounted() {
@@ -29,10 +29,10 @@ export default {
         .get(getLoginInfoUrl)
         .then((response)=>{
           if(response.data){
-            this.logged = response.data.google_signed_in;
-            this.username = response.data.username;
+            this.store.commit("setLogged", response.data.google_signed_in);
+            this.store.commit("setUsername", response.data.username);
           } else {
-            this.logged = false;
+            this.store.commit("setLogged", false);
           }
         });
     axios

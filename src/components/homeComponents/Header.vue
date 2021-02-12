@@ -1,25 +1,12 @@
 <template>
   <div class="header__main-panel">
     <h1>Unseen</h1>
-    <button v-if="!logged" @click="login">Login</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Header",
-  props: {
-    logged: {
-      type: Boolean,
-      required: true
-    }
-  },
-  methods: {
-    login(){
-      let from_location = window.location;
-      window.location.href = '/auth/google?from_location='+from_location;
-    }
-  }
+  name: "Header"
 }
 </script>
 
@@ -40,14 +27,6 @@ export default {
     font-weight: normal;
     font-family: Eutemia;
     font-size: 20vh;
-  }
-
-  button{
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 5vh 3vw 0 0;
-    font-size: 5vh;
   }
 }
 </style>

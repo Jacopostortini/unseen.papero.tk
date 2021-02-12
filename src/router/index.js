@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from "../views/Home";
 import Game from "../views/Game";
 import axios from "axios";
-import {createLocalAccountUrl, getLoginInfoUrl} from "../constants/constants";
+import {createLocalAccountUrl} from "../constants/constants";
+import {useStore} from "vuex";
 
 const routes = [
   {
@@ -24,23 +25,15 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next)=>{
-  if(to.name==="Game"){
-    axios
-        .get(getLoginInfoUrl)
-        .then((response)=>{
-          if(!response.data){
-            axios
-                .get(createLocalAccountUrl)
-                .then(()=>{
-                  next();
-                });
-          } else {
-            next();
-          }
-        })
-  } else {
-    next();
-  }
+  if(to.name==="Game"){ //Se è diretto ad una partita
+    let store = useStore();
+    if(store.state.username) next(); //se è loggato con account local o con google
+    else { //se non è loggato nè con google nè con account local
+      axios
+          .get(createLocalAccountUrl)
+          .then(()=>{next()});
+    }
+  } else next(); //Se non è diretto ad una partita
 })
 
 export default router

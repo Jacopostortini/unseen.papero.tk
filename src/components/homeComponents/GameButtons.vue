@@ -53,32 +53,36 @@ export default {
   },
   methods: {
     joinGame(){
-      axios
-          .get(getGameStatusUrl, {params: {game_id: this.gameToJoin}})
-          .then((response)=>{
-            if (response.data){
-              this.router.push({name: "Game", params: {gameId: this.gameToJoin}})
-            } else {
-              this.popupMessage = "This game does not exist";
-              this.popupConfirmButton = "Create it now";
-              this.popupGame = this.gameToJoin;
-              this.showPopup = true;
-            }
-          });
+      if (this.gameToJoin) {
+        axios
+            .get(getGameStatusUrl, {params: {game_id: this.gameToJoin}})
+            .then((response) => {
+              if (response.data) {
+                this.router.push({name: "Game", params: {gameId: this.gameToJoin}})
+              } else {
+                this.popupMessage = "This game does not exist";
+                this.popupConfirmButton = "Create it now";
+                this.popupGame = this.gameToJoin;
+                this.showPopup = true;
+              }
+            });
+      }
     },
     createGame(){
-      axios
-          .get(getGameStatusUrl, {params: {game_id: this.gameToCreate}})
-          .then((response)=>{
-            if (response.data){
-              this.popupMessage = "This game already exists";
-              this.popupConfirmButton = "Join it now";
-              this.popupGame = this.gameToCreate;
-              this.showPopup = true;
-            } else {
-              this.router.push({name: "Game", params: {gameId: this.gameToCreate}})
-            }
-          });
+      if(this.gameToCreate) {
+        axios
+            .get(getGameStatusUrl, {params: {game_id: this.gameToCreate}})
+            .then((response) => {
+              if (response.data) {
+                this.popupMessage = "This game already exists";
+                this.popupConfirmButton = "Join it now";
+                this.popupGame = this.gameToCreate;
+                this.showPopup = true;
+              } else {
+                this.router.push({name: "Game", params: {gameId: this.gameToCreate}})
+              }
+            });
+      }
     },
     redirectToGame(game){
       this.router.push({name: "Game", params: {gameId: game}})

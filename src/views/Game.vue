@@ -1,5 +1,7 @@
 <template>
   <div class="game__main-panel">
+    <UserHamburgerMenu :show-chat=true
+                       :game="game"/>
     <PregamePhase v-if="status===0"
                   :players="players"
                   :current-player="currentPlayer"
@@ -41,10 +43,7 @@ export default {
     const players = ref([]);
     const game = ref({});
 
-    //TODO: LOGIC FOR FETCHING USER ID FROM FLASK AND USERNAME
-    /*let id = prompt("id:")
-    let username = prompt("username:")*/
-    socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});//{user_id: id, game_id: gameId, username: username});
+    socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});
 
     function setupData(data){
       status.value = data.status;
