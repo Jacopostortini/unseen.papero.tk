@@ -35,7 +35,7 @@ import UserHamburgerMenu from "../components/UserHamburgerMenu";
 export default {
   name: "Game",
   components: {PostGamePhase, GamePhase, PregamePhase, UserHamburgerMenu},
-  setup(){
+  setup(props, ctx){
     const socket = io(webSocketUrl, {
       path: "/unseen/socket.io/"
     });
@@ -122,7 +122,7 @@ export default {
       message.color = findColorByLocalId(data._from);
       message.fromYou = data._from === currentPlayer.value.local_id;
       messages.value.push(message);
-      this.$refs["chat-container"].scrollTop = this.$refs["chat-container"].scrollHeight;
+      ctx.$refs["chat-container"].scrollTop = ctx.$refs["chat-container"].scrollHeight;
     }
 
     function findUsernameByLocalId(id){
