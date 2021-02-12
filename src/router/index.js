@@ -30,13 +30,13 @@ router.beforeEach(async (to, from, next)=>{
       .get(getLoginInfoUrl)
       .then((response)=>{
         if(response.data){ //se è loggato in qualche modo
-          this.store.dispatch("setLogged", response.data.google_signed_in);
-          this.store.dispatch("setUsername", response.data.username);
+          store.dispatch("setLogged", response.data.google_signed_in);
+          store.dispatch("setUsername", response.data.username);
 
           next(); //se è loggato in qualche modo può andare dove vuole
 
         } else { //se non è loggato
-          this.store.dispatch("setLogged", false);
+          store.dispatch("setLogged", false);
 
           if(to.name==="Game"){ //se sta andando in una partita
             axios
