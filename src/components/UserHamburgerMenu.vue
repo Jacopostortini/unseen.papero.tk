@@ -61,6 +61,7 @@ $theme-color-light: #4abf6f;
   display: flex;
   flex-flow: row;
   transition: all 0.5s;
+  z-index: 200;
 
   &.hidden{
     transform: translateX(calc(-25vw - 1px));
