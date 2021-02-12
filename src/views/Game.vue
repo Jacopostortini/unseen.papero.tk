@@ -120,7 +120,7 @@ export default {
       message.body = data.message;
       message.color = findColorByLocalId(data._from);
       message.fromYou = data._from === currentPlayer.value.local_id;
-      messages.push(message);
+      messages.value.push(message);
     }
 
     function findUsernameByLocalId(id){
