@@ -29,6 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/global";
 
 .chat__main-panel{
   position: relative;
@@ -50,11 +51,25 @@ export default {
   }
 
   .chat__input{
-    position: fixed;
+    position: absolute;
     bottom: 0;
+    display: flex;
+    flex-flow: row;
+
+    input{
+      font-size: 3vh;
+      border-radius: 10px;
+
+      &:focus{
+        outline: none;
+      }
+    }
 
     button{
-      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(-45deg, $papero-color-dark, $papero-color-light);
     }
   }
 }
