@@ -33,7 +33,6 @@ export default {
         this.$emit('send-message', {message: this.message});
         this.message = "";
       }
-      this.$refs["chat-container"].scrollTop = this.$refs["chat-container"].scrollHeight;
     }
   }
 }

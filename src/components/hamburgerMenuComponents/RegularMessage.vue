@@ -37,6 +37,7 @@ export default {
 
   &.right-aligned{
     align-self: flex-end;
+    text-align: right;
   }
 }
 </style>
