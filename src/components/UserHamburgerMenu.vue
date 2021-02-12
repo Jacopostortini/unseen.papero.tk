@@ -13,7 +13,7 @@
         <p>You are currently not logged in</p>
         <button class="procede-with-google" @click="redirectToGoogle">Sign in now with google</button>
       </div>
-      <ChatContainer v-if="showChat" :messages="messages"/>
+      <ChatContainer v-if="showChat" :messages="messages" @send-message="$emit('send-message', $event)"/>
     </div>
     <div class="user-hamburger-menu__icon" @click="show=!show" :class="{'rotated': show}">
       <img src="@/assets/hamburger_icon.png">

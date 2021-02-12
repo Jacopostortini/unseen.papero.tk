@@ -31,6 +31,7 @@ export default {
 <style lang="scss" scoped>
 
 .chat__main-panel{
+  position: relative;
   margin: 10%;
   width: 80%;
   height: fit-content;
@@ -46,6 +47,15 @@ export default {
     flex-flow: column;
     justify-content: center;
     height: fit-content;
+  }
+
+  .chat__input{
+    position: fixed;
+    bottom: 0;
+
+    button{
+      background-color: black;
+    }
   }
 }
 
