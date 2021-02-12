@@ -1,6 +1,6 @@
 <template>
   <div class="chat__main-panel">
-    <div class="chat__container" ref="chat-container">
+    <div class="chat__container" id="chat-container">
       <div class="chat__message-container" v-for="(message, index) in messages" :key="index">
         <InfoMessage v-if="message.localId===-1" :message="message"/>
         <RegularMessage v-else :message="message"/>
