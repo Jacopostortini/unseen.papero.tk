@@ -126,7 +126,7 @@ export default {
         let chat = document.getElementById("chat-container");
         chat.scrollTop = chat.scrollHeight;
         clearInterval(t);
-      }, 200)
+      }, 100)
     }
 
     function findUsernameByLocalId(id){
