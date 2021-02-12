@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from "../views/Home";
 import Game from "../views/Game";
 import axios from "axios";
-import {createLocalAccountUrl} from "../constants/constants";
+import {createLocalAccountUrl, getLoginInfoUrl} from "../constants/constants";
 import store from "../store";
 
 
@@ -26,14 +26,26 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next)=>{
-  if(to.name==="Game"){ //Se è diretto ad una partita
-    if(store.state.username) next(); //se è loggato con account local o con google
-    else { //se non è loggato nè con google nè con account local
-      axios
-          .get(createLocalAccountUrl)
-          .then(()=>{next()});
-    }
-  } else next(); //Se non è diretto ad una partita
+  axios
+      .get(getLoginInfoUrl)
+      .then((response)=>{
+        if(response.data){ //se è loggato in qualche modo
+          this.store.dispatch("setLogged", response.data.google_signed_in);
+          this.store.dispatch("setUsername", response.data.username);
+
+          next(); //se è loggato in qualche modo può andare dove vuole
+
+        } else { //se non è loggato
+          this.store.dispatch("setLogged", false);
+
+          if(to.name==="Game"){ //se sta andando in una partita
+            axios
+                .get(createLocalAccountUrl)
+                .then(()=>{next()});
+          } else next(); //se non sta andando in una partita non c'è bisogno dell'account
+
+        }
+      });
 })
 
 export default router

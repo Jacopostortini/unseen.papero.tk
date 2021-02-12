@@ -12,7 +12,7 @@ import Header from "@/components/homeComponents/Header";
 import GameHistory from "@/components/homeComponents/GameHistory";
 import GameButtons from "@/components/homeComponents/GameButtons";
 import axios from "axios";
-import {getAllGamesUrl, getLoginInfoUrl} from "../constants/constants";
+import {getAllGamesUrl} from "../constants/constants";
 import UserHamburgerMenu from "../components/UserHamburgerMenu";
 import {useStore} from "vuex";
 export default {
@@ -57,16 +57,6 @@ export default {
     }
   },
   mounted() {
-    axios
-        .get(getLoginInfoUrl)
-        .then((response)=>{
-          if(response.data){
-            this.store.dispatch("setLogged", response.data.google_signed_in);
-            this.store.dispatch("setUsername", response.data.username);
-          } else {
-            this.store.dispatch("setLogged", false);
-          }
-        });
     axios
         .get(getAllGamesUrl)
         .then((response)=>{this.games = response.data})
