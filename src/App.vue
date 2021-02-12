@@ -3,6 +3,7 @@
 </template>
 
 <style lang="scss">
+@import "styles/global";
 
 @font-face {
   font-family: Eutemia;
@@ -14,5 +15,16 @@
   height: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   font-size: 150%;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $papero-color-dark;
+  border-radius: 10px;
 }
 </style>

@@ -17,9 +17,9 @@ export default {
 @import "../../styles/global";
 
 .info-message__main-panel{
+  margin: 5px 10% 5px 10%;
   align-self: center;
   width: 80%;
-  margin-left: 10%;
   background: linear-gradient(-45deg, $papero-color-dark, $papero-color-light);
   text-align: center;
   border-radius: 2vh;
