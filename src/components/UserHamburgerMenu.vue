@@ -101,7 +101,7 @@ export default {
     }
 
     .logged-menu{
-      height: 25vh;
+      height: 20vh;
       display: flex;
       flex-flow: column;
       align-items: center;

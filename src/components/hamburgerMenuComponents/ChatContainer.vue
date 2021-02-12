@@ -1,6 +1,6 @@
 <template>
   <div class="chat__main-panel">
-    <div class="chat__container">
+    <div class="chat__container" ref="chat-container">
       <div class="chat__message-container" v-for="(message, index) in messages" :key="index">
         <InfoMessage v-if="message.localId===-1" :message="message"/>
         <RegularMessage v-else :message="message"/>
@@ -29,9 +29,11 @@ export default {
   },
   methods: {
     sendMessage(){
-      if(this.message && this.message!=="")
+      if(this.message && this.message!=="") {
         this.$emit('send-message', {message: this.message});
         this.message = "";
+      }
+      this.$refs["chat-container"].scrollTop = this.$refs["chat-container"].scrollHeight;
     }
   }
 }
