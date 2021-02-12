@@ -97,10 +97,11 @@ export default {
     align-items: center;
 
     .home-button{
-      width: 100%;
+      height: 25vh;
     }
 
     .logged-menu{
+      height: 25vh;
       display: flex;
       flex-flow: column;
       align-items: center;
@@ -108,7 +109,6 @@ export default {
       width: 100%;
 
       div{
-        margin: 15px;
         width: 100%;
         display: flex;
         justify-content: space-evenly;
@@ -122,10 +122,15 @@ export default {
     }
 
     .not-logged-menu{
+      height: 20vh;
       display: flex;
       flex-flow: column;
       align-items: center;
       color: white;
+
+      p{
+        margin: 10px;
+      }
     }
   }
 

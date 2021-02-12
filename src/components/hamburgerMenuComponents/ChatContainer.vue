@@ -6,7 +6,7 @@
         <RegularMessage v-else :message="message"/>
       </div>
     </div>
-    <form class="chat__input"  @submit.prevent="$emit('send-message', {message: message}); message=''">
+    <form class="chat__input"  @submit.prevent="sendMessage">
       <input placeholder="Type a message" v-model="message">
       <button>Send</button>
     </form>
@@ -26,6 +26,13 @@ export default {
     return{
       message: null
     }
+  },
+  methods: {
+    sendMessage(){
+      if(this.message && this.message!=="")
+        this.$emit('send-message', {message: this.message});
+        this.message = "";
+    }
   }
 }
 </script>
@@ -35,14 +42,14 @@ export default {
 
 .chat__main-panel{
   width: 100%;
-  height: 100%;
+  height: 50vh;
   justify-self: flex-end;
   display: flex;
   flex-flow: column;
 
   .chat__container{
     margin: 10% 10% 10px 10%;
-    height: 70%;
+    height: 80%;
     background-color: white;
     overflow-y: auto;
     display: flex;
