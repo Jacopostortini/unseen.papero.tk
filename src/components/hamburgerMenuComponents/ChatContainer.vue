@@ -69,6 +69,8 @@ export default {
     }
 
     button{
+      margin: 5px;
+      padding: 1% 3% 1% 3%;
       color: white;
       border: none;
       border-radius: 10px;
