@@ -1,7 +1,7 @@
 <template>
   <div class="user-hamburger-menu__main-panel" @click.stop="" :class="{'hidden': !show}">
     <div class="user-hamburger-menu__menu">
-      <img class="home-button" src="@/assets/logo.gif" @click="redirectToHome">
+      <img class="home-button" src="@/assets/logo.png" @click="redirectToHome">
       <div class="logged-menu" v-if="username">
         <div>
           <p>Username: <strong>{{username}}</strong></p>
