@@ -1,5 +1,5 @@
 <template>
-  <div class="game__main-panel">
+  <div class="game__main-panel" @click="redirectToGame">
     <div class="name-container" :id="game.game_id+'container'">
       <h1 :id="game.game_id+'name'" :class="{'overflows': overflows}">{{game.game_id}}</h1>
     </div>
@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import {useRouter} from "vue-router";
+
 export default {
   name: "Game",
   props: {
@@ -19,6 +21,17 @@ export default {
   data(){
     return {
       overflows: false
+    }
+  },
+  methods: {
+    redirectToGame(){
+      useRouter()
+          .push({
+                name: "Game",
+                params: {
+                  gameId: this.game.game_id
+                }
+              });
     }
   },
   mounted() {
