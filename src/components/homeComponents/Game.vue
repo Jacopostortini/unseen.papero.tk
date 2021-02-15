@@ -20,12 +20,13 @@ export default {
   },
   data(){
     return {
-      overflows: false
+      overflows: false,
+      router: useRouter()
     }
   },
   methods: {
     redirectToGame(){
-      useRouter()
+      this.router
           .push({
                 name: "Game",
                 params: {
