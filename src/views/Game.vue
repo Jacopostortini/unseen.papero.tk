@@ -46,6 +46,31 @@ export default {
     const game = ref({});
     const messages = ref([]);
 
+    status.value = 0
+    currentPlayer.value = {
+      local_id: 0,
+      color: -1,
+      is_mister_x: true,
+      is_admin: true,
+      username: "jacopo"
+    }
+    players.value = [
+      currentPlayer.value
+    ]
+    game.value = {
+
+    }
+
+    messages.value = [
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "black"
+      }
+    ]
+
     socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});
 
     function setupData(data){
@@ -166,11 +191,30 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import "../styles/global";
 
 .game__main-panel{
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+button {
+  color: white;
+  padding: 1%;
+  background: transparent;
+  border: 2px solid white;
+  transition: all 0.5s;
+  margin: 1%;
+
+  &:hover{
+    background-color: white;
+    color: $theme-color-dark;
+  }
+
+  &:focus{
+    outline: none;
+  }
 }
 </style>

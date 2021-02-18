@@ -1,6 +1,12 @@
 <template>
   <div class="pregame-phase__main-panel">
-    <header class="pregame-phase__header">Unseen</header>
+
+
+    <header class="pregame-phase__header">
+      <h1>Unseen</h1>
+    </header>
+
+
     <div class="pregame-phase__players">
       <div class="pregame-phase__players-table"/>
       <PlayerLabel v-for="player in players"
@@ -9,6 +15,17 @@
                    :current-player="currentPlayer"
                    @kickplayer="$emit('kickplayer', $event)"/>
     </div>
+
+
+    <div class="pregame-phase__information-panel">
+      <CopyInformation message="Copy the url and share it with your friends!" :info="url.toString()"/>
+      <CopyInformation message="Or send them this tag!" :info="id"/>
+      <div class="pregame-phase__admin-badge">
+        <p>The admin of this lobby is: <strong>{{ adminUsername }}</strong></p>
+      </div>
+    </div>
+
+
     <div class="pregame-phase__buttons">
       <button v-if="currentPlayer && !currentPlayer.is_mister_x"
               @click="showChangeColorPopup=true">Change your pawn</button>
@@ -23,29 +40,18 @@
       <button v-if="currentPlayer && players.length!==1"
               @click="$emit('quitgame')">Quit game</button>
     </div>
-    <div class="pregame-phase__information-panel">
-      <div class="pregame-phase__copy-container" @mouseover="hoverUrl=true" @mouseleave="hoverUrl=false">
-        <label for="pregame-phase__url">Copy the url and share it with your friends!</label>
-        <br>
-        <p id="pregame-phase__url" class="pregame-phase__copy">{{ url.toString() }}</p>
-        <button v-clipboard:copy="url" :class="{'copy-hover': hoverUrl}" @click="onCopiedUrl">Copy<span :class="{'copied': copiedUrl}">Copied</span></button>
-      </div>
-      <div class="pregame-phase__copy-container" @mouseover="hoverTag=true" @mouseleave="hoverTag=false">
-        <label for="pregame-phase__tag">Or send them this tag!</label>
-        <br>
-        <p id="pregame-phase__tag" class="pregame-phase__copy">{{ id }}</p>
-        <button v-clipboard:copy="id" :class="{'copy-hover': hoverTag}" @click="onCopiedTag">Copy<span :class="{'copied': copiedTag}">Copied</span></button>
-      </div>
-      <div class="pregame-phase__admin-and-mister-x">
-        <p>The admin of this lobby is: <strong>{{ adminUsername }}</strong></p>
-      </div>
-    </div>
+
+
+
+
     <div class="pregame-phase__popup" v-if="showChangeColorPopup" @click="showChangeColorPopup=false">
       <ChangeColorPopup :players="players" @changecolor="$emit('changecolor', $event)"/>
     </div>
     <div class="pregame-phase__popup" v-if="showChangeMisterXPopup" @click="showChangeMisterXPopup=false">
       <ChangeMisterXPopup :players="players" :current-player="currentPlayer" @changemisterx="$emit('changemisterx', $event)"/>
     </div>
+
+
   </div>
 </template>
 
@@ -54,9 +60,10 @@ import PlayerLabel from "./pregamePhaseComponents/PlayerLabel";
 import {useRoute} from "vue-router";
 import ChangeColorPopup from "./pregamePhaseComponents/ChangeColorPopup";
 import ChangeMisterXPopup from "./pregamePhaseComponents/ChangeMisterXPopup";
+import CopyInformation from "./pregamePhaseComponents/CopyInformation";
 export default {
   name: "PregamePhase",
-  components: {ChangeMisterXPopup, ChangeColorPopup, PlayerLabel},
+  components: {CopyInformation, ChangeMisterXPopup, ChangeColorPopup, PlayerLabel},
   props: {
     players: {
       type: Array,
@@ -138,19 +145,25 @@ export default {
   display: grid;
   justify-items: center;
   align-items: center;
-  grid-template-columns: 1fr 1fr auto;
-  grid-template-rows: 20% 50% 30%;
-  grid-template-areas: "header header header" "players players info" "footer footer footer";
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 20vh 50vh 30vh;
+  grid-template-areas: "header header" "players info" "footer footer";
   height: 100%;
-  padding-right: 5%;
+  padding-right: 5vw;
 
   .pregame-phase__header{
     grid-area: header;
-    color: white;
-    font-weight: normal;
-    font-size: 10vw;
-    font-family: Eutemia;
-    margin-top: 10px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+    h1{
+      margin: 0;
+      color: white;
+      font-family: Eutemia;
+      font-size: 15vh;
+      font-weight: normal;
+    }
   }
 
   .pregame-phase__players{
@@ -175,7 +188,17 @@ export default {
       background-color: white;
       transform: skewX(80deg);
     }
+  }
 
+  .pregame-phase__information-panel{
+    grid-area: info;
+    align-self: center;
+    justify-self: center;
+
+    .pregame-phase__admin-badge{
+      color: white;
+      font-size: 3vh;
+    }
   }
 
   .pregame-phase__buttons{
@@ -186,24 +209,10 @@ export default {
     justify-content: space-evenly;
 
     button{
-      border: 1px solid white;
-      padding: 1%;
-      font-size: 1.5em;
-      color: white;
-      background: none;
-      height: fit-content;
-      margin: 1%;
-      transition: all 0.5s;
+      font-size: 5vh;
 
       &:hover{
-        background-color: white;
-        color: $theme-color-light;
         animation-play-state: paused;
-      }
-
-      &:active{
-        transform: translate(1px);
-        box-shadow: none;
       }
 
       &:focus{
@@ -243,72 +252,6 @@ export default {
       70% {transform: rotate(0deg) scale(1.1); background-color: white; color: $theme-color-light}
       90% {transform: rotate(0deg) scale(1.1); background-color: white; color: $theme-color-light}
       100% {transform: rotate(0deg) scale(1); background-color: white; color: $theme-color-light}
-    }
-  }
-
-  .pregame-phase__information-panel{
-    grid-area: info;
-    color: white;
-    font-size: 2vw;
-    margin-top: 100px;
-
-    .copy-hover:not(span){
-      color: white;
-    }
-
-    .copied{
-      animation: copied 1s;
-    }
-
-    button {
-      background: none;
-      border: none;
-      color: transparent;
-      font-weight: bold;
-      font-size: 1.5vw;
-      transition: color 0.5s;
-      position: relative;
-
-      span{
-        position: absolute;
-        left: 0;
-        color: transparent;
-      }
-
-      &:focus{
-        outline: none;
-      }
-    }
-
-    @keyframes copied {
-      0% {
-        color: white;
-        transform: translateY(0) scale(0);
-      }
-      75%{
-        transform: translateY(-15px) scale(1);
-        color: rgba(255, 255, 255, 200);
-      }
-      100% {
-        transform: translateY(-20px) scale(1);
-        color: transparent;
-      }
-    }
-
-    strong{
-      color: white;
-    }
-
-    .pregame-phase__copy-container{
-      margin-top: 10px;
-
-      .pregame-phase__copy {
-        display: inline-block;
-        color: white;
-        border: 2px solid white;
-        padding: 10px;
-        margin-right: 10px;
-      }
     }
   }
 
