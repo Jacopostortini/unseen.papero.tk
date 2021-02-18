@@ -127,7 +127,7 @@ export default {
       .back-arrow-wrapper{
         position: absolute;
         top: 0;
-        left: 0;
+        left: -10px;
         width: 12%;
         height: 50%;
         display: flex;
@@ -149,7 +149,6 @@ export default {
       }
 
       input{
-        margin: 5%;
         background: transparent;
         color: white;
         font-size: 2vw;
