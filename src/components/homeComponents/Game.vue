@@ -54,7 +54,7 @@ export default {
   color: white;
   display: grid;
   grid-template-columns: 60% 40%;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
   transition: all 0.5s;
 
