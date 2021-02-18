@@ -18,6 +18,7 @@ const getAllGamesUrl = "https://papero.tk/server/unseen/games/all";
 const getGameStatusUrl = "https://papero.tk/server/unseen/games/status_by_id";
 const createLocalAccountUrl = "https://papero.tk/auth/local";
 const logoutUrl = "https://papero.tk/auth/logout";
+const quitGameUrl = "https://papero.tk/games/quit";
 
 export {
     zoomFunctionBase,
@@ -31,5 +32,6 @@ export {
     getAllGamesUrl,
     getGameStatusUrl,
     createLocalAccountUrl,
-    logoutUrl
+    logoutUrl,
+    quitGameUrl
 };

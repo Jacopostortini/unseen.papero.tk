@@ -46,7 +46,7 @@ export default {
     const game = ref({});
     const messages = ref([]);
 
-    status.value = 0
+/*    status.value = 0
     currentPlayer.value = {
       local_id: 0,
       color: -1,
@@ -69,7 +69,7 @@ export default {
         username: "jacopo",
         color: "black"
       }
-    ]
+    ]*/
 
     socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});
 

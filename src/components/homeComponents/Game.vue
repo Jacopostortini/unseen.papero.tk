@@ -15,6 +15,8 @@
 
 <script>
 import {useRouter} from "vue-router";
+import axios from "axios";
+import {quitGameUrl} from "../../constants/constants";
 
 export default {
   name: "Game",
@@ -45,7 +47,11 @@ export default {
               });
     },
     quitGame(){
-      //TODO: IMPLEMENT QUIT GAME
+      axios
+          .post(quitGameUrl)
+          .then(()=>{
+            this.router.go(0);
+          });
     }
   },
   mounted() {
