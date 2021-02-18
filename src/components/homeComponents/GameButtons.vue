@@ -20,15 +20,15 @@
         <button>Create</button>
       </form>
     </div>
-    <form class="game-buttons__popup-background" v-if="showPopup" @click="showPopup=false" @submit.prevent="">
+    <div class="game-buttons__popup-background" v-if="showPopup" @click="showPopup=false">
       <div class="game-buttons__popup" @click.stop="">
         <h1>{{popupMessage}}</h1>
         <div>
-          <button @click="redirectToGame(popupGame)" type="submit">{{popupConfirmButton}}</button>
+          <button @click="redirectToGame(popupGame)">{{popupConfirmButton}}</button>
           <button @click="showPopup=false">Cancel</button>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 

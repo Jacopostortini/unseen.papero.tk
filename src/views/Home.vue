@@ -1,7 +1,7 @@
 <template>
 <div class="main-panel">
   <Header/>
-  <GameHistory :games="games"/>
+  <GameHistory :games="[{game_id: 'erggggggggggggggggggerer', date: 'seconds ago'}]"/>
   <GameButtons/>
   <UserHamburgerMenu/>
 </div>
