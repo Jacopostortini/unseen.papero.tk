@@ -115,6 +115,7 @@ export default {
         align-items: center;
         font-size: 2vw;
         flex-wrap: wrap;
+        margin-bottom: 10px;
 
         p{
           white-space: nowrap;
