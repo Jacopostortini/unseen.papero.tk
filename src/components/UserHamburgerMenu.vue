@@ -46,7 +46,7 @@ export default {
       return this.store.state.logged;
     },
     username: function (){
-      return this.store.state.username;
+      return this.store.state.username===null ? null : decodeURIComponent(this.store.state.username);
     }
   },
   mounted() {
@@ -113,6 +113,7 @@ export default {
         display: flex;
         justify-content: space-evenly;
         align-items: center;
+        font-size: 2vw;
         flex-wrap: wrap;
 
         p{
@@ -127,6 +128,7 @@ export default {
       flex-flow: column;
       align-items: center;
       color: white;
+      font-size: 1.5vw;
 
       p{
         margin: 10px;

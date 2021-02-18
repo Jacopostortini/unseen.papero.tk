@@ -31,7 +31,7 @@ router.beforeEach(async (to, from, next)=>{
       .then((response)=>{
         if(response.data){ //se è loggato in qualche modo
           store.dispatch("setLogged", response.data.google_signed_in);
-          store.dispatch("setUsername", response.data.username);
+          store.dispatch("setUsername", decodeURIComponent(response.data.username));
 
           next(); //se è loggato in qualche modo può andare dove vuole
 
@@ -46,6 +46,7 @@ router.beforeEach(async (to, from, next)=>{
 
         }
       });
+  next();
 })
 
 export default router
