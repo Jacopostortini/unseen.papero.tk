@@ -48,7 +48,7 @@ export default {
     },
     quitGame(){
       axios
-          .post(quitGameUrl)
+          .post(quitGameUrl, {game_id: this.game.game_id})
           .then(()=>{
             this.router.go(0);
           });
