@@ -1,5 +1,9 @@
 <template>
-  <div class="player-label__main-panel" :class="{'player-label__admin-player': player.is_admin}">
+  <div class="player-label__main-panel"
+       :class="{'player-label__admin-player': player.is_admin}"
+       @mouseover="hover=true"
+       @mouseleave="hover=false">
+    <p class="kick-player-badge" v-if="hover && currentPlayer.is_admin && !isYou">kick</p>
     <img :src="player.is_mister_x ? require('@/assets/pawns/pawn_mister_x.png') : require('@/assets/pawns/pawn_'+player.color+'.png')"
          :class="{'kicked-player': fadeOut, 'hover-animation': hoverPlayerAnimation}"
          @click="kickPlayer">
@@ -25,7 +29,8 @@ export default {
   data(){
     return {
       fadeOut: false,
-      hoverPlayerAnimation: true
+      hoverPlayerAnimation: true,
+      hover: false
     }
   },
   methods: {
@@ -51,9 +56,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/global";
 
 .player-label__main-panel {
-
   display: flex;
   flex-flow: column;
   flex-wrap: wrap;
@@ -64,6 +69,15 @@ export default {
   text-align: center;
   position: relative;
   margin: 0 2% 0 2%;
+
+  .kick-player-badge{
+    animation: fade-in 0.5s;
+    position: absolute;
+    top: -10%;
+    margin: 0;
+    font-size: 3vh;
+    font-weight: lighter;
+  }
 
   img {
     height: 60%;

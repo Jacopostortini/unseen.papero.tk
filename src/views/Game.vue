@@ -49,7 +49,7 @@ export default {
     const messages = ref([]);
     const unreadMessages = ref(false);
 
- /*   status.value = 0
+/*    status.value = 0
     currentPlayer.value = {
       local_id: 0,
       color: -1,
@@ -58,7 +58,14 @@ export default {
       username: "jacopo"
     }
     players.value = [
-      currentPlayer.value
+      currentPlayer.value,
+      {
+        local_id: 1,
+        color: 1,
+        is_mister_x: false,
+        is_admin: false,
+        username: "matteo"
+      }
     ]
     game.value = {
 

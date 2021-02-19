@@ -2,7 +2,7 @@ const zoomFunctionBase = 1.1;
 const mouseWheelReductionFactor = 100;
 const keyScrollSpeed = 5;
 const colors = 5;
-const colorCorrispectives = ["red", "blue", "green", "pink", "white"];
+const colorCorrispectives = ["red", "blue", "green", "pink", "gray"];
 const gameConfig = {
     taxi: 12,
     bus: 8,
