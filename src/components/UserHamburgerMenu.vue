@@ -4,7 +4,7 @@
       <img class="home-button" src="@/assets/logo.png" @click="redirectToHome">
       <div class="logged-menu" v-if="username">
         <div>
-          <p>Username: <strong>{{username}}</strong></p>
+          <p>Username: <strong>{{decodeURIComponent(username)}}</strong></p>
           <button @click="logout" v-if="!disableLogout">Logout</button>
         </div>
         <button class="procede-with-google" v-if="!logged" @click="redirectToGoogle">Activate sync with google</button>
@@ -15,8 +15,9 @@
       </div>
       <ChatContainer v-if="showChat" :messages="messages" @send-message="$emit('send-message', $event)"/>
     </div>
-    <div class="user-hamburger-menu__icon" @click="show=!show" :class="{'rotated': show}">
+    <div class="user-hamburger-menu__icon" @click="toggleMenu" :class="{'rotated': show}">
       <img src="@/assets/hamburger_icon.png">
+      <div class="notification-badge" v-if="showChat && !show && unreadMessages"/>
     </div>
   </div>
 </template>
@@ -33,7 +34,8 @@ export default {
   props: {
     showChat: Boolean,
     messages: Array,
-    disableLogout: Boolean
+    disableLogout: Boolean,
+    unreadMessages: Boolean
   },
   data(){
     return{
@@ -46,13 +48,17 @@ export default {
       return this.store.state.logged;
     },
     username: function (){
-      return this.store.state.username===null ? null : decodeURIComponent(this.store.state.username);
+      return this.store.state.username;
     }
   },
   mounted() {
     window.addEventListener("click", ()=>{this.show=false});
   },
   methods: {
+    toggleMenu(){
+      this.show = !this.show;
+      this.$emit("chat-opened");
+    },
     redirectToHome(){
       window.location.href = "/";
     },
@@ -138,6 +144,7 @@ export default {
   }
 
   .user-hamburger-menu__icon{
+    position: relative;
     margin-top: 15px;
     margin-left: 15px;
     width: 5vh;
@@ -147,6 +154,16 @@ export default {
     img{
       width: 100%;
       height: 100%;
+    }
+
+    div{
+      position: absolute;
+      right: -1vh;
+      top: 0;
+      width: 2vh;
+      height: 2vh;
+      border-radius: 50%;
+      background-color: red;
     }
 
     &.rotated{

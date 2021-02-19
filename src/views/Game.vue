@@ -3,6 +3,8 @@
     <UserHamburgerMenu :show-chat="true"
                        :messages="messages"
                        :disable-logout="true"
+                       :unread-messages="unreadMessages"
+                       @chat-opened="unreadMessages=false"
                        @send-message="sendMessage"/>
     <PregamePhase v-if="status===0"
                   :players="players"
@@ -45,8 +47,9 @@ export default {
     const players = ref([]);
     const game = ref({});
     const messages = ref([]);
+    const unreadMessages = ref(false);
 
-/*    status.value = 0
+ /*   status.value = 0
     currentPlayer.value = {
       local_id: 0,
       color: -1,
@@ -107,6 +110,7 @@ export default {
 
     socket.on(events.CHAT, data => {
       appendMessage(data);
+      this.unreadMessages.value = true;
     })
 
     function joinGame() {
@@ -178,6 +182,7 @@ export default {
       players,
       game,
       messages,
+      unreadMessages,
       joinGame,
       quitGame,
       kickPlayer,
