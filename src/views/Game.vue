@@ -110,7 +110,7 @@ export default {
 
     socket.on(events.CHAT, data => {
       appendMessage(data);
-      this.unreadMessages.value = true;
+      unreadMessages.value = true;
     })
 
     function joinGame() {
