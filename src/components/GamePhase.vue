@@ -1,24 +1,19 @@
 <template>
   <div class="game-phase__main-panel">
     <MapManager class="game-phase__map-manager"/>
-    <GameSideBarNormal class="game-phase__game-stats" v-if="!currentPlayer.is_mister_x"
+<!--    <GameSideBarNormal class="game-phase__game-stats"
                        :players="players"
                        :current-player="currentPlayer"
-                       :game="game"/>
-    <GameSideBarMisterX class="game-phase__game-stats" v-else
-                        :players="players"
-                        :current-player="currentPlayer"
-                        :game="game"/>
+                       :game="game"/>-->
   </div>
 </template>
 
 <script>
 import MapManager from "./gamePhaseComponents/MapManager";
-import GameSideBarNormal from "./gamePhaseComponents/GameSideBarNormal";
-import GameSideBarMisterX from "./gamePhaseComponents/GameSideBarMisterX";
+//import GameSideBarNormal from "./gamePhaseComponents/GameSideBarNormal";
 export default {
   name: "GamePhase",
-  components: {GameSideBarNormal, GameSideBarMisterX, MapManager},
+  components: {/*GameSideBarNormal, */MapManager},
   props: {
     players: {
       type: Array,
@@ -40,10 +35,10 @@ export default {
 
 .game-phase__main-panel{
   display: grid;
-  grid-template-columns: 1.35fr 0.65fr;
+  grid-template-columns: 70% 30%;
+  grid-template-areas: "map sidebar";
   width: 100%;
   height: 100%;
-  background: linear-gradient($theme-color-light, $theme-color-dark);
   color: white;
 }
 

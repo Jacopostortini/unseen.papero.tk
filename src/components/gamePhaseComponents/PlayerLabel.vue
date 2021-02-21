@@ -1,9 +1,7 @@
 <template>
   <div class="player-label__main-panel">
-    <div class="player-label__player-information" :class="{'player-label__playing-player': isPlaying}">
-      <div class="player-label__color-badge" :style="{backgroundColor: playerColor}"></div>
+    <div class="player-label__player-information">
       <strong>{{ player.username }}</strong>
-      <img v-if="player.is_mister_x" src="/assets/misterx_icon.png">
     </div>
   </div>
 </template>
@@ -45,27 +43,14 @@ export default {
     flex-flow: row;
     align-items: center;
 
-    .player-label__color-badge{
-      border-radius: 50%;
-      border: 2px solid white;
-      max-width: 20px;
-      max-height: 20px;
-      width: 1em;
-      height: 1em;
-      margin-right: 10px;
-    }
-
     strong{
-      font-size: 1em;
+      font-size: 2vh;
+      color: black;
     }
 
     img{
       height: 1.5em;
     }
-  }
-
-  .player-label__playing-player{
-    transform: scale(1.5);
   }
 }
 </style>

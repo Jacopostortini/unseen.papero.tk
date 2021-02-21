@@ -70,9 +70,16 @@ export default {
 <style lang="scss" scoped>
 
 .game-sidebar-normal__main-panel{
+  grid-area: sidebar;
+
+  background-image: url("../../assets/background_image.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+
   display: grid;
   grid-template-rows: auto 1fr 1fr;
-  row-gap: 3%;
+
   justify-content: space-evenly;
 
   .game-sidebar-normal__players{
