@@ -31,13 +31,16 @@ import {useRoute} from "vue-router";
 import io from "socket.io-client";
 import {ref} from "@vue/reactivity";
 import {computed} from "vue";
+import PreGamePhase from "../components/PreGamePhase";
+import GamePhase from "../components/GamePhase";
+import PostGamePhase from "../components/PostGamePhase";
 
 export default {
   name: "Game",
   components: {
-    PreGamePhase: () => import("../components/PreGamePhase"),
-    GamePhase: () => import("../components/GamePhase"),
-    PostGamePhase: () => import("../components/PostGamePhase"),
+    PreGamePhase,
+    GamePhase,
+    PostGamePhase,
     UserHamburgerMenu: () => import("../components/UserHamburgerMenu"),
   },
   setup(){
