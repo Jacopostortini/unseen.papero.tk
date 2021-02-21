@@ -44,7 +44,7 @@ router.beforeEach(async (to, from, next)=>{
               axios
                   .get(createLocalAccountUrl)
                   .then(()=>{
-                      next();
+                      to();
                   });
             } else next(); //se non sta andando in una partita non c'è bisogno dell'account
 
@@ -55,7 +55,7 @@ router.beforeEach(async (to, from, next)=>{
           axios
               .get(createLocalAccountUrl)
               .then(()=>{
-                  next();
+                  to();
               });
       } else next();
   }
