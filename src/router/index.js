@@ -53,7 +53,7 @@ router.beforeEach(async (to, from, next)=>{
           }
         });
   } else {
-      if(store.status.username === null && to.name === "Game"){ //se non è loggato e sta andando in partita
+      if(store.state.username === null && to.name === "Game"){ //se non è loggato e sta andando in partita
           axios
               .get(createLocalAccountUrl)
               .then((response)=>{
