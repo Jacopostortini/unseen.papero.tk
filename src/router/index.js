@@ -43,8 +43,10 @@ router.beforeEach(async (to, from, next)=>{
             if(to.name==="Game"){ //se sta andando in una partita
               axios
                   .get(createLocalAccountUrl)
-                  .then(()=>{
-                      next(to);
+                  .then((response)=>{
+                      store.dispatch("setUsername", response.data);
+                      store.dispatch("setLogged", false);
+                      next();
                   });
             } else next(); //se non sta andando in una partita non c'è bisogno dell'account
 
@@ -54,8 +56,10 @@ router.beforeEach(async (to, from, next)=>{
       if(store.status.username === null && to.name === "Game"){ //se non è loggato e sta andando in partita
           axios
               .get(createLocalAccountUrl)
-              .then(()=>{
-                  next(to);
+              .then((response)=>{
+                  store.dispatch("setUsername", response.data);
+                  store.dispatch("setLogged", false);
+                  next();
               });
       } else next();
   }
