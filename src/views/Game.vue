@@ -118,6 +118,7 @@ export default {
     socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});
 
     function setupData(data){
+      console.log(data);
       status.value = data.status;
       if(data.your_local_id!=null){
         data.players.forEach(player => {
