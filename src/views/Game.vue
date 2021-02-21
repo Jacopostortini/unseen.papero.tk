@@ -4,6 +4,7 @@
                        :messages="messages"
                        :disable-logout="true"
                        :unread-messages="unreadMessages"
+                       :src="hamburgerMenuImage"
                        @chat-opened="unreadMessages=false"
                        @send-message="sendMessage"/>
     <PregamePhase v-if="status===0"
@@ -33,6 +34,7 @@ import {useRoute} from "vue-router";
 import io from "socket.io-client";
 import {ref} from "@vue/reactivity";
 import UserHamburgerMenu from "../components/UserHamburgerMenu";
+import {computed} from "vue";
 
 export default {
   name: "Game",
@@ -49,13 +51,31 @@ export default {
     const messages = ref([]);
     const unreadMessages = ref(false);
 
-    status.value = 1
+    const hamburgerMenuImage = computed(function (){
+      switch (status.value){
+        case 0:
+          return require("@/assets/hamburger_icon_light.png");
+        case 1:
+          return require("@/assets/hamburger_icon_dark.png");
+        case 2:
+          return require("@/assets/hamburger_icon_light.png");
+        default:
+          return require("@/assets/hamburger_icon_light.png");
+      }
+    })
+
+/*    status.value = 1;
     currentPlayer.value = {
       local_id: 0,
       color: -1,
       is_mister_x: true,
       is_admin: true,
-      username: "jacopo"
+      username: "jacopo",
+      used_taxi: 0,
+      used_bus: 0,
+      used_underground: 0,
+      used_secret_moves: 0,
+      used_double_turns: 0
     }
     players.value = [
       currentPlayer.value,
@@ -65,10 +85,24 @@ export default {
         is_mister_x: false,
         is_admin: false,
         username: "matteo"
+      },
+      {
+        local_id: 2,
+        color: 2,
+        is_mister_x: false,
+        is_admin: false,
+        username: "rami"
+      },
+      {
+        local_id: 3,
+        color: 3,
+        is_mister_x: false,
+        is_admin: false,
+        username: "tave"
       }
     ]
     game.value = {
-
+      playingPlayer: 1
     }
 
     messages.value = [
@@ -77,9 +111,9 @@ export default {
         local_id: 0,
         fromYou: true,
         username: "jacopo",
-        color: "black"
+        color: "gray"
       }
-    ]
+    ]*/
 
     socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});
 
@@ -184,6 +218,7 @@ export default {
     }
 
     return {
+      hamburgerMenuImage,
       status,
       currentPlayer,
       players,

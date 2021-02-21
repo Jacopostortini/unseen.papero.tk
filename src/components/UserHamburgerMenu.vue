@@ -16,7 +16,7 @@
       <ChatContainer v-if="showChat" :messages="messages" @send-message="$emit('send-message', $event)"/>
     </div>
     <div class="user-hamburger-menu__icon" @click="toggleMenu" :class="{'rotated': show}">
-      <img src="@/assets/hamburger_icon.png">
+      <img :src="src">
       <div class="notification-badge" v-if="showChat && !show && unreadMessages"/>
     </div>
   </div>
@@ -35,7 +35,10 @@ export default {
     showChat: Boolean,
     messages: Array,
     disableLogout: Boolean,
-    unreadMessages: Boolean
+    unreadMessages: Boolean,
+    src: {
+      required: true
+    }
   },
   data(){
     return{

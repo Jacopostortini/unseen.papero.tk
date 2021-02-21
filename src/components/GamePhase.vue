@@ -1,19 +1,19 @@
 <template>
   <div class="game-phase__main-panel">
     <MapManager class="game-phase__map-manager"/>
-<!--    <GameSideBarNormal class="game-phase__game-stats"
+    <GameSideBar class="game-phase__game-stats"
                        :players="players"
                        :current-player="currentPlayer"
-                       :game="game"/>-->
+                       :game="game"/>
   </div>
 </template>
 
 <script>
 import MapManager from "./gamePhaseComponents/MapManager";
-//import GameSideBarNormal from "./gamePhaseComponents/GameSideBarNormal";
+import GameSideBar from "./gamePhaseComponents/GameSideBar";
 export default {
   name: "GamePhase",
-  components: {/*GameSideBarNormal, */MapManager},
+  components: {GameSideBar, MapManager},
   props: {
     players: {
       type: Array,

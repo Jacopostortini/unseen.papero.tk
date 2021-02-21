@@ -1,100 +1,40 @@
 <template>
-  <div class="map-manager__main-panel" id="map-manager__main-panel">
-
-  </div>
+  <div class="map-manager__main-panel"
+       id="map-manager__main-panel"
+       @mousedown="mouseDown"
+       @mousemove="mouseMove"
+       @mouseup="mouseUp"></div>
 </template>
 
 <script>
 import *  as PIXI from "pixi.js";
 import {
+  getContainerFromPathObject,
   getContainerFromStations,
+  keyPressed,
   map,
+  mouseWheelReductionFactor,
   pathTilesetHeight,
   pathTilesetWidth,
-  scale,
-  tileSize
+  tileSize,
+  zoomFunctionBase
 } from "../../constants/mapConstants";
 import stations from "../../constants/stations";
-import {onMounted} from "vue";
+import {onMounted, computed, ref} from "vue";
 import pathTilesetImage from "../../assets/pathtileset.png";
+import links from "../../constants/links";
 export default {
   name: "MapManager",
-  /*methods: {
-    verticalScroll(number, element) {
-      element.scrollTop += number;
-    },
-    horizontalScroll(number, element) {
-      element.scrollLeft += number;
-    },
-    keyPressed(event) {
-      let elementClass = ".map-manager__main-panel";
-      switch (event.key.toString().toLowerCase()){
-        case "w":
-          this.verticalScroll(-keyScrollSpeed, document.querySelector(elementClass));
-          break;
-        case "arrowup":
-          this.verticalScroll(-keyScrollSpeed, document.querySelector(elementClass));
-          break;
-        case "a":
-          this.horizontalScroll(-keyScrollSpeed, document.querySelector(elementClass));
-          break;
-        case "arrowleft":
-          this.horizontalScroll(-keyScrollSpeed, document.querySelector(elementClass));
-          break;
-        case "s":
-          this.verticalScroll(keyScrollSpeed, document.querySelector(elementClass));
-          break;
-        case "arrowdown":
-          this.verticalScroll(keyScrollSpeed, document.querySelector(elementClass));
-          break;
-        case "d":
-          this.horizontalScroll(keyScrollSpeed, document.querySelector(elementClass));
-          break;
-        case "arrowright":
-          this.horizontalScroll(keyScrollSpeed, document.querySelector(elementClass));
-          break;
-      }
-    },
-    mouseDown() {
-      this.dragging = true;
-    },
-    mouseMove(event) {
-      if(this.dragging){
-        event.target.parentNode.style.cursor = "move";
-        event.target.parentNode.scrollLeft -= event.movementX;
-        event.target.parentNode.scrollTop -= event.movementY;
-      }
-    },
-    mouseUp(event) {
-      this.dragging = false;
-      event.target.parentNode.style.cursor = "auto";
-    },
-    zoom(event) {
-      let zoomFactor = 1;
-      if(this.deltaY+event.deltaY<0){
-        this.deltaY = 0;
-      } else {
-        this.deltaY += event.deltaY;
-        zoomFactor = Math.pow(zoomFunctionBase, event.deltaY/mouseWheelReductionFactor);
-      }
-      let panel = document.querySelector(".map-manager__main-panel");
-      let sL = event.offsetX*(zoomFactor-1)+panel.scrollLeft*zoomFactor;
-      let sT = event.offsetY*(zoomFactor-1)+panel.scrollTop*zoomFactor;
-      panel.scrollLeft = Math.round(sL);
-      panel.scrollTop = Math.round(sT);
-    }
-  },
-  computed: {
-    imgPercentage: function () {
-      return 100*Math.pow(zoomFunctionBase, this.deltaY/mouseWheelReductionFactor);
-    }
-  },*/
   setup() {
-    //window.addEventListener("keydown", this.keyPressed);
+    const deltaY = ref(0);
+    const dragging = ref(false);
+    const scale = computed(function (){
+      return Math.pow(zoomFunctionBase, deltaY.value/mouseWheelReductionFactor);
+    });
 
     const app = new PIXI.Application({
-      width: tileSize * scale * map.width,
-      height: tileSize * scale * map.height,
+      width: tileSize * map.width,
+      height: tileSize * map.height,
       transparent: true,
       antialias: false
     });
@@ -118,10 +58,10 @@ export default {
             );
           }
 
-          /*for (let i = 0; i < links.length; i++){
-            app.stage.addChild(getContainerFromPathObject(links[i], tileSize, scale, pathTextures));
-          }*/
-          app.stage.addChild(getContainerFromStations(stations, tileSize, scale, pathTextures));
+          for (let i = 0; i < links.length; i++){
+            app.stage.addChild(getContainerFromPathObject(links[i], stations, tileSize, pathTextures));
+          }
+          app.stage.addChild(getContainerFromStations(stations, tileSize, pathTextures));
 
         });
 
@@ -130,22 +70,60 @@ export default {
       console.error(e);
     });
 
+    function mouseDown() {
+      dragging.value = true;
+    }
+
+    function mouseMove(event) {
+      if(dragging.value){
+        event.target.parentNode.style.cursor = "move";
+        event.target.parentNode.scrollLeft -= event.movementX;
+        event.target.parentNode.scrollTop -= event.movementY;
+      }
+    }
+
+    function mouseUp(event) {
+      dragging.value = false;
+      event.target.parentNode.style.cursor = "auto";
+    }
+
+    function zoom(event) {
+      let zoomFactor = 1;
+      if(deltaY.value+event.deltaY<0){
+        deltaY.value = 0;
+      } else {
+        deltaY.value += event.deltaY;
+        zoomFactor = Math.pow(zoomFunctionBase, event.deltaY/mouseWheelReductionFactor);
+      }
+      let panel = document.querySelector(".map-manager__main-panel");
+      let sL = event.offsetX*(zoomFactor-1)+panel.scrollLeft*zoomFactor;
+      let sT = event.offsetY*(zoomFactor-1)+panel.scrollTop*zoomFactor;
+      panel.scrollLeft = Math.round(sL);
+      panel.scrollTop = Math.round(sT);
+    }
+
     onMounted(() => {
       document.getElementById("map-manager__main-panel").appendChild(app.view);
-    })
+      window.addEventListener("keydown", keyPressed);
+    });
 
+    return{
+      scale,
+      mouseDown,
+      mouseMove,
+      mouseUp,
+      zoom
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
 .map-manager__main-panel{
   overflow: hidden;
   width: 100%;
   height: 100%;
   border-radius: 0 20px 20px 0;
-  .map-manager__map{
-    vertical-align: top;
-  }
 }
 </style>

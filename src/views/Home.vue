@@ -3,7 +3,7 @@
   <Header/>
   <GameHistory :games="games"/>
   <GameButtons/>
-  <UserHamburgerMenu/>
+  <UserHamburgerMenu :src="require('@/assets/hamburger_icon_light.png')"/>
 </div>
 </template>
 

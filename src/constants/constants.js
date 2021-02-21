@@ -1,6 +1,3 @@
-const zoomFunctionBase = 1.1;
-const mouseWheelReductionFactor = 100;
-const keyScrollSpeed = 5;
 const colors = 5;
 const colorCorrispectives = ["red", "blue", "green", "pink", "gray"];
 const gameConfig = {
@@ -21,9 +18,6 @@ const logoutUrl = "https://papero.tk/auth/logout";
 const quitGameUrl = "https://papero.tk/server/unseen/games/quit";
 
 export {
-    zoomFunctionBase,
-    mouseWheelReductionFactor,
-    keyScrollSpeed,
     colors,
     colorCorrispectives,
     gameConfig,

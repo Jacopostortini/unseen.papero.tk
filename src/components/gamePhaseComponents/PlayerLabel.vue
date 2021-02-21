@@ -1,8 +1,7 @@
 <template>
   <div class="player-label__main-panel">
-    <div class="player-label__player-information">
-      <strong>{{ player.username }}</strong>
-    </div>
+    <img :src="player.is_mister_x ? require('@/assets/pawns/pawn_mister_x.png') : require('@/assets/pawns/pawn_'+player.color+'.png')"/>
+    <strong :class="{'underlined': isPlaying}">{{ player.username }}</strong>
   </div>
 </template>
 
@@ -36,21 +35,20 @@ export default {
   display: flex;
   flex-flow: row;
   align-items: center;
-  justify-content: space-between;
+  //justify-content: space-between;
 
-  .player-label__player-information{
-    display: flex;
-    flex-flow: row;
-    align-items: center;
+  strong{
+    font-size: 3vh;
+    color: white;
 
-    strong{
-      font-size: 2vh;
-      color: black;
+    &.underlined{
+      text-decoration: underline;
     }
+  }
 
-    img{
-      height: 1.5em;
-    }
+  img {
+    margin: 0 2% 0 5%;
+    height: 10vh;
   }
 }
 </style>
