@@ -40,10 +40,10 @@ const UserHamburgerMenu = defineAsyncComponent(() => import("../components/UserH
 export default {
   name: "Game",
   components: {
+    UserHamburgerMenu,
     PreGamePhase,
     GamePhase,
-    PostGamePhase,
-    UserHamburgerMenu,
+    PostGamePhase
   },
   setup(){
     const socket = io(webSocketUrl, {
@@ -70,7 +70,7 @@ export default {
       }
     })
 
-/*    status.value = 1;
+    /*status.value = 1;
     currentPlayer.value = {
       local_id: 0,
       color: -1,
