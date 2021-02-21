@@ -26,7 +26,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next)=>{
-  if(store.state.username === "null" && store.state.logged === "false"){ //se non è ancora stato trovato il logged
+  if(store.state.username === "" && store.state.logged === -1){ //se non è ancora stato trovato il logged
     axios
         .get(getLoginInfoUrl)
         .then((response)=>{
@@ -37,19 +37,28 @@ router.beforeEach(async (to, from, next)=>{
             next(); //se è loggato in qualche modo può andare dove vuole
 
           } else { //se non è loggato
+            store.dispatch("setUsername", null);
             store.dispatch("setLogged", false);
 
             if(to.name==="Game"){ //se sta andando in una partita
               axios
                   .get(createLocalAccountUrl)
                   .then(()=>{
-                    to();
+                      next();
                   });
             } else next(); //se non sta andando in una partita non c'è bisogno dell'account
 
           }
         });
-  } else next();
+  } else {
+      if(store.status.username === null && to.name === "Game"){ //se non è loggato e sta andando in partita
+          axios
+              .get(createLocalAccountUrl)
+              .then(()=>{
+                  next();
+              });
+      } else next();
+  }
 })
 
 export default router

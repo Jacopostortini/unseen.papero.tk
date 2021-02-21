@@ -14,14 +14,12 @@ import GameButtons from "@/components/homeComponents/GameButtons";
 import axios from "axios";
 import {getAllGamesUrl} from "../constants/constants";
 import UserHamburgerMenu from "../components/UserHamburgerMenu";
-import {useStore} from "vuex";
 export default {
   name: "Home",
   components: {UserHamburgerMenu, GameButtons, GameHistory, Header},
   data(){
     return {
       games: null,
-      store: useStore()
     }
   },
   mounted() {
