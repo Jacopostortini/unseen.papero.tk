@@ -9,14 +9,18 @@
 
 <script>
 import Header from "@/components/homeComponents/Header";
-import GameHistory from "@/components/homeComponents/GameHistory";
 import GameButtons from "@/components/homeComponents/GameButtons";
 import axios from "axios";
 import {getAllGamesUrl} from "../constants/constants";
-import UserHamburgerMenu from "../components/UserHamburgerMenu";
+import GameHistory from "../components/homeComponents/GameHistory";
 export default {
   name: "Home",
-  components: {UserHamburgerMenu, GameButtons, GameHistory, Header},
+  components: {
+    UserHamburgerMenu: () => import("../components/UserHamburgerMenu"),
+    GameButtons,
+    GameHistory,
+    Header
+  },
   data(){
     return {
       games: null,

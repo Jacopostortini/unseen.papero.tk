@@ -7,7 +7,7 @@
                        :src="hamburgerMenuImage"
                        @chat-opened="unreadMessages=false"
                        @send-message="sendMessage"/>
-    <PregamePhase v-if="status===0"
+    <PreGamePhase v-if="status===0"
                   :players="players"
                   :current-player="currentPlayer"
                   @joingame="joinGame"
@@ -25,20 +25,21 @@
 </template>
 
 <script>
-import PregamePhase from "../components/PregamePhase";
-import GamePhase from "../components/GamePhase";
-import PostGamePhase from "../components/PostGamePhase";
 import {colorCorrispectives, webSocketUrl} from "../constants/constants";
 import events from "../constants/webSocketEvents";
 import {useRoute} from "vue-router";
 import io from "socket.io-client";
 import {ref} from "@vue/reactivity";
-import UserHamburgerMenu from "../components/UserHamburgerMenu";
 import {computed} from "vue";
 
 export default {
   name: "Game",
-  components: {PostGamePhase, GamePhase, PregamePhase, UserHamburgerMenu},
+  components: {
+    PreGamePhase: () => import("../components/PreGamePhase"),
+    GamePhase: () => import("../components/GamePhase"),
+    PostGamePhase: () => import("../components/PostGamePhase"),
+    UserHamburgerMenu: () => import("../components/UserHamburgerMenu"),
+  },
   setup(){
     const socket = io(webSocketUrl, {
       path: "/unseen/socket.io/"

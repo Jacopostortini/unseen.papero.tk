@@ -9,11 +9,13 @@
 </template>
 
 <script>
-import MapManager from "./gamePhaseComponents/MapManager";
 import GameSideBar from "./gamePhaseComponents/GameSideBar";
 export default {
   name: "GamePhase",
-  components: {GameSideBar, MapManager},
+  components: {
+    GameSideBar,
+    MapManager: () => import("./gamePhaseComponents/MapManager")
+  },
   props: {
     players: {
       type: Array,

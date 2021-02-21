@@ -1,6 +1,6 @@
 <template>
   <div>
-    postgame
+    postGame
   </div>
 </template>
 

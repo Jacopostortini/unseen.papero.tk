@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from "../views/Home";
-import Game from "../views/Game";
 import axios from "axios";
 import {createLocalAccountUrl, getLoginInfoUrl} from "../constants/constants";
 import store from "../store";
 
+const Home = () => import("../views/Home");
+const Game = () => import("../views/Game");
 
 const routes = [
   {
@@ -44,7 +44,7 @@ router.beforeEach(async (to, from, next)=>{
               axios
                   .get(createLocalAccountUrl)
                   .then((response)=>{
-                      store.dispatch("setUsername", response.data);
+                      store.dispatch("setUsername", response.data.username);
                       store.dispatch("setLogged", false);
                       next();
                   });
@@ -57,7 +57,7 @@ router.beforeEach(async (to, from, next)=>{
           axios
               .get(createLocalAccountUrl)
               .then((response)=>{
-                  store.dispatch("setUsername", response.data);
+                  store.dispatch("setUsername", response.data.username);
                   store.dispatch("setLogged", false);
                   next();
               });
