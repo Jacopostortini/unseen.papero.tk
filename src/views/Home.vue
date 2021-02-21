@@ -16,7 +16,9 @@ import GameHistory from "../components/homeComponents/GameHistory";
 export default {
   name: "Home",
   components: {
-    UserHamburgerMenu: () => import("../components/UserHamburgerMenu"),
+    UserHamburgerMenu: () => ({
+      component: import("../components/UserHamburgerMenu")
+    }),
     GameButtons,
     GameHistory,
     Header
