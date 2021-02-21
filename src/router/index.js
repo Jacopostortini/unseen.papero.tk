@@ -26,27 +26,30 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next)=>{
-  axios
-      .get(getLoginInfoUrl)
-      .then((response)=>{
-        if(response.data){ //se è loggato in qualche modo
-          store.dispatch("setLogged", response.data.google_signed_in);
-          store.dispatch("setUsername", decodeURIComponent(response.data.username));
+  if(store.state.username === "null" && store.state.logged === "false"){ //se non è ancora stato trovato il logged
+    axios
+        .get(getLoginInfoUrl)
+        .then((response)=>{
+          if(response.data){ //se è loggato in qualche modo
+            store.dispatch("setLogged", response.data.google_signed_in);
+            store.dispatch("setUsername", decodeURIComponent(response.data.username));
 
-          next(); //se è loggato in qualche modo può andare dove vuole
+            next(); //se è loggato in qualche modo può andare dove vuole
 
-        } else { //se non è loggato
-          store.dispatch("setLogged", false);
+          } else { //se non è loggato
+            store.dispatch("setLogged", false);
 
-          if(to.name==="Game"){ //se sta andando in una partita
-            axios
-                .get(createLocalAccountUrl)
-                .then(()=>{next()});
-          } else next(); //se non sta andando in una partita non c'è bisogno dell'account
+            if(to.name==="Game"){ //se sta andando in una partita
+              axios
+                  .get(createLocalAccountUrl)
+                  .then(()=>{
+                    to();
+                  });
+            } else next(); //se non sta andando in una partita non c'è bisogno dell'account
 
-        }
-      });
-  //next();
+          }
+        });
+  } else next();
 })
 
 export default router
