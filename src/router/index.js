@@ -3,8 +3,8 @@ import axios from "axios";
 import {createLocalAccountUrl, getLoginInfoUrl} from "../constants/constants";
 import store from "../store";
 
-const Home = () => import("../views/Home");
-const Game = () => import("../views/Game");
+const Home = () => import("../views/Home" /* webpackChunkName: "home" */);
+const Game = () => import("../views/Game" /* webpackChunkName: "game" */);
 
 const routes = [
   {
@@ -26,6 +26,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next)=>{
+    next();
   if(store.state.username === "" && store.state.logged === -1){ //se non è ancora stato trovato il logged
     axios
         .get(getLoginInfoUrl)

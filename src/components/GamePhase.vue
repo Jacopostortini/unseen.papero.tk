@@ -10,11 +10,15 @@
 
 <script>
 import GameSideBar from "./gamePhaseComponents/GameSideBar";
+import {defineAsyncComponent} from "vue";
+
+const MapManager = defineAsyncComponent(() => import("./gamePhaseComponents/MapManager" /* webpackChunkName: "mapManager" */));
+
 export default {
   name: "GamePhase",
   components: {
     GameSideBar,
-    MapManager: () => import("./gamePhaseComponents/MapManager")
+    MapManager
   },
   props: {
     players: {

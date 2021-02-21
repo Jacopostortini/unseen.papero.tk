@@ -30,10 +30,12 @@ import events from "../constants/webSocketEvents";
 import {useRoute} from "vue-router";
 import io from "socket.io-client";
 import {ref} from "@vue/reactivity";
-import {computed} from "vue";
+import {computed, defineAsyncComponent} from "vue";
 import PreGamePhase from "../components/PreGamePhase";
 import GamePhase from "../components/GamePhase";
 import PostGamePhase from "../components/PostGamePhase";
+
+const UserHamburgerMenu = defineAsyncComponent(() => import("../components/UserHamburgerMenu" /* webpackChunkName: "userHamburgerMenu" */));
 
 export default {
   name: "Game",
@@ -41,7 +43,7 @@ export default {
     PreGamePhase,
     GamePhase,
     PostGamePhase,
-    UserHamburgerMenu: () => import("../components/UserHamburgerMenu"),
+    UserHamburgerMenu,
   },
   setup(){
     const socket = io(webSocketUrl, {

@@ -13,12 +13,13 @@ import GameButtons from "@/components/homeComponents/GameButtons";
 import axios from "axios";
 import {getAllGamesUrl} from "../constants/constants";
 import GameHistory from "../components/homeComponents/GameHistory";
+import {defineAsyncComponent} from "vue";
+
+const UserHamburgerMenu = defineAsyncComponent(() => import("../components/UserHamburgerMenu" /* webpackChunkName: "userHamburgerMenu" */));
 export default {
   name: "Home",
   components: {
-    UserHamburgerMenu: () => ({
-      component: import("../components/UserHamburgerMenu")
-    }),
+    UserHamburgerMenu,
     GameButtons,
     GameHistory,
     Header
