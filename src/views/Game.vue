@@ -70,7 +70,7 @@ export default {
       }
     })
 
-    /*status.value = 1;
+    status.value = 1;
     currentPlayer.value = {
       local_id: 0,
       color: -1,
@@ -119,7 +119,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ]*/
+    ]
 
     socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});
 

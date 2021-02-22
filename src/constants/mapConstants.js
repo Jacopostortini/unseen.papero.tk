@@ -4,17 +4,17 @@ const zoomFunctionBase = 1.1;
 const mouseWheelReductionFactor = 100;
 const keyScrollSpeed = 5;
 const tileSize = 64;
-const pathTilesetWidth = 2;
-const pathTilesetHeight = 19;
-const map = {
+const pathsTilesetDimension = {
+    width: 4,
+    height: 15
+}
+const stationsTilesetDimension = {
+    width: 3,
+    height: 1
+}
+const mapDimension = {
     width: 60,
-    height: 40,
-    background: [
-        [7, 7, 7, 7],
-        [7, 7, 7, 7],
-        [7, 7, 7, 7],
-        [7, 7, 7, 7]
-    ]
+    height: 40
 };
 
 Array.prototype.equals = function(arr){
@@ -61,6 +61,7 @@ function getContainerFromPathObject(path, stations, tileSize, tileTextures){
             if(path.type < 3) {
                 sprite = new PIXI.Sprite(tileTextures[2 * 3 * path.type + currentDirection]);
             } else {
+                m = m===0 ? 1 : m;
                 sprite = new PIXI.Sprite(tileTextures[8 * path.type - 6 + 2*(m+1) + currentDirection]);
             }
 
@@ -69,13 +70,14 @@ function getContainerFromPathObject(path, stations, tileSize, tileTextures){
         sprite.y = tileSize * currentPoint[1];
         container.addChild(sprite);
     }
+    console.log(path.from, path.to);
     return container;
 }
 
 function getContainerFromStations(stations, tileSize, tileTextures){
     let container = new PIXI.Container();
     for(let i = 0; i < stations.length; i++){
-        let sprite = new PIXI.Sprite(tileTextures[34+stations[i].type]);
+        let sprite = new PIXI.Sprite(tileTextures[stations[i].type]);
         sprite.x = tileSize * stations[i].point[0];
         sprite.y = tileSize * stations[i].point[1];
         let color = (stations[i].type === 2) ? "white" : "black";
@@ -132,9 +134,9 @@ export {
     mouseWheelReductionFactor,
     keyScrollSpeed,
     tileSize,
-    pathTilesetWidth,
-    pathTilesetHeight,
-    map,
+    pathsTilesetDimension,
+    stationsTilesetDimension,
+    mapDimension,
     getContainerFromPathObject,
     getContainerFromStations,
     verticalScroll,

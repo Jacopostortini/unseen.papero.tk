@@ -9,20 +9,22 @@
 <script>
 import *  as PIXI from "pixi.js";
 import {
-  getContainerFromPathObject,
+  //getContainerFromPathObject,
   getContainerFromStations,
   keyPressed,
-  map,
+  mapDimension,
   mouseWheelReductionFactor,
-  pathTilesetHeight,
-  pathTilesetWidth,
+  pathsTilesetDimension,
+  stationsTilesetDimension,
   tileSize,
   zoomFunctionBase
 } from "../../constants/mapConstants";
 import stations from "../../constants/stations";
 import {onMounted, computed, ref} from "vue";
-import pathTilesetImage from "../../assets/pathtileset.png";
-import links from "../../constants/links";
+import pathsTilesetImage from "../../assets/pathsTileset.png";
+import stationsTilesetImage from "../../assets/stationsTileset.png";
+import paths from "../../constants/paths";
+//import links from "../../constants/links";
 export default {
   name: "MapManager",
   setup() {
@@ -33,8 +35,8 @@ export default {
     });
 
     const app = new PIXI.Application({
-      width: tileSize * map.width,
-      height: tileSize * map.height,
+      width: tileSize * mapDimension.width,
+      height: tileSize * mapDimension.height,
       transparent: true,
       antialias: false
     });
@@ -42,27 +44,48 @@ export default {
     PIXI.settings.ROUND_PIXELS = true;
 
     app.loader
-        .add("pathTileset", pathTilesetImage)
+        .add("pathsTileset", pathsTilesetImage)
+        .add("stationsTileset", stationsTilesetImage)
         //.add("backgroundTileset", "tileset.png")
         .load((loader, resources) => {
 
           //crop tilesets to get tiles textures
 
-          let pathTextures = [];
-          for (let i = 0; i < pathTilesetWidth * pathTilesetHeight; i++) {
-            let x = i % pathTilesetWidth;
-            let y = Math.floor(i / pathTilesetWidth);
-            pathTextures[i] = new PIXI.Texture(
-                resources.pathTileset.texture,
+          let pathsTextures = [];
+          for (let i = 0; i < pathsTilesetDimension.width * pathsTilesetDimension.height; i++) {
+            let x = i % pathsTilesetDimension.width;
+            let y = Math.floor(i / pathsTilesetDimension.width);
+            pathsTextures[i] = new PIXI.Texture(
+                resources.pathsTileset.texture,
                 new PIXI.Rectangle(x * tileSize, y * tileSize, tileSize, tileSize)
             );
           }
 
-          for (let i = 0; i < links.length; i++){
-            app.stage.addChild(getContainerFromPathObject(links[i], stations, tileSize, pathTextures));
+          let stationsTextures = [];
+          for (let i = 0; i < stationsTilesetDimension.width * stationsTilesetDimension.height; i++) {
+            let x = i % stationsTilesetDimension.width;
+            let y = Math.floor(i / stationsTilesetDimension.width);
+            stationsTextures[i] = new PIXI.Texture(
+                resources.stationsTileset.texture,
+                new PIXI.Rectangle(x * tileSize, y * tileSize, tileSize, tileSize)
+            );
           }
-          app.stage.addChild(getContainerFromStations(stations, tileSize, pathTextures));
 
+          /*for (let i = 0; i < links.length; i++){
+            app.stage.addChild(getContainerFromPathObject(links[i], stations, tileSize, pathTextures));
+          }*/
+          let links = new PIXI.Container();
+          for (let row = 0; row < mapDimension.height; row++){
+            for (let col = 0; col < mapDimension.width; col++){
+              let texture = pathsTextures[paths[row][col]];
+              let sprite = new PIXI.Sprite(texture);
+              sprite.x = tileSize * col;
+              sprite.y = tileSize * row;
+              links.addChild(sprite);
+            }
+          }
+          app.stage.addChild(links);
+          app.stage.addChild(getContainerFromStations(stations, tileSize, stationsTextures));
         });
 
 
