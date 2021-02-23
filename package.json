@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "node-sass": "^5.0.0",
     "pixi.js": "^5.3.8",
+    "pixi.js-legacy": "^5.3.8",
     "sass-loader": "^10.1.1",
     "serve": "^11.3.2",
     "socket.io-client": "^2",

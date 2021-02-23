@@ -6,7 +6,7 @@ const keyScrollSpeed = 5;
 const tileSize = 64;
 const pathsTilesetDimension = {
     width: 4,
-    height: 15
+    height: 18
 }
 const stationsTilesetDimension = {
     width: 3,
