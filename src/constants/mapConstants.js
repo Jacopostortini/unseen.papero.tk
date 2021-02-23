@@ -12,67 +12,14 @@ const stationsTilesetDimension = {
     width: 3,
     height: 1
 }
+const backgroundTilesetDimension = {
+    width: 2,
+    height: 4
+}
 const mapDimension = {
     width: 60,
     height: 40
 };
-
-Array.prototype.equals = function(arr){
-    if(!arr) return false;
-    if(this.length !== arr.length) return false;
-    for(let i = 0; i < this.length; i++){
-        if(this[i] !== arr[i]) return false;
-    }
-    return true;
-}
-
-Array.prototype.containsArray = function (arr, from){
-    if(!arr) return false;
-    for (let i = from || 0; i < this.length; i++){
-        if(this[i].equals(arr)) return true;
-    }
-    return false;
-}
-
-function getContainerFromPathObject(path, stations, tileSize, tileTextures){
-    let from = stations[path.from-1].point;
-    let to = stations[path.to-1].point;
-    let currentPoint = [...from];
-    let currentDirection = path.direction;
-    let m = Math.sign( ( to[1]-from[1] ) / ( to[0]-from[0]) );
-    let turnsDone = 0;
-    let container = new PIXI.Container();
-    while(!currentPoint.equals(to)){
-        let sprite;
-        if(currentDirection===0) currentPoint[0] += (m===0) ? 1 : m;
-        else currentPoint[1]++;
-        if(currentPoint.equals((to))) break;
-        let isTurningPoint = path.turns.containsArray(currentPoint, turnsDone);
-        if (isTurningPoint) {
-            if(path.type < 3) {
-                if (m === 1) sprite = new PIXI.Sprite(tileTextures[2 * 3 * path.type + 2 + 1 + currentDirection]);
-                else sprite = new PIXI.Sprite(tileTextures[2 * 3 * path.type + 2 + 3 * currentDirection]);
-            } else {
-                sprite = new PIXI.Sprite(tileTextures[8 * path.type - 6 + 2 + 2*(m+1) + currentDirection]);
-            }
-            currentDirection = 1 - currentDirection;
-            turnsDone++;
-        } else {
-            if(path.type < 3) {
-                sprite = new PIXI.Sprite(tileTextures[2 * 3 * path.type + currentDirection]);
-            } else {
-                m = m===0 ? 1 : m;
-                sprite = new PIXI.Sprite(tileTextures[8 * path.type - 6 + 2*(m+1) + currentDirection]);
-            }
-
-        }
-        sprite.x = tileSize * currentPoint[0];
-        sprite.y = tileSize * currentPoint[1];
-        container.addChild(sprite);
-    }
-    console.log(path.from, path.to);
-    return container;
-}
 
 function getContainerFromStations(stations, tileSize, tileTextures){
     let container = new PIXI.Container();
@@ -136,8 +83,8 @@ export {
     tileSize,
     pathsTilesetDimension,
     stationsTilesetDimension,
+    backgroundTilesetDimension,
     mapDimension,
-    getContainerFromPathObject,
     getContainerFromStations,
     verticalScroll,
     horizontalScroll,
