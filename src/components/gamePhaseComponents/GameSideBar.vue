@@ -9,19 +9,19 @@
 
 
     <div class="game-sidebar-normal__transport-cards" v-if="!currentPlayer.is_mister_x">
-      <div class="game-sidebar-normal__transport-wrapper">
+      <div class="game-sidebar-normal__transport-wrapper" v-if="remainingTaxis">
         <TransportCard v-for="n in remainingTaxis"
                       :key="n"
                       :src="require('@/assets/meansOfTransport/taxi_icon.png')"
                       color="yellow"/>
       </div>
-      <div class="game-sidebar-normal__transport-wrapper">
+      <div class="game-sidebar-normal__transport-wrapper" v-if="remainingBuses">
         <TransportCard v-for="n in remainingBuses"
                       :key="n"
                       :src="require('@/assets/meansOfTransport/bus_icon.png')"
                       color="blue"/>
       </div>
-      <div class="game-sidebar-normal__transport-wrapper">
+      <div class="game-sidebar-normal__transport-wrapper" v-if="remainingUndergrounds">
         <TransportCard v-for="n in remainingUndergrounds"
                       :key="n"
                       :src="require('@/assets/meansOfTransport/underground_icon.svg')"
@@ -29,13 +29,13 @@
       </div>
     </div>
     <div class="game-sidebar-normal__transport-cards" v-else>
-      <div class="game-sidebar-normal__transport-wrapper">
+      <div class="game-sidebar-normal__transport-wrapper" v-if="remainingSecretMoves">
         <TransportCard v-for="n in remainingSecretMoves"
                        :key="n"
                        :src="require('@/assets/meansOfTransport/secret_transport_icon.png')"
                        color="black"/>
       </div>
-      <div class="game-sidebar-normal__transport-wrapper">
+      <div class="game-sidebar-normal__transport-wrapper" v-if="remainingDoubleTurn">
         <TransportCard v-for="n in remainingDoubleTurn"
                        :key="n"
                        :src="require('@/assets/meansOfTransport/2x_icon.png')"
@@ -82,6 +82,7 @@ export default {
       return gameConfig.underground-this.currentPlayer.used_underground;
     },
     remainingSecretMoves: function (){
+      console.log(gameConfig.taxi-this.currentPlayer.used_secret_moves);
       return gameConfig.secret_moves-this.currentPlayer.used_secret_moves;
     },
     remainingDoubleTurn: function (){

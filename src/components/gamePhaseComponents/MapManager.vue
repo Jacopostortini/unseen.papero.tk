@@ -10,7 +10,6 @@
 import *  as PIXI from "pixi.js-legacy";
 import {
   backgroundTilesetDimension,
-  //getContainerFromPathObject,
   getContainerFromStations,
   keyPressed,
   mapDimension,
