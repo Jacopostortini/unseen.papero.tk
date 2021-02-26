@@ -44,48 +44,48 @@ function keyPressed(event, instance) {
         case "w":
             instance.panBy({
                 originX: 0,
-                originY: -keyScrollSpeed
+                originY: keyScrollSpeed
             });
             break;
         case "arrowup":
             instance.panBy({
                 originX: 0,
-                originY: -keyScrollSpeed
+                originY: keyScrollSpeed
             });
             break;
         case "a":
             instance.panBy({
-                originX: -keyScrollSpeed,
+                originX: keyScrollSpeed,
                 originY: 0
             });
             break;
         case "arrowleft":
             instance.panBy({
-                originX: -keyScrollSpeed,
+                originX: keyScrollSpeed,
                 originY: 0
             });
             break;
         case "s":
             instance.panBy({
                 originX: 0,
-                originY: keyScrollSpeed
+                originY: -keyScrollSpeed
             });
             break;
         case "arrowdown":
             instance.panBy({
                 originX: 0,
-                originY: keyScrollSpeed
+                originY: -keyScrollSpeed
             });
             break;
         case "d":
             instance.panBy({
-                originX: keyScrollSpeed,
+                originX: -keyScrollSpeed,
                 originY: 0
             });
             break;
         case "arrowright":
             instance.panBy({
-                originX: keyScrollSpeed,
+                originX: -keyScrollSpeed,
                 originY: 0
             });
             break;
