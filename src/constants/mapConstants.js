@@ -39,40 +39,55 @@ function getContainerFromStations(stations, tileSize, tileTextures){
     return container;
 }
 
-function verticalScroll(number, element) {
-    element.scrollTop += number;
-}
-
-function horizontalScroll(number, element) {
-    element.scrollLeft += number;
-}
-
 function keyPressed(event, instance) {
-    let elementClass = ".map-manager__main-panel";
     switch (event.key.toString().toLowerCase()){
         case "w":
-            verticalScroll(-keyScrollSpeed, document.querySelector(elementClass));
+            instance.panBy({
+                originX: 0,
+                originY: -keyScrollSpeed
+            });
             break;
         case "arrowup":
-            verticalScroll(-keyScrollSpeed, document.querySelector(elementClass));
+            instance.panBy({
+                originX: 0,
+                originY: -keyScrollSpeed
+            });
             break;
         case "a":
-            horizontalScroll(-keyScrollSpeed, document.querySelector(elementClass));
+            instance.panBy({
+                originX: -keyScrollSpeed,
+                originY: 0
+            });
             break;
         case "arrowleft":
-            horizontalScroll(-keyScrollSpeed, document.querySelector(elementClass));
+            instance.panBy({
+                originX: -keyScrollSpeed,
+                originY: 0
+            });
             break;
         case "s":
-            verticalScroll(keyScrollSpeed, document.querySelector(elementClass));
+            instance.panBy({
+                originX: 0,
+                originY: keyScrollSpeed
+            });
             break;
         case "arrowdown":
-            verticalScroll(keyScrollSpeed, document.querySelector(elementClass));
+            instance.panBy({
+                originX: 0,
+                originY: keyScrollSpeed
+            });
             break;
         case "d":
-            horizontalScroll(keyScrollSpeed, document.querySelector(elementClass));
+            instance.panBy({
+                originX: keyScrollSpeed,
+                originY: 0
+            });
             break;
         case "arrowright":
-            horizontalScroll(keyScrollSpeed, document.querySelector(elementClass));
+            instance.panBy({
+                originX: keyScrollSpeed,
+                originY: 0
+            });
             break;
         case "+":
             instance.zoom({
@@ -102,7 +117,5 @@ export {
     backgroundTilesetDimension,
     mapDimension,
     getContainerFromStations,
-    verticalScroll,
-    horizontalScroll,
     keyPressed
 }
