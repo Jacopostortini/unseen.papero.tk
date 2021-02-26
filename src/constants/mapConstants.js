@@ -1,7 +1,8 @@
-import * as PIXI from "pixi.js";
+import * as PIXI from "pixi.js-legacy";
 
-const zoomFunctionBase = 1.1;
-const mouseWheelReductionFactor = 100;
+const minZoom = 0.15;
+const maxZoom = 1;
+const zoomSensibility = 15;
 const keyScrollSpeed = 5;
 const tileSize = 64;
 const pathsTilesetDimension = {
@@ -46,7 +47,7 @@ function horizontalScroll(number, element) {
     element.scrollLeft += number;
 }
 
-function keyPressed(event) {
+function keyPressed(event, instance) {
     let elementClass = ".map-manager__main-panel";
     switch (event.key.toString().toLowerCase()){
         case "w":
@@ -73,12 +74,27 @@ function keyPressed(event) {
         case "arrowright":
             horizontalScroll(keyScrollSpeed, document.querySelector(elementClass));
             break;
+        case "+":
+            instance.zoom({
+                deltaScale: 1,
+                x: 0,
+                y: 0
+            });
+            break;
+        case "-":
+            instance.zoom({
+                deltaScale: -1,
+                x: 0,
+                y: 0
+            });
+            break;
     }
 }
 
 export {
-    zoomFunctionBase,
-    mouseWheelReductionFactor,
+    minZoom,
+    maxZoom,
+    zoomSensibility,
     keyScrollSpeed,
     tileSize,
     pathsTilesetDimension,

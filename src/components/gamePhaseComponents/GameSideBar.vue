@@ -82,7 +82,6 @@ export default {
       return gameConfig.underground-this.currentPlayer.used_underground;
     },
     remainingSecretMoves: function (){
-      console.log(gameConfig.taxi-this.currentPlayer.used_secret_moves);
       return gameConfig.secret_moves-this.currentPlayer.used_secret_moves;
     },
     remainingDoubleTurn: function (){

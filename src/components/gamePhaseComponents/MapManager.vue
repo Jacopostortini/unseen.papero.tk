@@ -1,9 +1,6 @@
 <template>
   <div class="map-manager__main-panel"
-       id="map-manager__main-panel"
-       @mousedown="mouseDown"
-       @mousemove="mouseMove"
-       @mouseup="mouseUp"></div>
+       id="map-manager__main-panel"></div>
 </template>
 
 <script>
@@ -12,29 +9,22 @@ import {
   backgroundTilesetDimension,
   getContainerFromStations,
   keyPressed,
-  mapDimension,
-  mouseWheelReductionFactor,
+  mapDimension, maxZoom, minZoom,
   pathsTilesetDimension,
   stationsTilesetDimension,
-  tileSize,
-  zoomFunctionBase
+  tileSize, zoomSensibility
 } from "../../constants/mapConstants";
 import stations from "../../constants/stations";
-import {onMounted, computed, ref} from "vue";
+import {onMounted, ref} from "vue";
 import pathsTilesetImage from "../../assets/pathsTileset.png";
 import stationsTilesetImage from "../../assets/stationsTileset.png";
 import backgroundTilesetImage from "../../assets/backgroundTileset.png";
 import paths from "../../constants/paths";
 import backgrounds from "../../constants/background";
+import renderer from "../../modules/renderer";
 export default {
   name: "MapManager",
   setup() {
-    const deltaY = ref(0);
-    const dragging = ref(false);
-    const scale = computed(function (){
-      return Math.pow(zoomFunctionBase, deltaY.value/mouseWheelReductionFactor);
-    });
-
     const app = new PIXI.Application({
       width: tileSize * mapDimension.width,
       height: tileSize * mapDimension.height,
@@ -84,6 +74,7 @@ export default {
 
           let links = new PIXI.Container();
           let background = new PIXI.Container();
+
           for (let row = 0; row < mapDimension.height; row++){
             for (let col = 0; col < mapDimension.width; col++){
               let pathTexture = pathsTextures[paths[row][col]];
@@ -109,50 +100,56 @@ export default {
       console.error(e);
     });
 
-    function mouseDown() {
-      dragging.value = true;
-    }
-
-    function mouseMove(event) {
-      if(dragging.value){
-        event.target.parentNode.style.cursor = "move";
-        event.target.parentNode.scrollLeft -= event.movementX;
-        event.target.parentNode.scrollTop -= event.movementY;
-      }
-    }
-
-    function mouseUp(event) {
-      dragging.value = false;
-      event.target.parentNode.style.cursor = "auto";
-    }
-
-    function zoom(event) {
-      let zoomFactor = 1;
-      if(deltaY.value+event.deltaY<0){
-        deltaY.value = 0;
-      } else {
-        deltaY.value += event.deltaY;
-        zoomFactor = Math.pow(zoomFunctionBase, event.deltaY/mouseWheelReductionFactor);
-      }
-      let panel = document.querySelector(".map-manager__main-panel");
-      let sL = event.offsetX*(zoomFactor-1)+panel.scrollLeft*zoomFactor;
-      let sT = event.offsetY*(zoomFactor-1)+panel.scrollTop*zoomFactor;
-      panel.scrollLeft = Math.round(sL);
-      panel.scrollTop = Math.round(sT);
-    }
-
     onMounted(() => {
       document.getElementById("map-manager__main-panel").appendChild(app.view);
-      window.addEventListener("keydown", keyPressed);
+      const dragging = ref(false);
+
+      const container = document.getElementById("map-manager__main-panel");
+      const instance = renderer({
+        minScale: minZoom,
+        maxScale: maxZoom,
+        element: container.children[0],
+        scaleSensitivity: zoomSensibility
+      });
+
+      instance.zoom({
+        deltaScale: -11,
+        x: window.innerWidth/50,
+        y: window.innerHeight/20
+      })
+
+      container.addEventListener("wheel", (event) => {
+        if (event.ctrlKey) return;
+        event.preventDefault();
+        instance.zoom({
+          deltaScale: Math.sign(event.deltaY),
+          x: event.pageX,
+          y: event.pageY
+        });
+      });
+
+      container.addEventListener("mousedown", () => {
+        dragging.value = true;
+        document.body.style.cursor = "move";
+      });
+
+      container.addEventListener("mousemove", (event) => {
+        if (!dragging.value) return;
+        event.preventDefault();
+        instance.panBy({
+          originX: event.movementX,
+          originY: event.movementY
+        });
+      });
+
+      container.addEventListener("mouseup", () => {
+        dragging.value = false;
+        document.body.style.cursor = "default";
+      });
+
+      window.addEventListener("keydown", (event) => keyPressed(event, instance));
     });
 
-    return{
-      scale,
-      mouseDown,
-      mouseMove,
-      mouseUp,
-      zoom
-    }
   }
 }
 </script>
