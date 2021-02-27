@@ -11,8 +11,23 @@
 <script>
 import GameSideBar from "./gamePhaseComponents/GameSideBar";
 import {defineAsyncComponent} from "vue";
+import LoadingMap from "./gamePhaseComponents/LoadingMap";
+import {loaderParameters} from "../constants/mapConstants";
 
-const MapManager = defineAsyncComponent(() => import("./gamePhaseComponents/MapManager" /* webpackChunkName: "mapManager" */));
+const MapManager = defineAsyncComponent({
+  loader: () => new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(import("./gamePhaseComponents/MapManager" /* webpackChunkName: "mapManager" */))
+        }, loaderParameters.latency);
+      }),
+  delay: loaderParameters.delay,
+  timeout: loaderParameters.timeout,
+  errorComponent: LoadingMap,
+  loadingComponent: LoadingMap,
+  onError: (error, retry) => {
+    retry();
+  }
+});
 
 export default {
   name: "GamePhase",

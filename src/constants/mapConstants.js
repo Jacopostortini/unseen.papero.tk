@@ -1,5 +1,10 @@
 import * as PIXI from "pixi.js-legacy";
 
+const loaderParameters = {
+    latency: 1000,
+    delay: 0,
+    timeout: 3000
+}
 const minZoom = 0.15;
 const maxZoom = 1;
 const zoomSensibility = 15;
@@ -122,6 +127,7 @@ function findStationByPosition(x, y, stations){
 }
 
 export {
+    loaderParameters,
     minZoom,
     maxZoom,
     zoomSensibility,
