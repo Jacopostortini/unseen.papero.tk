@@ -155,6 +155,33 @@ export default {
         }
       });
 
+      let previousTouch;
+      container.addEventListener("touchstart", (event) => {
+        if(event.touches.length === 1) {
+          date = new Date().getTime();
+          previousTouch = event;
+        }
+      });
+
+      container.addEventListener("touchmove", (event) => {
+        if(event.touches.length === 1){
+          //console.log(event);
+          let dx = event.touches[0].pageX-previousTouch.touches[0].pageX;
+          let dy = event.touches[0].pageY-previousTouch.touches[0].pageY;
+          instance.panBy({
+            originX: dx,
+            originY: dy
+          });
+          previousTouch = event;
+        }
+      });
+
+      container.addEventListener("touchend", (event) => {
+        if (event.touches.length === 1){
+          previousTouch = null;
+        }
+      });
+
       window.addEventListener("keydown", (event) => keyPressed(event, instance));
     });
 

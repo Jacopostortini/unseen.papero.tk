@@ -2,6 +2,19 @@
   <router-view/>
 </template>
 
+<script>
+export default {
+  name: "App",
+  mounted() {
+    try {
+      screen.orientation.lock("landscape");
+    } catch (e) {
+      console.log(e);
+    }
+  }
+}
+</script>
+
 <style lang="scss">
 @import "styles/global";
 
