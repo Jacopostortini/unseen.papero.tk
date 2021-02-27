@@ -6,7 +6,7 @@
 <script>
 import *  as PIXI from "pixi.js-legacy";
 import {
-  backgroundTilesetDimension,
+  backgroundTilesetDimension, findStationByPosition,
   getContainerFromStations,
   keyPressed,
   mapDimension, maxZoom, minZoom,
@@ -128,9 +128,11 @@ export default {
         });
       });
 
+      let date;
       container.addEventListener("mousedown", () => {
         dragging.value = true;
         document.body.style.cursor = "move";
+        date = new Date().getTime();
       });
 
       container.addEventListener("mousemove", (event) => {
@@ -142,9 +144,15 @@ export default {
         });
       });
 
-      container.addEventListener("mouseup", () => {
+      container.addEventListener("mouseup", (event) => {
         dragging.value = false;
         document.body.style.cursor = "default";
+        if (new Date().getTime() - date < 1000) {
+          let x = Math.floor(event.offsetX/tileSize);
+          let y = Math.floor(event.offsetY/tileSize);
+          let clicked = findStationByPosition(x, y, stations);
+          if(clicked) console.log(clicked.number);
+        }
       });
 
       window.addEventListener("keydown", (event) => keyPressed(event, instance));

@@ -106,6 +106,21 @@ function keyPressed(event, instance) {
     }
 }
 
+Array.prototype.equals = function (arr) {
+    if (arr.length !== this.length) return false;
+    for(let i = 0; i < arr.length; i++){
+        if (arr[i]!==this[i]) return false;
+    }
+    return true;
+}
+
+function findStationByPosition(x, y, stations){
+    for(let i = 0; i < stations.length; i++){
+        if(stations[i].point.equals([x, y])) return stations[i];
+    }
+    return null;
+}
+
 export {
     minZoom,
     maxZoom,
@@ -117,5 +132,6 @@ export {
     backgroundTilesetDimension,
     mapDimension,
     getContainerFromStations,
-    keyPressed
+    keyPressed,
+    findStationByPosition
 }
