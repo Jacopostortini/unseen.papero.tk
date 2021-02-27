@@ -90,7 +90,7 @@ export default {
               background.addChild(backgroundSprite);
             }
           }
-          //app.stage.addChild(background);
+          app.stage.addChild(background);
           app.stage.addChild(links);
           app.stage.addChild(getContainerFromStations(stations, tileSize, stationsTextures));
         });
