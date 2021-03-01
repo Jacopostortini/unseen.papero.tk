@@ -73,7 +73,7 @@ export default {
       }
     })
 
-/*    status.value = 1;
+    /*status.value = 1;
     currentPlayer.value = {
       local_id: 0,
       color: -1,
@@ -164,6 +164,7 @@ export default {
     });
 
     const instance = getCurrentInstance();
+    console.log(instance);
 
     socket.on(events.CHAT, data => {
       appendMessage(data);
