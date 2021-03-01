@@ -5,8 +5,10 @@
                        :disable-logout="true"
                        :unread-messages="unreadMessages"
                        :src="hamburgerMenuImage"
+                       :show="showHamburgerMenu"
                        @chat-opened="unreadMessages=false"
-                       @send-message="sendMessage"/>
+                       @send-message="sendMessage"
+                       @toggle-show="showHamburgerMenu=$event"/>
     <PreGamePhase v-if="status===0"
                   :players="players"
                   :current-player="currentPlayer"
@@ -30,7 +32,7 @@ import events from "../constants/webSocketEvents";
 import {useRoute} from "vue-router";
 import io from "socket.io-client";
 import {ref} from "@vue/reactivity";
-import {computed, defineAsyncComponent} from "vue";
+import {computed, defineAsyncComponent, getCurrentInstance} from "vue";
 import PreGamePhase from "../components/PreGamePhase";
 import GamePhase from "../components/GamePhase";
 import PostGamePhase from "../components/PostGamePhase";
@@ -56,6 +58,7 @@ export default {
     const game = ref({});
     const messages = ref([]);
     const unreadMessages = ref(false);
+    const showHamburgerMenu = ref(false);
 
     const hamburgerMenuImage = computed(function (){
       switch (status.value){
@@ -70,7 +73,7 @@ export default {
       }
     })
 
-    status.value = 1;
+/*    status.value = 1;
     currentPlayer.value = {
       local_id: 0,
       color: -1,
@@ -123,7 +126,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ]
+    ]*/
 
     socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});
 
@@ -160,9 +163,15 @@ export default {
       setupData(data);
     });
 
+    const instance = getCurrentInstance();
+
     socket.on(events.CHAT, data => {
       appendMessage(data);
       unreadMessages.value = true;
+      if(data._from === -1) instance.ctx.$toast.info(data.message, {
+        duration: 3000,
+        maxToasts: 4
+      });
     })
 
     function joinGame() {
@@ -236,6 +245,7 @@ export default {
       game,
       messages,
       unreadMessages,
+      showHamburgerMenu,
       joinGame,
       quitGame,
       kickPlayer,

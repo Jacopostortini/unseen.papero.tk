@@ -38,12 +38,12 @@ export default {
     unreadMessages: Boolean,
     src: {
       required: true
-    }
+    },
+    show: Boolean
   },
   data(){
     return{
-      store: useStore(),
-      show: false
+      store: useStore()
     }
   },
   computed: {
@@ -55,11 +55,11 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener("click", ()=>{this.show=false});
+    window.addEventListener("click", ()=>{this.$emit("toggle-show", false)});
   },
   methods: {
     toggleMenu(){
-      this.show = !this.show;
+      this.$emit("toggle-show", !this.show);
       this.$emit("chat-opened");
     },
     redirectToHome(){
