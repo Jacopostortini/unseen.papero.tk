@@ -70,7 +70,7 @@ export default {
       }
     })
 
-    /*status.value = 1;
+    status.value = 1;
     currentPlayer.value = {
       local_id: 0,
       color: -1,
@@ -81,7 +81,8 @@ export default {
       used_bus: 0,
       used_underground: 0,
       used_secret_moves: 0,
-      used_double_turns: 0
+      used_double_turns: 0,
+      online: true
     }
     players.value = [
       currentPlayer.value,
@@ -90,25 +91,28 @@ export default {
         color: 1,
         is_mister_x: false,
         is_admin: false,
-        username: "matteo"
+        username: "matteo",
+        online: true
       },
       {
         local_id: 2,
         color: 2,
         is_mister_x: false,
         is_admin: false,
-        username: "rami"
+        username: "rami",
+        online: false
       },
       {
         local_id: 3,
         color: 3,
         is_mister_x: false,
         is_admin: false,
-        username: "tave"
+        username: "tave",
+        online: true
       }
     ]
     game.value = {
-      playingPlayer: 1
+      playingPlayer: 0
     }
 
     messages.value = [
@@ -119,7 +123,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ]*/
+    ]
 
     socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});
 

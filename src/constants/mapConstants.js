@@ -20,7 +20,7 @@ const stationsTilesetDimension = {
 }
 const backgroundTilesetDimension = {
     width: 2,
-    height: 4
+    height: 3
 }
 const mapDimension = {
     width: 60,
