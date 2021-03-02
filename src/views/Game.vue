@@ -176,6 +176,10 @@ export default {
       this.setupData(data);
     });
 
+    this.socket.on(events.GAME_MODIFIED, data => {
+      this.setupData(data);
+    });
+
     this.socket.on(events.CHAT, data => {
       this.messageReceived(data);
     });

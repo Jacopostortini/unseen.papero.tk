@@ -9,6 +9,7 @@ export default {
     CHAT: "chat",
 
     START_GAME: "start-game", //status...tutte le info
+    GAME_MODIFIED: "game-modified",
     MOVE: "move", //{user_id: x, position: y,  players_turn: z}
     MOVE_MISTER_X: "move-mister-x", //{_from: x, _to: y, transport, //{//{user_id: x, players_turn: y, last_moves:(null) [(dall'ultima rivelazione,)
     // move: {_from:, _to: transport:,}]}
