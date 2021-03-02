@@ -100,7 +100,7 @@ export default {
       message.username = this.findUsernameByLocalId(data._from);
       message.body = data.message;
       message.color = this.findColorByLocalId(data._from);
-      message.fromYou = data._from === this.currentPlayer.value.local_id;
+      message.fromYou = data._from === this.currentPlayer.local_id;
       this.messages.push(message);
       let t = setInterval(()=>{
         let chat = document.getElementById("chat-container");
