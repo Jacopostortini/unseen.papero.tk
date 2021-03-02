@@ -1,6 +1,8 @@
 <template>
   <div class="game-phase__main-panel">
-    <MapManager class="game-phase__map-manager"/>
+    <MapManager class="game-phase__map-manager"
+                :players="players"
+                @station-clicked="stationClicked"/>
     <GameSideBar class="game-phase__game-stats"
                        :players="players"
                        :current-player="currentPlayer"
@@ -46,6 +48,13 @@ export default {
     game: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    stationClicked(number){
+      if (this.currentPlayer.local_id === this.game.playingPlayer){
+        this.$emit("move", number);
+      } else return;
     }
   }
 }

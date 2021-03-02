@@ -21,7 +21,8 @@
     <GamePhase v-else-if="status===1"
                :players="players"
                :current-player="currentPlayer"
-               :game="game"/>
+               :game="game"
+               @move="move"/>
     <PostGamePhase v-else-if="status===2"/>
   </div>
 </template>
@@ -155,6 +156,10 @@ export default {
       let msg = message;
       msg._from = this.currentPlayer.local_id;
       this.socket.emit(events.CHAT, msg);
+    },
+    move(number){
+      console.log("moving to "+number)
+      this.socket.emit(events.MOVE, number);
     }
   },
   mounted() {
@@ -208,7 +213,7 @@ export default {
         is_admin: false,
         username: "matteo",
         online: true,
-        position: 2
+        //position: 2
       },
       {
         local_id: 2,

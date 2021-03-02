@@ -1,6 +1,5 @@
 <template>
-  <div class="map-manager__main-panel"
-       id="map-manager__main-panel"></div>
+  <div class="map-manager__main-panel" id="map-manager__main-panel"></div>
 </template>
 
 <script>
@@ -16,16 +15,19 @@ import {
 } from "../../constants/mapConstants";
 import stations from "../../constants/stations";
 import {onMounted, ref} from "vue";
-import pathsTilesetImage from "../../assets/pathsTileset.png";
-import stationsTilesetImage from "../../assets/stationsTileset.png";
-import backgroundTilesetImage from "../../assets/backgroundTileset.png";
-import housesTilesetImage from "../../assets/housesTileset.png";
+import pathsTilesetImage from "../../assets/tilesets/pathsTileset.png";
+import stationsTilesetImage from "../../assets/tilesets/stationsTileset.png";
+import backgroundTilesetImage from "../../assets/tilesets/backgroundTileset.png";
+import housesTilesetImage from "../../assets/tilesets/housesTileset.png";
 import paths from "../../constants/paths";
 import backgrounds from "../../constants/background";
 import renderer from "../../modules/renderer";
 export default {
   name: "MapManager",
-  setup() {
+  props: {
+    players: Array
+  },
+  setup(props, ctx) {
     const app = new PIXI.Application({
       width: tileSize * mapDimension.width,
       height: tileSize * mapDimension.height,
@@ -43,32 +45,34 @@ export default {
         .load((loader, resources) => {
 
           //crop tilesets to get tiles textures
+          let textures = {
+            paths: [],
+            stations: [],
+            backgrounds: []
+          }
 
-          let pathsTextures = [];
           for (let i = 0; i < pathsTilesetDimension.width * pathsTilesetDimension.height; i++) {
             let x = i % pathsTilesetDimension.width;
             let y = Math.floor(i / pathsTilesetDimension.width);
-            pathsTextures[i] = new PIXI.Texture(
+            textures.paths[i] = new PIXI.Texture(
                 resources.pathsTileset.texture,
                 new PIXI.Rectangle(x * tileSize, y * tileSize, tileSize, tileSize)
             );
           }
 
-          let stationsTextures = [];
           for (let i = 0; i < stationsTilesetDimension.width * stationsTilesetDimension.height; i++) {
             let x = i % stationsTilesetDimension.width;
             let y = Math.floor(i / stationsTilesetDimension.width);
-            stationsTextures[i] = new PIXI.Texture(
+            textures.stations[i] = new PIXI.Texture(
                 resources.stationsTileset.texture,
                 new PIXI.Rectangle(x * tileSize, y * tileSize, tileSize, tileSize)
             );
           }
 
-          let backgroundTextures = [];
           for (let i = 0; i < backgroundTilesetDimension.width * backgroundTilesetDimension.height; i++) {
             let x = i % backgroundTilesetDimension.width;
             let y = Math.floor(i / backgroundTilesetDimension.width);
-            backgroundTextures[i] = new PIXI.Texture(
+            textures.backgrounds[i] = new PIXI.Texture(
                 resources.backgroundTileset.texture,
                 new PIXI.Rectangle(x * tileSize, y * tileSize, tileSize, tileSize)
             );
@@ -76,7 +80,7 @@ export default {
           for (let i = 0; i < (housesTilesetDimension.width * housesTilesetDimension.height); i++){
             let x = i % housesTilesetDimension.width;
             let y = Math.floor(i / housesTilesetDimension.width);
-            backgroundTextures[(backgroundTilesetDimension.width * backgroundTilesetDimension.height) + i] = new PIXI.Texture(
+            textures.backgrounds[(backgroundTilesetDimension.width * backgroundTilesetDimension.height) + i] = new PIXI.Texture(
                 resources.housesTileset.texture,
                 new PIXI.Rectangle(x * tileSize, y * tileSize, tileSize, tileSize)
             );
@@ -87,13 +91,13 @@ export default {
 
           for (let row = 0; row < mapDimension.height; row++){
             for (let col = 0; col < mapDimension.width; col++){
-              let pathTexture = pathsTextures[paths[row][col]];
+              let pathTexture = textures.paths[paths[row][col]];
               let pathSprite = new PIXI.Sprite(pathTexture);
               pathSprite.x = tileSize * col;
               pathSprite.y = tileSize * row;
               links.addChild(pathSprite);
 
-              let backgroundTexture = backgroundTextures[backgrounds[row][col]];
+              let backgroundTexture = textures.backgrounds[backgrounds[row][col]];
               let backgroundSprite = new PIXI.Sprite(backgroundTexture);
               backgroundSprite.x = tileSize * col;
               backgroundSprite.y = tileSize * row;
@@ -102,9 +106,38 @@ export default {
           }
           app.stage.addChild(background);
           app.stage.addChild(links);
-          app.stage.addChild(getContainerFromStations(stations, tileSize, stationsTextures));
-        });
+          app.stage.addChild(getContainerFromStations(stations, tileSize, textures.stations));
 
+          let pawnsContainer = new PIXI.Container();
+          props.players.forEach(player => {
+            let texture = textures.stations[player.color+4];
+            let sprite = new PIXI.Sprite(texture);
+            if(player.position) {
+              let point = stations[player.position - 1].point;
+              sprite.x = point[0] * tileSize;
+              sprite.y = point[1] * tileSize;
+            } else {
+              sprite.visible = false;
+            }
+            pawnsContainer.addChild(sprite);
+          });
+
+          app.stage.addChild(pawnsContainer);
+
+          app.ticker.add(()=>{
+            props.players.forEach( (player, index) => {
+              let sprite = pawnsContainer.children[index];
+              if(player.position) {
+                sprite.visible = true;
+                let point = stations[player.position - 1].point;
+                sprite.x = point[0] * tileSize;
+                sprite.y = point[1] * tileSize;
+              } else {
+                sprite.visible = false;
+              }
+            });
+          })
+        });
 
     app.loader.onError.add((e)=>{
       console.error(e);
@@ -161,7 +194,7 @@ export default {
           let x = Math.floor(event.offsetX/tileSize);
           let y = Math.floor(event.offsetY/tileSize);
           let clicked = findStationByPosition(x, y, stations);
-          if(clicked) console.log(clicked.number);
+          if(clicked) ctx.emit("station-clicked", clicked.number);
         }
       });
 

@@ -16,7 +16,7 @@ const pathsTilesetDimension = {
 }
 const stationsTilesetDimension = {
     width: 3,
-    height: 1
+    height: 3
 }
 const backgroundTilesetDimension = {
     width: 2,
