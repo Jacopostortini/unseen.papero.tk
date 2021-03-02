@@ -32,6 +32,7 @@ export default {
 
   .transport-card__image{
     width: 50%;
+    padding: 10%;
   }
 }
 

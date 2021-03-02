@@ -187,8 +187,8 @@ export default {
     this.status = 1;
     this.currentPlayer = {
       local_id: 0,
-      color: -1,
-      is_mister_x: true,
+      color: 1,
+      is_mister_x: false,
       is_admin: true,
       username: "jacopo",
       used_taxi: 0,
@@ -202,8 +202,8 @@ export default {
       this.currentPlayer,
       {
         local_id: 1,
-        color: 1,
-        is_mister_x: false,
+        color: -1,
+        is_mister_x: true,
         is_admin: false,
         username: "matteo",
         online: true

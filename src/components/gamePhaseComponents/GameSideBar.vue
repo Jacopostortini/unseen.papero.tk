@@ -1,5 +1,10 @@
 <template>
   <div class="game-sidebar-normal__main-panel">
+
+    <div class="game-sidebar__title" @click="redirectHome">
+      <h1>Unseen</h1>
+    </div>
+
     <div class="game-sidebar-normal__players">
       <PlayerLabel v-for="player in players"
                    :key="player.local_id"
@@ -55,6 +60,7 @@ import PlayerLabel from "./PlayerLabel";
 import TransportCard from "./TransportCard";
 import { gameConfig } from "../../constants/constants";
 import MisterXTable from "./MisterXTable";
+import {useRouter} from "vue-router";
 export default {
   name: "GameSideBar",
   components: {MisterXTable, TransportCard, PlayerLabel},
@@ -69,6 +75,11 @@ export default {
     game: {
       type: Object,
       required: true
+    }
+  },
+  data(){
+    return {
+      router: useRouter()
     }
   },
   computed: {
@@ -86,7 +97,12 @@ export default {
     },
     remainingDoubleTurn: function (){
       return gameConfig.double_turns-this.currentPlayer.used_double_turns;
-    },
+    }
+  },
+  methods: {
+    redirectHome(){
+      this.router.push({name: "Home"})
+    }
   }
 }
 </script>
@@ -102,11 +118,24 @@ export default {
   background-position: bottom;
 
   display: grid;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto auto 1fr;
   grid-template-columns: 1fr;
 
   justify-content: left;
   padding-top: 10px;
+
+  .game-sidebar__title{
+
+    h1{
+      cursor: pointer;
+      text-align: center;
+      font-size: 5vh;
+      margin: 0;
+      font-weight: normal;
+      font-family: Eutemia;
+    }
+
+  }
 
   .game-sidebar-normal__players{
     width: 100%;
@@ -120,7 +149,6 @@ export default {
     flex-flow: column;
 
     .game-sidebar-normal__transport-wrapper{
-      margin: 1%;
       display: flex;
       flex-flow: row;
       flex-wrap: wrap;

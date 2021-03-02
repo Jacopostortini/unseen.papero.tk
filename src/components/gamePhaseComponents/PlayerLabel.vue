@@ -52,7 +52,7 @@ export default {
 
   img {
     margin: 0 2% 0 5%;
-    height: 10vh;
+    height: 8vh;
   }
 }
 </style>
