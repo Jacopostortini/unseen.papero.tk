@@ -31,8 +31,7 @@ import {colorCorrispectives, webSocketUrl} from "../constants/constants";
 import events from "../constants/webSocketEvents";
 import {useRoute} from "vue-router";
 import io from "socket.io-client";
-import {ref} from "@vue/reactivity";
-import {computed, defineAsyncComponent, getCurrentInstance} from "vue";
+import {defineAsyncComponent} from "vue";
 import PreGamePhase from "../components/PreGamePhase";
 import GamePhase from "../components/GamePhase";
 import PostGamePhase from "../components/PostGamePhase";
@@ -47,21 +46,22 @@ export default {
     GamePhase,
     PostGamePhase
   },
-  setup(){
-    const socket = io(webSocketUrl, {
-      path: "/unseen/socket.io/"
-    });
-    const gameId = useRoute().params.gameId;
-    const status = ref(undefined);
-    const currentPlayer = ref(undefined);
-    const players = ref([]);
-    const game = ref({});
-    const messages = ref([]);
-    const unreadMessages = ref(false);
-    const showHamburgerMenu = ref(false);
-
-    const hamburgerMenuImage = computed(function (){
-      switch (status.value){
+  data(){
+    return {
+      socket: null,
+      gameId: useRoute().params.gameId,
+      status: undefined,
+      currentPlayer: undefined,
+      players: [],
+      game: {},
+      messages: [],
+      unreadMessages: false,
+      showHamburgerMenu: false
+    }
+  },
+  computed: {
+    hamburgerMenuImage: function () {
+      switch (this.status){
         case 0:
           return require("@/assets/hamburger_icon_light.png");
         case 1:
@@ -71,10 +71,116 @@ export default {
         default:
           return require("@/assets/hamburger_icon_light.png");
       }
-    })
+    }
+  },
+  methods: {
+    setupData(data) {
+      console.log(data);
+      this.status = data.status;
+      if(data.your_local_id!=null){
+        data.players.forEach(player => {
+          if(player.local_id===data.your_local_id){
+            this.currentPlayer = player;
+          }
+        })
+      } else {
+        this.currentPlayer = null;
+      }
+      this.players = data.players;
+      this.game = {
+        playingPlayer: data.players_turn,
+        isRevelation: data.is_revelation_turn,
+        lastMisterXKnownPosition: data.last_known_position,
+        misterXMoves: data.mister_x_moves
+      }
+    },
+    appendMessage(data){
+      let message = {};
+      message.localId = data._from;
+      message.username = this.findUsernameByLocalId(data._from);
+      message.body = data.message;
+      message.color = this.findColorByLocalId(data._from);
+      message.fromYou = data._from === this.currentPlayer.value.local_id;
+      this.messages.push(message);
+      let t = setInterval(()=>{
+        let chat = document.getElementById("chat-container");
+        chat.scrollTop = chat.scrollHeight;
+        clearInterval(t);
+      }, 100)
+    },
+    findUsernameByLocalId(id){
+      for(let i = 0; i < this.players.length; i++){
+        if(this.players[i].local_id===id){
+          return this.players[i].username;
+        }
+      }
+      return null;
+    },
+    findColorByLocalId(id){
+      for(let i = 0; i < this.players.length; i++){
+        if(this.players[i].local_id===id){
+          return colorCorrispectives[this.players[i].color];
+        }
+      }
+      return null;
+    },
+    messageReceived(data){
+      this.appendMessage(data);
+      this.unreadMessages = true;
+      if(data._from === -1) this.$toast.info(data.message, {
+        duration: 3000,
+        maxToasts: 4
+      });
+    },
+    joinGame() {
+      this.socket.emit(events.JOIN_GAME);
+    },
+    quitGame() {
+      this.socket.emit(events.QUIT_GAME);
+    },
+    kickPlayer(localId){
+      this.socket.emit(events.KICK_PLAYER, localId);
+    },
+    changeColor(newColor){
+      this.socket.emit(events.CHANGE_COLOR, newColor);
+    },
+    startGame(){
+      this.socket.emit(events.START_GAME);
+    },
+    changeMisterX(newMisterX){
+      this.socket.emit(events.CHANGE_MISTER_X, newMisterX);
+    },
+    sendMessage(message){
+      let msg = message;
+      msg._from = this.currentPlayer.local_id;
+      this.socket.emit(events.CHAT, msg);
+    }
+  },
+  mounted() {
+    this.socket = io(webSocketUrl, {
+      path: "/unseen/socket.io/"
+    });
 
-    /*status.value = 1;
-    currentPlayer.value = {
+    this.socket.emit(events.CONNECT_TO_GAME, {game_id: this.gameId});
+
+    this.socket.on(events.CONNECT_TO_GAME, (data) => {
+      this.setupData(data);
+    });
+
+    this.socket.on(events.LOBBY_MODIFIED, data => {
+      this.setupData(data);
+    });
+
+    this.socket.on(events.START_GAME, data => {
+      this.setupData(data);
+    });
+
+    this.socket.on(events.CHAT, data => {
+      this.messageReceived(data);
+    });
+
+    /*this.status = 1;
+    this.currentPlayer = {
       local_id: 0,
       color: -1,
       is_mister_x: true,
@@ -87,8 +193,8 @@ export default {
       used_double_turns: 0,
       online: true
     }
-    players.value = [
-      currentPlayer.value,
+    this.players = [
+      this.currentPlayer,
       {
         local_id: 1,
         color: 1,
@@ -114,11 +220,11 @@ export default {
         online: true
       }
     ]
-    game.value = {
+    this.game = {
       playingPlayer: 0
     }
 
-    messages.value = [
+    this.messages = [
       {
         body: "ciaooo",
         local_id: 0,
@@ -126,135 +232,8 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ]*/
+    ];*/
 
-    socket.emit(events.CONNECT_TO_GAME, {game_id: gameId});
-
-    function setupData(data){
-      console.log(data);
-      status.value = data.status;
-      if(data.your_local_id!=null){
-        data.players.forEach(player => {
-          if(player.local_id===data.your_local_id){
-            currentPlayer.value = player;
-          }
-        })
-      } else {
-        currentPlayer.value = null;
-      }
-      players.value = data.players;
-      game.value = {
-        playingPlayer: data.players_turn,
-        isRevelation: data.is_revelation_turn,
-        lastMisterXKnownPosition: data.last_known_position,
-        misterXMoves: data.mister_x_moves
-      }
-    }
-
-    socket.on(events.CONNECT_TO_GAME, (data) => {
-      setupData(data);
-    });
-
-    socket.on(events.LOBBY_MODIFIED, data => {
-      setupData(data);
-    });
-
-    socket.on(events.START_GAME, data => {
-      setupData(data);
-    });
-
-    const instance = getCurrentInstance();
-    console.log(instance);
-
-    socket.on(events.CHAT, data => {
-      appendMessage(data);
-      unreadMessages.value = true;
-      if(data._from === -1) instance.ctx.$toast.info(data.message, {
-        duration: 3000,
-        maxToasts: 4
-      });
-    })
-
-    function joinGame() {
-      socket.emit(events.JOIN_GAME);
-    }
-
-    function quitGame() {
-      socket.emit(events.QUIT_GAME);
-    }
-
-    function kickPlayer(localId){
-      socket.emit(events.KICK_PLAYER, localId);
-    }
-
-    function changeColor(newColor){
-      socket.emit(events.CHANGE_COLOR, newColor);
-    }
-
-    function startGame(){
-      socket.emit(events.START_GAME);
-    }
-
-    function changeMisterX(newMisterX){
-      socket.emit(events.CHANGE_MISTER_X, newMisterX);
-    }
-
-    function sendMessage(message){
-      let msg = message;
-      msg._from = currentPlayer.value.local_id;
-      socket.emit(events.CHAT, msg);
-    }
-
-    function appendMessage(data){
-      let message = {};
-      message.localId = data._from;
-      message.username = findUsernameByLocalId(data._from);
-      message.body = data.message;
-      message.color = findColorByLocalId(data._from);
-      message.fromYou = data._from === currentPlayer.value.local_id;
-      messages.value.push(message);
-      let t = setInterval(()=>{
-        let chat = document.getElementById("chat-container");
-        chat.scrollTop = chat.scrollHeight;
-        clearInterval(t);
-      }, 100)
-    }
-
-    function findUsernameByLocalId(id){
-      for(let i = 0; i < players.value.length; i++){
-        if(players.value[i].local_id===id){
-          return players.value[i].username;
-        }
-      }
-      return null;
-    }
-
-    function findColorByLocalId(id){
-      for(let i = 0; i < players.value.length; i++){
-        if(players.value[i].local_id===id){
-          return colorCorrispectives[players.value[i].color];
-        }
-      }
-      return null;
-    }
-
-    return {
-      hamburgerMenuImage,
-      status,
-      currentPlayer,
-      players,
-      game,
-      messages,
-      unreadMessages,
-      showHamburgerMenu,
-      joinGame,
-      quitGame,
-      kickPlayer,
-      changeColor,
-      changeMisterX,
-      startGame,
-      sendMessage
-    }
 
   }
 }
