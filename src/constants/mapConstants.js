@@ -10,22 +10,23 @@ const maxZoom = 1;
 const zoomSensibility = 15;
 const keyScrollSpeed = 5;
 const tileSize = 64;
-const pathsTilesetDimension = {
-    width: 4,
-    height: 18
-}
-const stationsTilesetDimension = {
-    width: 3,
-    height: 3
-}
-const backgroundTilesetDimension = {
-    width: 2,
-    height: 4
-}
-
-const housesTilesetDimension = {
-    width: 2,
-    height: 6
+const tilesetsDimension = {
+    paths: {
+        width: 4,
+        height: 18
+    },
+    stations: {
+        width: 3,
+        height: 3
+    },
+    streets: {
+        width: 2,
+        height: 4
+    },
+    background: {
+        width: 2,
+        height: 6
+    }
 }
 const mapDimension = {
     width: 60,
@@ -138,10 +139,7 @@ export {
     zoomSensibility,
     keyScrollSpeed,
     tileSize,
-    pathsTilesetDimension,
-    stationsTilesetDimension,
-    backgroundTilesetDimension,
-    housesTilesetDimension,
+    tilesetsDimension,
     mapDimension,
     getContainerFromStations,
     keyPressed,
