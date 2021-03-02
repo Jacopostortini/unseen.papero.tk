@@ -7,7 +7,7 @@
 import *  as PIXI from "pixi.js-legacy";
 import {
   backgroundTilesetDimension, findStationByPosition,
-  getContainerFromStations,
+  getContainerFromStations, housesTilesetDimension,
   keyPressed,
   mapDimension, maxZoom, minZoom,
   pathsTilesetDimension,
@@ -19,6 +19,7 @@ import {onMounted, ref} from "vue";
 import pathsTilesetImage from "../../assets/pathsTileset.png";
 import stationsTilesetImage from "../../assets/stationsTileset.png";
 import backgroundTilesetImage from "../../assets/backgroundTileset.png";
+import housesTilesetImage from "../../assets/housesTileset.png";
 import paths from "../../constants/paths";
 import backgrounds from "../../constants/background";
 import renderer from "../../modules/renderer";
@@ -38,6 +39,7 @@ export default {
         .add("pathsTileset", pathsTilesetImage)
         .add("stationsTileset", stationsTilesetImage)
         .add("backgroundTileset", backgroundTilesetImage)
+        .add("housesTileset", housesTilesetImage)
         .load((loader, resources) => {
 
           //crop tilesets to get tiles textures
@@ -68,6 +70,14 @@ export default {
             let y = Math.floor(i / backgroundTilesetDimension.width);
             backgroundTextures[i] = new PIXI.Texture(
                 resources.backgroundTileset.texture,
+                new PIXI.Rectangle(x * tileSize, y * tileSize, tileSize, tileSize)
+            );
+          }
+          for (let i = 0; i < (housesTilesetDimension.width * housesTilesetDimension.height); i++){
+            let x = i % housesTilesetDimension.width;
+            let y = Math.floor(i / housesTilesetDimension.width);
+            backgroundTextures[(backgroundTilesetDimension.width * backgroundTilesetDimension.height) + i] = new PIXI.Texture(
+                resources.housesTileset.texture,
                 new PIXI.Rectangle(x * tileSize, y * tileSize, tileSize, tileSize)
             );
           }

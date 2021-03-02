@@ -22,6 +22,11 @@ const backgroundTilesetDimension = {
     width: 2,
     height: 3
 }
+
+const housesTilesetDimension = {
+    width: 2,
+    height: 6
+}
 const mapDimension = {
     width: 60,
     height: 40
@@ -136,6 +141,7 @@ export {
     pathsTilesetDimension,
     stationsTilesetDimension,
     backgroundTilesetDimension,
+    housesTilesetDimension,
     mapDimension,
     getContainerFromStations,
     keyPressed,

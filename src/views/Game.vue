@@ -184,7 +184,7 @@ export default {
       this.messageReceived(data);
     });
 
-    /*this.status = 1;
+    this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: -1,
@@ -237,7 +237,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];*/
+    ];
 
   }
 }
