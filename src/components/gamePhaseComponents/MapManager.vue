@@ -19,7 +19,7 @@ import {onMounted, ref} from "vue";
 import pathsTilesetImage from "../../assets/pathsTileset.png";
 import stationsTilesetImage from "../../assets/stationsTileset.png";
 import backgroundTilesetImage from "../../assets/backgroundTileset.png";
-import housesTilesetImage from "../../assets/housesTileset.png";
+import housesTilesetImage from "../../assets/testerTileset.png"; //"../../assets/housesTileset.png"
 import paths from "../../constants/paths";
 import backgrounds from "../../constants/background";
 import renderer from "../../modules/renderer";
