@@ -196,7 +196,8 @@ export default {
       used_underground: 0,
       used_secret_moves: 0,
       used_double_turns: 0,
-      online: true
+      online: true,
+      position: 1
     }
     this.players = [
       this.currentPlayer,
@@ -206,7 +207,8 @@ export default {
         is_mister_x: true,
         is_admin: false,
         username: "matteo",
-        online: true
+        online: true,
+        position: 2
       },
       {
         local_id: 2,
@@ -214,7 +216,8 @@ export default {
         is_mister_x: false,
         is_admin: false,
         username: "rami",
-        online: false
+        online: false,
+        position: 3
       },
       {
         local_id: 3,
@@ -222,7 +225,8 @@ export default {
         is_mister_x: false,
         is_admin: false,
         username: "tave",
-        online: true
+        online: true,
+        position: 4
       }
     ]
     this.game = {
