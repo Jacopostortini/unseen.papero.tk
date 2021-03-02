@@ -20,7 +20,7 @@ const stationsTilesetDimension = {
 }
 const backgroundTilesetDimension = {
     width: 2,
-    height: 3
+    height: 4
 }
 
 const housesTilesetDimension = {
