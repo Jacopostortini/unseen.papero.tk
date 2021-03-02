@@ -127,9 +127,10 @@ export default {
     messageReceived(data){
       this.appendMessage(data);
       this.unreadMessages = true;
-      if(data._from === -1) this.$toast.info(data.message, {
+      if(data._from === -1) this.$toast.show(data.message, {
         duration: 3000,
-        maxToasts: 4
+        maxToasts: 4,
+        className: "toast"
       });
     },
     joinGame() {
@@ -234,7 +235,6 @@ export default {
       }
     ];*/
 
-
   }
 }
 </script>
@@ -264,5 +264,24 @@ button {
   &:focus{
     outline: none;
   }
+}
+
+.toast{
+  display: grid;
+  align-items: center;
+  animation-duration: 150ms;
+  margin: 0.5em 0;
+  border-radius: 0.5em;
+  pointer-events: auto;
+  color: #fff;
+  background-color: orange;
+  min-height: 3em;
+  cursor: pointer;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  padding: 0.5em 2em;
+  word-break: break-word;
+  width: fit-content;
+  align-self: flex-end;
+
 }
 </style>
