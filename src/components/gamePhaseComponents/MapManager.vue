@@ -236,6 +236,12 @@ export default {
       container.addEventListener("touchend", (event) => {
         if (event.touches.length === 1){
           previousTouch = null;
+          if (new Date().getTime() - date < 1000) {
+            let x = Math.floor(event.offsetX/tileSize);
+            let y = Math.floor(event.offsetY/tileSize);
+            let clicked = findStationByPosition(x, y, stations);
+            if(clicked) ctx.emit("station-clicked", clicked.number);
+          }
         }
       });
 
