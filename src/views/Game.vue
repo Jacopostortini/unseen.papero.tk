@@ -157,9 +157,9 @@ export default {
       msg._from = this.currentPlayer.local_id;
       this.socket.emit(events.CHAT, msg);
     },
-    move(number){
-      console.log("moving to "+number)
-      this.socket.emit(events.MOVE, number);
+    move(event){
+      console.log(event)
+      this.socket.emit(events.MOVE, event);
     }
   },
   mounted() {
@@ -189,7 +189,7 @@ export default {
       this.messageReceived(data);
     });
 
- /*   this.status = 1;
+    /*this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -202,7 +202,12 @@ export default {
       used_secret_moves: 0,
       used_double_turns: 0,
       online: true,
-      position: 1
+      position: 1,
+      available_moves: {
+        taxi: [8],
+        bus: [47, 59],
+        underground: [47]
+      }
     }
     this.players = [
       this.currentPlayer,
@@ -246,8 +251,8 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];
-*/
+    ];*/
+
   }
 }
 </script>

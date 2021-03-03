@@ -53,7 +53,27 @@ export default {
   methods: {
     stationClicked(number){
       if (this.currentPlayer.local_id === this.game.playingPlayer){
-        this.$emit("move", number);
+        let taxiAvailable = this.currentPlayer.available_moves.taxi.includes(number);
+        let busAvailable = this.currentPlayer.available_moves.bus.includes(number);
+        let undergroundAvailable = this.currentPlayer.available_moves.underground.includes(number);
+        if(!taxiAvailable && !busAvailable && !undergroundAvailable) return;
+        if(taxiAvailable && !busAvailable && !undergroundAvailable) this.$emit("move", {
+          _from: this.currentPlayer.position,
+          _to: number,
+          transport: 0
+        });
+        else if(!taxiAvailable && busAvailable && !undergroundAvailable) this.$emit("move", {
+          _from: this.currentPlayer.position,
+          _to: number,
+          transport: 1
+        });
+        else if(!taxiAvailable && !busAvailable && undergroundAvailable) this.$emit("move", {
+          _from: this.currentPlayer.position,
+          _to: number,
+          transport: 2
+        });
+
+        //this.$emit("move", number);
       } else return;
     }
   }
