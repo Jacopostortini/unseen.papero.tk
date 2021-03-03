@@ -240,6 +240,8 @@ export default {
             let x = Math.floor(event.offsetX/tileSize);
             let y = Math.floor(event.offsetY/tileSize);
             let clicked = findStationByPosition(x, y, stations);
+
+
             if(clicked) ctx.emit("station-clicked", clicked.number);
           }
         }
