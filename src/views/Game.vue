@@ -22,6 +22,7 @@
                :players="players"
                :current-player="currentPlayer"
                :game="game"
+               :changed-status-panel="changedStatusPanel"
                @move="move"/>
     <PostGamePhase v-else-if="status===2"/>
   </div>
@@ -57,7 +58,12 @@ export default {
       game: {},
       messages: [],
       unreadMessages: false,
-      showHamburgerMenu: false
+      showHamburgerMenu: false,
+      changedStatusPanel: {
+        title: null,
+        description: null,
+        show: false
+      }
     }
   },
   computed: {
@@ -77,6 +83,9 @@ export default {
   methods: {
     setupData(data) {
       console.log(data);
+      let wasYourTurn;
+      if(this.currentPlayer) wasYourTurn = this.game.playingPlayer === this.currentPlayer.local_id;
+      let wasRevelation = this.game.isRevelation;
       this.status = data.status;
       if(data.your_local_id!=null){
         data.players.forEach(player => {
@@ -94,6 +103,15 @@ export default {
         lastMisterXKnownPosition: data.last_known_position,
         misterXMoves: data.mister_x_moves
       }
+      if(this.currentPlayer) {
+        let isYourTurn = this.game.playingPlayer === this.currentPlayer.local_id;
+        if (!wasYourTurn && isYourTurn) this.handleEvents("Your turn",
+              "It's your turn! Choose one of the available stations to move!");
+      }
+
+      let isRevelation = this.game.isRevelation;
+      if(!wasRevelation && isRevelation) this.handleEvents("Revelation",
+      "Mister X's position is "+this.game.lastMisterXKnownPosition);
     },
     appendMessage(data){
       let message = {};
@@ -160,6 +178,17 @@ export default {
     move(event){
       console.log(event)
       this.socket.emit(events.MOVE, event);
+    },
+    handleEvents (title, description){
+      this.changedStatusPanel.title = title;
+      this.changedStatusPanel.description = description;
+      this.changedStatusPanel.show = true;
+      const show = async () => {
+        setTimeout(()=>{
+          this.changedStatusPanel.show = false;
+        }, 5000)
+      }
+      show();
     }
   },
   mounted() {
@@ -189,7 +218,7 @@ export default {
       this.messageReceived(data);
     });
 
-    /*this.status = 1;
+    this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -251,8 +280,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];*/
-
+    ];
   }
 }
 </script>
