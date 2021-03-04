@@ -23,7 +23,8 @@
                :current-player="currentPlayer"
                :game="game"
                :changed-status-panel="changedStatusPanel"
-               @move="move"/>
+               @move="move"
+               @close-status-changed-panel="changedStatusPanel.show=false"/>
     <PostGamePhase v-else-if="status===2"/>
   </div>
 </template>
@@ -147,7 +148,7 @@ export default {
       this.appendMessage(data);
       this.unreadMessages = true;
       if(data._from === -1) this.$toast.show(data.message, {
-        duration: 3000,
+        duration: 2000,
         maxToasts: 4,
         className: "toast"
       });
@@ -186,7 +187,7 @@ export default {
       const show = async () => {
         setTimeout(()=>{
           this.changedStatusPanel.show = false;
-        }, 5000)
+        }, 3000)
       }
       show();
     }
@@ -218,7 +219,7 @@ export default {
       this.messageReceived(data);
     });
 
-    /*this.status = 1;
+/*    this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: 1,

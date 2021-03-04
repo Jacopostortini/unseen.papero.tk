@@ -1,5 +1,5 @@
 <template>
-  <div class="status-changed-panel__wrapper">
+  <div class="status-changed-panel__wrapper" @click="$emit('close-status-changed-panel')">
     <div class="status-changed__main-panel">
       <h1>{{title}}</h1>
       <p>{{description}}</p>

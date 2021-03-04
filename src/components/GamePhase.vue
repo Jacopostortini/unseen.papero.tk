@@ -4,7 +4,8 @@
       <StatusChangedPanel
           v-if="changedStatusPanel.show"
           :title="changedStatusPanel.title"
-          :description="changedStatusPanel.description"/>
+          :description="changedStatusPanel.description"
+          @close-status-changed-panel="$emit('close-status-changed-panel')"/>
     </transition>
     <MapManager class="game-phase__map-manager"
                 :players="players"
@@ -13,6 +14,10 @@
                        :players="players"
                        :current-player="currentPlayer"
                        :game="game"/>
+    <ChoiceOfTransportPopup v-if="transportChoice.show"
+                            :choices="transportChoice.choices"
+                            @transport-chosen="onTransportChosen"
+                            @close-popup="transportChoice.show=false"/>
   </div>
 </template>
 
@@ -22,6 +27,7 @@ import {defineAsyncComponent} from "vue";
 import LoadingMap from "./gamePhaseComponents/LoadingMap";
 import {loaderParameters} from "../constants/mapConstants";
 import StatusChangedPanel from "./gamePhaseComponents/StatusChangedPanel";
+import ChoiceOfTransportPopup from "./gamePhaseComponents/ChoiceOfTransportPopup";
 
 const MapManager = defineAsyncComponent({
   loader: () => new Promise((resolve) => {
@@ -41,6 +47,7 @@ const MapManager = defineAsyncComponent({
 export default {
   name: "GamePhase",
   components: {
+    ChoiceOfTransportPopup,
     StatusChangedPanel,
     GameSideBar,
     MapManager
@@ -59,31 +66,53 @@ export default {
     },
     changedStatusPanel: Object
   },
+  data(){
+    return {
+      transportChoice: {
+        show: false,
+        choices: []
+      }
+    }
+  },
   methods: {
     stationClicked(number){
       if (this.currentPlayer.local_id === this.game.playingPlayer){
+        let available = [];
         let taxiAvailable = this.currentPlayer.available_moves.taxi.includes(number);
         let busAvailable = this.currentPlayer.available_moves.bus.includes(number);
         let undergroundAvailable = this.currentPlayer.available_moves.underground.includes(number);
-        if(!taxiAvailable && !busAvailable && !undergroundAvailable) return;
-        if(taxiAvailable && !busAvailable && !undergroundAvailable) this.$emit("move", {
-          _from: this.currentPlayer.position,
-          _to: number,
-          transport: 0
+        available.push(taxiAvailable, busAvailable, undergroundAvailable);
+        let choices = [];
+        available.forEach((a,index) => {
+          if(a) choices.push(index);
         });
-        else if(!taxiAvailable && busAvailable && !undergroundAvailable) this.$emit("move", {
-          _from: this.currentPlayer.position,
-          _to: number,
-          transport: 1
-        });
-        else if(!taxiAvailable && !busAvailable && undergroundAvailable) this.$emit("move", {
-          _from: this.currentPlayer.position,
-          _to: number,
-          transport: 2
-        });
-
-        //this.$emit("move", number);
+        switch (choices.length){
+          case 0:
+            return;
+          case 1:
+            this.$emit("move", {
+              _from: this.currentPlayer.position,
+              _to: number,
+              transport: choices[0]
+            });
+            break;
+          default:
+            this.showChoicePopup(choices, number);
+        }
       }
+    },
+    showChoicePopup(choices, number){
+      this.transportChoice.choices = choices;
+      this.transportChoice.show = true;
+      this.transportChoice.number = number
+    },
+    onTransportChosen(transport){
+      this.transportChoice.show = false;
+      this.$emit("move", {
+        _from: this.currentPlayer.position,
+        _to: this.transportChoice.number,
+        transport: transport
+      });
     }
   }
 }
