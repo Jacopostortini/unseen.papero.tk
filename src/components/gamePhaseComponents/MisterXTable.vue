@@ -5,19 +5,35 @@
               :class="{'mister-x-table__revelation-turn-number': gameConfig.mister_x_is_visible_turns.includes(n)}">
         <span>{{ n }}</span>
       </div>
-      <div class="mister-x-table__turn-transport"/>
+      <div class="mister-x-table__turn-transport">
+        <TransportCard v-if="misterXMoves[n-1]!==null"
+                       :color="colors[misterXMoves[n-1]]"
+                       :src="src[misterXMoves[n-1]]"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { gameConfig } from "../../constants/constants";
+import TransportCard from "./TransportCard";
 
 export default {
   name: "MisterXTable",
+  components: {TransportCard},
+  props: {
+    misterXMoves: Array
+  },
   data(){
     return {
-      gameConfig
+      gameConfig,
+      colors: ["yellow", "blue", "red", "black"],
+      src: [
+        require("../../assets/meansOfTransport/taxi_icon.png"),
+        require("../../assets/meansOfTransport/bus_icon.png"),
+        require("../../assets/meansOfTransport/underground_icon.svg"),
+        require("../../assets/meansOfTransport/secret_transport_icon.png"),
+      ]
     }
   }
 }
@@ -64,6 +80,17 @@ export default {
       max-width: 6vh;
       border-radius: 10px;
       margin-left: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+
+      .transport-card__main-panel{
+        height: 150%;
+        width: 150%;
+        border-radius: 10px;
+        margin: 0;
+      }
     }
   }
 

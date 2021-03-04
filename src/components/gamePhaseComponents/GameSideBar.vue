@@ -40,17 +40,19 @@
                        :src="require('@/assets/meansOfTransport/secret_transport_icon.png')"
                        color="black"/>
       </div>
-      <div class="game-sidebar-normal__transport-wrapper" v-if="remainingDoubleTurn">
-        <TransportCard v-for="n in remainingDoubleTurn"
-                       :key="n"
-                       :src="require('@/assets/meansOfTransport/2x_icon.png')"
-                       color="black"/>
+    </div>
+
+    <div class="double-turn-cards" v-if="currentPlayer.is_mister_x">
+      <div class="double-turn-cards__wrapper" v-if="remainingDoubleTurn">
+        <div v-for="n in remainingDoubleTurn"
+                       :key="n">
+          <button @click="useDoubleTurn">Use double turn</button>
+        </div>
       </div>
     </div>
 
-
     <div class="game-sidebar-normal__misterx-table">
-      <MisterXTable/>
+      <MisterXTable :mister-x-moves="game.misterXMoves"/>
     </div>
   </div>
 </template>
@@ -102,6 +104,11 @@ export default {
   methods: {
     redirectHome(){
       this.router.push({name: "Home"})
+    },
+    useDoubleTurn(){
+      if(this.currentPlayer.local_id === this.game.playingPlayer && this.currentPlayer.is_mister_x){
+        this.$emit("use-double-turn");
+      }
     }
   }
 }
@@ -118,13 +125,15 @@ export default {
   background-position: bottom;
 
   display: grid;
-  grid-template-rows: auto auto auto 1fr;
+  grid-template-rows: auto auto auto auto 1fr;
   grid-template-columns: 1fr;
+  grid-template-areas: "title" "labels" "transports" "double-turns" "mister-x-table";
 
   justify-content: left;
   padding-top: 10px;
 
   .game-sidebar__title{
+    grid-area: title;
 
     h1{
       cursor: pointer;
@@ -138,6 +147,7 @@ export default {
   }
 
   .game-sidebar-normal__players{
+    grid-area: labels;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -145,6 +155,7 @@ export default {
   }
 
   .game-sidebar-normal__transport-cards{
+    grid-area: transports;
     display: flex;
     flex-flow: column;
 
@@ -155,10 +166,46 @@ export default {
     }
   }
 
+  .double-turn-cards{
+    margin: 20px;
+    grid-area: double-turns;
+
+    .double-turn-cards__wrapper{
+      display: grid;
+      align-items: center;
+      justify-content: space-evenly;
+      grid-auto-flow: column;
+
+      div{
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button{
+          border-top-color: red;
+          border-left-color: blue;
+          border-right-color: yellow;
+          border-bottom-color: green;
+          font-size: 3vh;
+          background: -webkit-linear-gradient(0, yellow, red);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+
+          &:hover{
+            border-color: white;
+          }
+        }
+      }
+    }
+  }
+
   .game-sidebar-normal__misterx-table{
+    grid-area: mister-x-table;
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: start;
   }
 }
 </style>

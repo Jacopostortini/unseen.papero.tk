@@ -1,19 +1,19 @@
 <template>
   <div class="game-phase__main-panel">
     <transition name="status-changed-panel-transition">
-      <StatusChangedPanel
-          v-if="changedStatusPanel.show"
-          :title="changedStatusPanel.title"
-          :description="changedStatusPanel.description"
-          @close-status-changed-panel="$emit('close-status-changed-panel')"/>
+      <StatusChangedPanel v-if="changedStatusPanel.show"
+                          :title="changedStatusPanel.title"
+                          :description="changedStatusPanel.description"
+                          @close-status-changed-panel="$emit('close-status-changed-panel')"/>
     </transition>
     <MapManager class="game-phase__map-manager"
                 :players="players"
                 @station-clicked="stationClicked"/>
     <GameSideBar class="game-phase__game-stats"
-                       :players="players"
-                       :current-player="currentPlayer"
-                       :game="game"/>
+                 :players="players"
+                 :current-player="currentPlayer"
+                 :game="game"
+                 @use-double-turn="$emit('use-double-turn')"/>
     <ChoiceOfTransportPopup v-if="transportChoice.show"
                             :choices="transportChoice.choices"
                             @transport-chosen="onTransportChosen"
@@ -86,18 +86,15 @@ export default {
         available.forEach((a,index) => {
           if(a) choices.push(index);
         });
-        switch (choices.length){
-          case 0:
-            return;
-          case 1:
-            this.$emit("move", {
-              _from: this.currentPlayer.position,
-              _to: number,
-              transport: choices[0]
-            });
-            break;
-          default:
-            this.showChoicePopup(choices, number);
+        if(choices.length !== 0 && this.currentPlayer.is_mister_x) choices.push(3);
+        if(choices.length===1) {
+          this.$emit("move", {
+            _from: this.currentPlayer.position,
+            _to: number,
+            transport: choices[0]
+          });
+        } else {
+          this.showChoicePopup(choices, number);
         }
       }
     },

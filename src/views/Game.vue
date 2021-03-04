@@ -24,7 +24,8 @@
                :game="game"
                :changed-status-panel="changedStatusPanel"
                @move="move"
-               @close-status-changed-panel="changedStatusPanel.show=false"/>
+               @close-status-changed-panel="changedStatusPanel.show=false"
+               @use-double-turn="useDoubleTurn"/>
     <PostGamePhase v-else-if="status===2"/>
   </div>
 </template>
@@ -111,8 +112,12 @@ export default {
       }
 
       let isRevelation = this.game.isRevelation;
-      if(!wasRevelation && isRevelation) this.handleEvents("Revelation",
-      "Mister X's position is "+this.game.lastMisterXKnownPosition);
+      if(!wasRevelation && isRevelation) {
+        this.handleEvents("Revelation", "Mister X's position is " + this.game.lastMisterXKnownPosition);
+        this.players.forEach(player => {
+          if(player.is_mister_x) player.position = this.game.lastMisterXKnownPosition;
+        })
+      }
     },
     appendMessage(data){
       let message = {};
@@ -177,8 +182,10 @@ export default {
       this.socket.emit(events.CHAT, msg);
     },
     move(event){
-      console.log(event)
       this.socket.emit(events.MOVE, event);
+    },
+    useDoubleTurn(){
+      this.socket.emit(events.USE_DOUBLE_TURN);
     },
     handleEvents (title, description){
       this.changedStatusPanel.title = title;
@@ -223,7 +230,7 @@ export default {
     this.currentPlayer = {
       local_id: 0,
       color: 1,
-      is_mister_x: false,
+      is_mister_x: true,
       is_admin: true,
       username: "jacopo",
       used_taxi: 0,
@@ -243,8 +250,8 @@ export default {
       this.currentPlayer,
       {
         local_id: 1,
-        color: -1,
-        is_mister_x: true,
+        color: 1,
+        is_mister_x: false,
         is_admin: false,
         username: "matteo",
         online: true,
@@ -270,7 +277,10 @@ export default {
       }
     ]
     this.game = {
-      playingPlayer: 0
+      playingPlayer: 0,
+      misterXMoves: [
+          1,0,0,1,2
+      ]
     }
 
     this.messages = [
