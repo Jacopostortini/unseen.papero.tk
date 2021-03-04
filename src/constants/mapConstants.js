@@ -25,7 +25,7 @@ const tilesetsDimension = {
     },
     background: {
         width: 2,
-        height: 9
+        height: 10
     }
 }
 const mapDimension = {
