@@ -1,5 +1,11 @@
 <template>
   <div class="game-phase__main-panel">
+    <transition name="status-changed-panel-transition">
+      <StatusChangedPanel
+          v-if="changedStatusPanel.show"
+          :title="changedStatusPanel.title"
+          :description="changedStatusPanel.description"/>
+    </transition>
     <MapManager class="game-phase__map-manager"
                 :players="players"
                 @station-clicked="stationClicked"/>
@@ -15,6 +21,7 @@ import GameSideBar from "./gamePhaseComponents/GameSideBar";
 import {defineAsyncComponent} from "vue";
 import LoadingMap from "./gamePhaseComponents/LoadingMap";
 import {loaderParameters} from "../constants/mapConstants";
+import StatusChangedPanel from "./gamePhaseComponents/StatusChangedPanel";
 
 const MapManager = defineAsyncComponent({
   loader: () => new Promise((resolve) => {
@@ -34,6 +41,7 @@ const MapManager = defineAsyncComponent({
 export default {
   name: "GamePhase",
   components: {
+    StatusChangedPanel,
     GameSideBar,
     MapManager
   },
@@ -48,7 +56,8 @@ export default {
     game: {
       type: Object,
       required: true
-    }
+    },
+    changedStatusPanel: Object
   },
   methods: {
     stationClicked(number){
@@ -74,7 +83,7 @@ export default {
         });
 
         //this.$emit("move", number);
-      } else return;
+      }
     }
   }
 }
@@ -90,6 +99,19 @@ export default {
   width: 100%;
   height: 100%;
   color: white;
+}
+
+.status-changed-panel-transition-enter-active,
+.status-changed-panel-transition-leave-active {
+  transition: all 1s ease;
+}
+
+.status-changed-panel-transition-enter-from{
+  transform: translateX(-2000px);
+}
+
+.status-changed-panel-transition-leave-to{
+  transform: translateX(2000px);
 }
 
 </style>

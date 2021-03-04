@@ -23,6 +23,10 @@ const tilesetsDimension = {
         width: 2,
         height: 7
     },
+    buildings: {
+        width: 2,
+        height: 4
+    },
     background: {
         width: 2,
         height: 10
