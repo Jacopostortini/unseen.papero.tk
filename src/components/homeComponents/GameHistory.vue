@@ -29,6 +29,8 @@ export default {
   width: 60%;
   text-align: right;
   z-index: 100;
+  max-height: 60vh;
+  overflow-y: scroll;
 
   span{
     color: white;
