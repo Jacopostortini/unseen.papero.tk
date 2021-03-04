@@ -1,12 +1,12 @@
 <template>
   <div class="choice-popup__main-wrapper"  @click="$emit('close-popup')">
-    <div class="choice-popup__main-panel" @click.stop="">
+    <div class="choice-popup__main-panel">
       <TransportCard class="choice"
                      v-for="(choice, index) in choices"
                      :key="index"
                      :color="colors[choice]"
                      :src="src[choice]"
-                     @click="$emit('transport-chosen', choice)">
+                     @click.stop="$emit('transport-chosen', choice)">
 
       </TransportCard>
     </div>

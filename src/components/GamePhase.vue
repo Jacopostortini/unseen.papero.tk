@@ -86,7 +86,8 @@ export default {
         available.forEach((a,index) => {
           if(a) choices.push(index);
         });
-        if(choices.length !== 0 && this.currentPlayer.is_mister_x) choices.push(3);
+        if(choices.length===0) return;
+        if(this.currentPlayer.is_mister_x) choices.push(3);
         if(choices.length===1) {
           this.$emit("move", {
             _from: this.currentPlayer.position,
