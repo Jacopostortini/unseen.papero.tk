@@ -21,11 +21,11 @@ const tilesetsDimension = {
     },
     streets: {
         width: 2,
-        height: 4
+        height: 7
     },
     background: {
         width: 2,
-        height: 6
+        height: 9
     }
 }
 const mapDimension = {
