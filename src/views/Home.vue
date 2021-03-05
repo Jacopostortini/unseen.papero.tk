@@ -3,7 +3,9 @@
   <Header/>
   <GameHistory :games="games"/>
   <GameButtons/>
-  <UserHamburgerMenu :src="require('@/assets/hamburger_icon_light.png')"/>
+  <UserHamburgerMenu :src="require('@/assets/hamburger_icon_light.png')"
+                     :show="showHamburgerMenu"
+                     @toggle-show="showHamburgerMenu=$event"/>
 </div>
 </template>
 
@@ -27,6 +29,7 @@ export default {
   data(){
     return {
       games: null,
+      showHamburgerMenu: false
     }
   },
   mounted() {
