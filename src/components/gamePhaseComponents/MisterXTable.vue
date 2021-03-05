@@ -7,8 +7,12 @@
       </div>
       <div class="mister-x-table__turn-transport">
         <TransportCard v-if="misterXMoves[n-1]!==null"
-                       :color="colors[misterXMoves[n-1]]"
-                       :src="src[misterXMoves[n-1]]"/>
+                       :class="{'revelation': misterXMoves[n-1] ? misterXMoves[n-1].position : false}"
+                       :color="misterXMoves[n-1] ? colors[misterXMoves[n-1].transport] : null"
+                       :src="misterXMoves[n-1] ? src[misterXMoves[n-1].transport] : null"/>
+        <strong v-if="misterXMoves[n-1] ? misterXMoves[n-1].position : false">
+          {{misterXMoves[n-1].position}}
+        </strong>
       </div>
     </div>
   </div>
@@ -84,12 +88,24 @@ export default {
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      position: relative;
 
       .transport-card__main-panel{
+        z-index: 1;
         height: 150%;
         width: 150%;
         border-radius: 10px;
         margin: 0;
+        transition: all 0.5s;
+
+        &.revelation:hover{
+          opacity: 0;
+        }
+      }
+
+      strong {
+        position: absolute;
+        color: black;
       }
     }
   }

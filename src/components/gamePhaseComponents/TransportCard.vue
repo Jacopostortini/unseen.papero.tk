@@ -9,11 +9,9 @@ export default {
   name: "TransportCard",
   props: {
     src: {
-      type: String,
       required: true
     },
     color: {
-      type: String,
       required: true
     }
   }

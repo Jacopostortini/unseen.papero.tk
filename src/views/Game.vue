@@ -233,7 +233,7 @@ export default {
       this.messageReceived(data);
     });
 
-    /*this.status = 1;
+/*    this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -284,9 +284,24 @@ export default {
       }
     ]
     this.game = {
-      playingPlayer: 1,
+      playingPlayer: 0,
       misterXMoves: [
-          1,0,0,1,2
+        {
+          transport: 0,
+          position: null
+        },
+        {
+          transport: 1,
+          position: null
+        },
+        {
+          transport: 2,
+          position: 30
+        },
+        {
+          transport: 0,
+          position: null
+        }
       ]
     }
 
