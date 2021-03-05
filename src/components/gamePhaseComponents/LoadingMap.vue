@@ -36,7 +36,7 @@ name: "LoadingMap"
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: black;
+    background: white;
     margin: -4px 0 0 -4px;
   }
   .loader div:nth-child(1) {

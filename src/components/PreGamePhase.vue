@@ -138,10 +138,6 @@ export default {
 @import "../styles/global";
 
 .pregame-phase__main-panel{
-  background-image: url("../assets/background_image.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: bottom;
   display: grid;
   justify-items: center;
   align-items: center;

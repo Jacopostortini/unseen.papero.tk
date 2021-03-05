@@ -269,6 +269,8 @@ export default {
       });
 
       window.addEventListener("keydown", (event) => keyPressed(event, instance));
+
+      ctx.emit("map-manager-loaded");
     });
 
   }

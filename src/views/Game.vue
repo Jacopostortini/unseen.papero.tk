@@ -23,6 +23,7 @@
                :current-player="currentPlayer"
                :game="game"
                :changed-status-panel="changedStatusPanel"
+               @map-manager-loaded="mapManagerLoaded"
                @move="move"
                @close-status-changed-panel="changedStatusPanel.show=false"
                @use-double-turn="useDoubleTurn"/>
@@ -65,27 +66,15 @@ export default {
         title: null,
         description: null,
         show: false
-      }
-    }
-  },
-  computed: {
-    hamburgerMenuImage: function () {
-      switch (this.status){
-        case 0:
-          return require("@/assets/hamburger_icon_light.png");
-        case 1:
-          return require("@/assets/hamburger_icon_dark.png");
-        case 2:
-          return require("@/assets/hamburger_icon_light.png");
-        default:
-          return require("@/assets/hamburger_icon_light.png");
-      }
+      },
+      hamburgerMenuImage: require("@/assets/hamburger_icon_light.png")
     }
   },
   methods: {
     setupData(data) {
       console.log(data);
       let wasYourTurn;
+      let previousStatus = this.status;
       if(this.currentPlayer) wasYourTurn = this.game.playingPlayer === this.currentPlayer.local_id;
       let wasRevelation = this.game.isRevelation;
       this.status = data.status;
@@ -107,13 +96,16 @@ export default {
       }
       if(this.currentPlayer) {
         let isYourTurn = this.game.playingPlayer === this.currentPlayer.local_id;
-        if (!wasYourTurn && isYourTurn) this.handleEvents("Your turn",
-              "It's your turn! Choose one of the available stations to move!");
+        if ( ( !wasYourTurn && isYourTurn ) && !( previousStatus!== 1 && this.status===1 )) this.handleEvents("Your turn",
+              "It's your turn! Choose one of the available stations to move!",
+            2500);
       }
 
       let isRevelation = this.game.isRevelation;
       if(!wasRevelation && isRevelation) {
-        this.handleEvents("Revelation", "Mister X's position is " + this.game.lastMisterXKnownPosition);
+        this.handleEvents("Revelation",
+            "Mister X's position is " + this.game.lastMisterXKnownPosition+"! Go catch him!",
+            4000);
         this.players.forEach(player => {
           if(player.is_mister_x) player.position = this.game.lastMisterXKnownPosition;
         })
@@ -187,16 +179,23 @@ export default {
     useDoubleTurn(){
       this.socket.emit(events.USE_DOUBLE_TURN);
     },
-    handleEvents (title, description){
+    handleEvents (title, description, time){
       this.changedStatusPanel.title = title;
       this.changedStatusPanel.description = description;
       this.changedStatusPanel.show = true;
       const show = async () => {
         setTimeout(()=>{
           this.changedStatusPanel.show = false;
-        }, 3000)
+        }, time)
       }
       show();
+    },
+    mapManagerLoaded(){
+      if(this.currentPlayer.local_id === this.game.playingPlayer){
+        this.handleEvents("Your turn",
+            "It's your turn! Choose one of the available stations to move!",
+            2500);
+      }
     }
   },
   mounted() {
@@ -222,11 +221,19 @@ export default {
       this.setupData(data);
     });
 
+    this.socket.on(events.USE_DOUBLE_TURN, () => {
+      if(!this.currentPlayer.is_mister_x){
+        this.handleEvents("Double turn",
+            "Oh no! Mister X played a double turn card, you were close!",
+            4000);
+      }
+    });
+
     this.socket.on(events.CHAT, data => {
       this.messageReceived(data);
     });
 
-/*    this.status = 1;
+    /*this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -277,7 +284,7 @@ export default {
       }
     ]
     this.game = {
-      playingPlayer: 0,
+      playingPlayer: 1,
       misterXMoves: [
           1,0,0,1,2
       ]
@@ -300,6 +307,11 @@ export default {
 @import "../styles/global";
 
 .game__main-panel{
+  background-image: url("../assets/background_image.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+
   width: 100%;
   height: 100%;
   overflow: hidden;

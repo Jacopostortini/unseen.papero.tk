@@ -119,10 +119,7 @@ export default {
 .game-sidebar-normal__main-panel{
   grid-area: sidebar;
 
-  background-image: url("../../assets/background_image.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: bottom;
+
 
   display: grid;
   grid-template-rows: auto auto auto auto 1fr;
