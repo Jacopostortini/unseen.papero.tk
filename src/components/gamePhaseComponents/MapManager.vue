@@ -188,6 +188,7 @@ export default {
           app.stage.addChild(pawnsContainer);
 
           let updatePawns = () => {
+            console.log("updating pawns using: ", props.players);
             props.players.forEach( (player, index) => {
               let sprite = pawnsContainer.children[index];
               if(player.position) {
