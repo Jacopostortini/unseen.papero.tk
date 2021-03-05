@@ -1,5 +1,5 @@
 <template>
-  <div class="game__main-panel">
+  <div class="game__main-panel" @click="click">
     <UserHamburgerMenu :show-chat="true"
                        :messages="messages"
                        :disable-logout="true"
@@ -23,7 +23,6 @@
                :current-player="currentPlayer"
                :game="game"
                :changed-status-panel="changedStatusPanel"
-               @map-manager-loaded="mapManagerLoaded"
                @move="move"
                @close-status-changed-panel="changedStatusPanel.show=false"
                @use-double-turn="useDoubleTurn"/>
@@ -32,6 +31,7 @@
 </template>
 
 <script>
+import mitt from "mitt";
 import {colorCorrispectives, webSocketUrl} from "../constants/constants";
 import events from "../constants/webSocketEvents";
 import {useRoute} from "vue-router";
@@ -40,6 +40,8 @@ import {defineAsyncComponent} from "vue";
 import PreGamePhase from "../components/PreGamePhase";
 import GamePhase from "../components/GamePhase";
 import PostGamePhase from "../components/PostGamePhase";
+
+window.mitt = window.mitt || new mitt();
 
 const UserHamburgerMenu = defineAsyncComponent(() => import("../components/UserHamburgerMenu" /* webpackChunkName: "userHamburgerMenu" */));
 
@@ -74,7 +76,6 @@ export default {
     setupData(data) {
       console.log(data);
       let wasYourTurn;
-      let previousStatus = this.status;
       if(this.currentPlayer) wasYourTurn = this.game.playingPlayer === this.currentPlayer.local_id;
       let wasRevelation = this.game.isRevelation;
       this.status = data.status;
@@ -96,9 +97,15 @@ export default {
       }
       if(this.currentPlayer) {
         let isYourTurn = this.game.playingPlayer === this.currentPlayer.local_id;
-        if ( ( !wasYourTurn && isYourTurn ) && !( previousStatus!== 1 && this.status===1 )) this.handleEvents("Your turn",
-              "It's your turn! Choose one of the available stations to move!",
-            2500);
+        if ( !wasYourTurn && isYourTurn ) this.$toast.show(
+            "It's your turn",
+            {
+              duration: 4000,
+              maxToasts: 4,
+              className: "toast turn-notification",
+              position: "top"
+            }
+        );
       }
 
       let isRevelation = this.game.isRevelation;
@@ -110,6 +117,7 @@ export default {
           if(player.is_mister_x) player.position = this.game.lastMisterXKnownPosition;
         })
       }
+      window.mitt.emit("update-pawns");
     },
     appendMessage(data){
       let message = {};
@@ -189,13 +197,6 @@ export default {
         }, time)
       }
       show();
-    },
-    mapManagerLoaded(){
-      if(this.currentPlayer.local_id === this.game.playingPlayer){
-        this.handleEvents("Your turn",
-            "It's your turn! Choose one of the available stations to move!",
-            2500);
-      }
     }
   },
   mounted() {
@@ -233,7 +234,7 @@ export default {
       this.messageReceived(data);
     });
 
-/*    this.status = 1;
+    /*this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -367,5 +368,10 @@ button {
   width: fit-content;
   align-self: flex-end;
 
+  &.turn-notification {
+    background-color: black;
+    align-self: center;
+    justify-content: start;
+  }
 }
 </style>

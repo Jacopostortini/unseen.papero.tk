@@ -8,8 +8,7 @@
     </transition>
     <MapManager class="game-phase__map-manager"
                 :players="players"
-                @station-clicked="stationClicked"
-                @map-manager-loaded="$emit('map-manager-loaded')"/>
+                @station-clicked="stationClicked"/>
     <GameSideBar class="game-phase__game-stats"
                  :players="players"
                  :current-player="currentPlayer"

@@ -1,5 +1,3 @@
-import * as PIXI from "pixi.js-legacy";
-
 const loaderParameters = {
     latency: 1000,
     delay: 0,
@@ -36,23 +34,6 @@ const mapDimension = {
     width: 60,
     height: 40
 };
-
-function getContainerFromStations(stations, tileSize, tileTextures){
-    let container = new PIXI.Container();
-    for(let i = 0; i < stations.length; i++){
-        let sprite = new PIXI.Sprite(tileTextures[stations[i].type]);
-        sprite.x = tileSize * stations[i].point[0];
-        sprite.y = tileSize * stations[i].point[1];
-        let color = (stations[i].type === 2) ? "white" : "black";
-        let label = new PIXI.Text(stations[i].number, {fontFamily: "sans-serif", fontWeight: "bold", fill: color});
-        label.anchor.x = label.anchor.y = 0.5;
-        label.x = sprite.width / 2;
-        label.y = sprite.height / 2;
-        sprite.addChild(label);
-        container.addChild(sprite);
-    }
-    return container;
-}
 
 function keyPressed(event, instance) {
     switch (event.key.toString().toLowerCase()){
@@ -121,21 +102,6 @@ function keyPressed(event, instance) {
     }
 }
 
-Array.prototype.equals = function (arr) {
-    if (arr.length !== this.length) return false;
-    for(let i = 0; i < arr.length; i++){
-        if (arr[i]!==this[i]) return false;
-    }
-    return true;
-}
-
-function findStationByPosition(x, y, stations){
-    for(let i = 0; i < stations.length; i++){
-        if(stations[i].point.equals([x, y])) return stations[i];
-    }
-    return null;
-}
-
 export {
     loaderParameters,
     minZoom,
@@ -145,7 +111,5 @@ export {
     tileSize,
     tilesetsDimension,
     mapDimension,
-    getContainerFromStations,
-    keyPressed,
-    findStationByPosition
+    keyPressed
 }
