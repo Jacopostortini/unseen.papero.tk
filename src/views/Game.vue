@@ -117,6 +117,7 @@ export default {
           if(player.is_mister_x) player.position = this.game.lastMisterXKnownPosition;
         })
       }
+      setTimeout(()=>{}, 100);
       window.mitt.emit("update-pawns");
     },
     appendMessage(data){
