@@ -4,9 +4,8 @@
 
 <script>
 import *  as PIXI from "pixi.js-legacy";
+import mitt from "mitt";
 import {
-  findStationByPosition,
-  getContainerFromStations,
   keyPressed,
   tilesetsDimension,
   mapDimension,
@@ -28,6 +27,8 @@ import buildings from "../../constants/buildings";
 import background from "../../constants/background";
 
 import renderer from "../../modules/renderer";
+
+window.mitt = window.mitt || new mitt();
 export default {
   name: "MapManager",
   props: {
@@ -138,11 +139,37 @@ export default {
             }
           }
 
+          let stationsContainer = new PIXI.Container();
+          for(let i = 0; i < stations.length; i++){
+            let sprite = new PIXI.Sprite(textures.stations[stations[i].type]);
+            sprite.x = tileSize * stations[i].point[0];
+            sprite.y = tileSize * stations[i].point[1];
+            let color = (stations[i].type === 2) ? "white" : "black";
+            let label = new PIXI.Text(stations[i].number, {fontFamily: "sans-serif", fontWeight: "bold", fill: color});
+            label.anchor.x = label.anchor.y = 0.5;
+            label.x = sprite.width / 2;
+            label.y = sprite.height / 2;
+            sprite.addChild(label);
+            sprite.interactive = true;
+            sprite.buttonMode = true;
+            stationsContainer.addChild(sprite);
+            let clickStarts = () => {
+              sprite.clickStartedDate = new Date().getTime();
+            }
+            let clickEnds = () => {
+              if(new Date().getTime() - sprite.clickStartedDate < 1500) ctx.emit("station-clicked", i+1);
+            }
+            sprite.on("mousedown", clickStarts);
+            sprite.on("touchstart", clickStarts);
+            sprite.on("mouseup", clickEnds);
+            sprite.on("touchend", clickEnds);
+          }
+
           app.stage.addChild(backgroundContainer);
           app.stage.addChild(buildingsContainer);
           app.stage.addChild(streetsContainer);
           app.stage.addChild(pathsContainer);
-          app.stage.addChild(getContainerFromStations(stations, tileSize, textures.stations));
+          app.stage.addChild(stationsContainer);
 
           let pawnsContainer = new PIXI.Container();
           props.players.forEach(player => {
@@ -160,8 +187,9 @@ export default {
 
           app.stage.addChild(pawnsContainer);
 
-          app.ticker.add(()=>{
-            props.players.forEach( (player, index) => {
+          let updatePawns = (players) => {
+            console.log("updating pawns using: ", players);
+            players.forEach( (player, index) => {
               let sprite = pawnsContainer.children[index];
               if(player.position) {
                 sprite.visible = true;
@@ -172,7 +200,8 @@ export default {
                 sprite.visible = false;
               }
             });
-          })
+          };
+          window.mitt.on("update-pawns", updatePawns);
         });
 
     app.loader.onError.add((e)=>{
@@ -207,11 +236,9 @@ export default {
         });
       });
 
-      let date;
       container.addEventListener("mousedown", () => {
         dragging.value = true;
         document.body.style.cursor = "move";
-        date = new Date().getTime();
       });
 
       container.addEventListener("mousemove", (event) => {
@@ -223,21 +250,14 @@ export default {
         });
       });
 
-      container.addEventListener("mouseup", (event) => {
+      container.addEventListener("mouseup", () => {
         dragging.value = false;
         document.body.style.cursor = "default";
-        if (new Date().getTime() - date < 1000) {
-          let x = Math.floor(event.offsetX/tileSize);
-          let y = Math.floor(event.offsetY/tileSize);
-          let clicked = findStationByPosition(x, y, stations);
-          if(clicked) ctx.emit("station-clicked", clicked.number);
-        }
       });
 
       let previousTouch;
       container.addEventListener("touchstart", (event) => {
         if(event.touches.length === 1) {
-          date = new Date().getTime();
           previousTouch = event;
         }
       });
@@ -257,20 +277,10 @@ export default {
       container.addEventListener("touchend", (event) => {
         if (event.touches.length === 1){
           previousTouch = null;
-          if (new Date().getTime() - date < 1000) {
-            let x = Math.floor(event.offsetX/tileSize);
-            let y = Math.floor(event.offsetY/tileSize);
-            let clicked = findStationByPosition(x, y, stations);
-
-
-            if(clicked) ctx.emit("station-clicked", clicked.number);
-          }
         }
       });
 
       window.addEventListener("keydown", (event) => keyPressed(event, instance));
-
-      ctx.emit("map-manager-loaded");
     });
 
   }

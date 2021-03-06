@@ -12,6 +12,7 @@
     "@vue/reactivity": "^3.0.5",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "mitt": "^2.1.0",
     "node-sass": "^5.0.0",
     "pixi.js-legacy": "^5.3.8",
     "sass-loader": "^10.1.1",
