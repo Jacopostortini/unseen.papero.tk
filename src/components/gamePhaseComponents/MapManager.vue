@@ -38,7 +38,7 @@ export default {
     const app = new PIXI.Application({
       width: tileSize * mapDimension.width,
       height: tileSize * mapDimension.height,
-      transparent: true,
+      backgroundColor: 0xf7f7f7,
       antialias: false
     });
 
