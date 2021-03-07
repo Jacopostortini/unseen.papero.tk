@@ -372,7 +372,7 @@ button {
     justify-content: start;
   }
 
-  &.black{background-color: gray(50);}
+  &.black{background-color: #323232;}
 
   &.red{background-color: red;}
 
@@ -383,7 +383,7 @@ button {
   &.pink{background-color: deeppink;}
 
   &.gray{
-    background-color: gray(200);
+    background-color: #c8c8c8;
     color: black;
   }
 }
