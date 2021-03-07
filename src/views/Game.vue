@@ -249,7 +249,7 @@ export default {
       used_secret_moves: 0,
       used_double_turns: 0,
       online: true,
-      position: Math.floor(Math.random()*186+1),
+      position: 8,
       available_moves: {
         taxi: [8],
         bus: [47, 59],

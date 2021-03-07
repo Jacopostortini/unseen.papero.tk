@@ -186,13 +186,14 @@ export default {
 
           let pawnsContainer = new PIXI.Container();
           props.players.forEach(player => {
-            let texture = textures.pawns[player.color];
+            let texture = textures.pawns[player.color+1];
             let sprite = new PIXI.Sprite(texture);
             if(player.position) {
               let point = stations[player.position - 1].point;
               sprite.x = point[0] * tileSize;
               sprite.y = (point[1]-1) * tileSize;
               sprite.interactive = true;
+              console.log(texture)
               sprite.on("mouseover", () => {
                 sprite.texture = textures.paths[70];
               });
