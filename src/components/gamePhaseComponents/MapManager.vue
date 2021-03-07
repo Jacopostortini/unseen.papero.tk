@@ -32,7 +32,8 @@ window.mitt = window.mitt || new mitt();
 export default {
   name: "MapManager",
   props: {
-    players: Array
+    players: Array,
+    currentPlayer: Object
   },
   setup(props, ctx) {
     const app = new PIXI.Application({
@@ -157,7 +158,7 @@ export default {
               sprite.clickStartedDate = new Date().getTime();
             }
             let clickEnds = () => {
-              if(new Date().getTime() - sprite.clickStartedDate < 1500) ctx.emit("station-clicked", i+1);
+              if(new Date().getTime() - sprite.clickStartedDate < 1000) ctx.emit("station-clicked", i+1);
             }
             sprite.on("mousedown", clickStarts);
             sprite.on("touchstart", clickStarts);
@@ -179,6 +180,13 @@ export default {
               let point = stations[player.position - 1].point;
               sprite.x = point[0] * tileSize;
               sprite.y = point[1] * tileSize;
+              sprite.interactive = true;
+              sprite.on("mouseover", () => {
+                sprite.texture = textures.paths[70];
+              });
+              sprite.on("mouseout", () => {
+                sprite.texture = texture;
+              });
             } else {
               sprite.visible = false;
             }
@@ -211,20 +219,36 @@ export default {
     onMounted(() => {
       document.getElementById("map-manager__main-panel").appendChild(app.view);
       const dragging = ref(false);
-
+      const defaultScale = window.innerHeight * 1.5 / 60 / 64;
       const container = document.getElementById("map-manager__main-panel");
       const instance = renderer({
         minScale: minZoom,
         maxScale: maxZoom,
         element: container.children[0],
-        scaleSensitivity: zoomSensibility
+        scaleSensitivity: zoomSensibility,
+        defaultScale: defaultScale
       });
 
-      instance.zoom({
-        deltaScale: -11,
-        x: window.innerWidth/50,
-        y: window.innerHeight/20
-      })
+      instance.toDefault();
+      const zoomToPawn = async (player) => {
+        if(!player.position) return;
+        let x = tileSize * stations[player.position-1].point[0] * defaultScale;
+        let y = tileSize * stations[player.position-1].point[1] * defaultScale;
+        let rep = 0;
+        let t = setInterval(() => {
+          instance.zoom({
+            x,
+            y,
+            deltaScale: 0.05
+          });
+          rep++;
+          if(rep > 200) clearInterval(t);
+        }, 5)
+      }
+      zoomToPawn(props.currentPlayer);
+
+      window.mitt.on("zoom-to-default", instance.toDefault);
+      window.mitt.on("zoom-to-pawn", zoomToPawn);
 
       container.addEventListener("wheel", (event) => {
         if (event.ctrlKey) return;
@@ -241,6 +265,11 @@ export default {
         document.body.style.cursor = "move";
       });
 
+      container.addEventListener("dblclick", (event) => {
+        event.preventDefault();
+        instance.toDefault();
+      })
+
       container.addEventListener("mousemove", (event) => {
         if (!dragging.value) return;
         event.preventDefault();
@@ -256,6 +285,7 @@ export default {
       });
 
       let previousTouch;
+      let lastTapTimeStamp;
       container.addEventListener("touchstart", (event) => {
         if(event.touches.length === 1) {
           previousTouch = event;
@@ -275,8 +305,10 @@ export default {
       });
 
       container.addEventListener("touchend", (event) => {
-        if (event.touches.length === 1){
+        if (event.changedTouches.length === 1){
           previousTouch = null;
+          if(event.timeStamp - lastTapTimeStamp < 500) instance.toDefault();
+          lastTapTimeStamp = event.timeStamp;
         }
       });
 
@@ -293,6 +325,5 @@ export default {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  border-radius: 0 20px 20px 0;
 }
 </style>

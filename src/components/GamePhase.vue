@@ -8,6 +8,7 @@
     </transition>
     <MapManager class="game-phase__map-manager"
                 :players="players"
+                :current-player="currentPlayer"
                 @station-clicked="stationClicked"/>
     <GameSideBar class="game-phase__game-stats"
                  :players="players"
@@ -120,8 +121,9 @@ export default {
 @import "../styles/global";
 
 .game-phase__main-panel{
+  user-select: none;
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: #{"min(150vh, 80%)"} 1fr;
   grid-template-areas: "map sidebar";
   width: 100%;
   height: 100%;

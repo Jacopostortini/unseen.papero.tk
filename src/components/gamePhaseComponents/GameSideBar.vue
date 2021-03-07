@@ -108,6 +108,7 @@ export default {
     useDoubleTurn(){
       if(this.currentPlayer.local_id === this.game.playingPlayer && this.currentPlayer.is_mister_x){
         this.$emit("use-double-turn");
+
       }
     }
   }
@@ -118,9 +119,7 @@ export default {
 
 .game-sidebar-normal__main-panel{
   grid-area: sidebar;
-
-
-
+  overflow-y: scroll;
   display: grid;
   grid-template-rows: auto auto auto auto 1fr;
   grid-template-columns: 1fr;

@@ -3,7 +3,7 @@
        :class="{'player-label__admin-player': player.is_admin}"
        @mouseover="hover=true"
        @mouseleave="hover=false">
-    <p class="kick-player-badge" v-if="hover && currentPlayer.is_admin && !isYou">kick</p>
+    <p class="kick-player-badge" v-if="hover && (currentPlayer ? currentPlayer.is_admin : false) && !isYou">kick</p>
     <img :src="player.is_mister_x ? require('@/assets/pawns/pawn_mister_x.png') : require('@/assets/pawns/pawn_'+player.color+'.png')"
          :class="{'kicked-player': fadeOut, 'hover-animation': hoverPlayerAnimation}"
          @click="kickPlayer">

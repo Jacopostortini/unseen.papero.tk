@@ -152,7 +152,7 @@ export default {
     messageReceived(data){
       this.appendMessage(data);
       this.unreadMessages = true;
-      if(data._from === -1) this.$toast.show(data.message, {
+      this.$toast.show(data.message, {
         duration: 2000,
         maxToasts: 4,
         className: "toast"
@@ -227,6 +227,8 @@ export default {
         this.handleEvents("Double turn",
             "Oh no! Mister X played a double turn card, you were close!",
             4000);
+      } else {
+        this.currentPlayer.used_double_turns++;
       }
     });
 
@@ -234,10 +236,10 @@ export default {
       this.messageReceived(data);
     });
 
-    this.status = 1;
+    /*this.status = 0;
     this.currentPlayer = {
       local_id: 0,
-      color: 1,
+      color: -1,
       is_mister_x: true,
       is_admin: true,
       username: "jacopo",
@@ -247,7 +249,7 @@ export default {
       used_secret_moves: 0,
       used_double_turns: 0,
       online: true,
-      position: 1,
+      position: Math.floor(Math.random()*186+1),
       available_moves: {
         taxi: [8],
         bus: [47, 59],
@@ -258,12 +260,12 @@ export default {
       this.currentPlayer,
       {
         local_id: 1,
-        color: 1,
-        is_mister_x: false,
-        is_admin: false,
+        color: -1,
+        is_mister_x: true,
+        is_admin: true,
         username: "matteo",
         online: true,
-        //position: 2
+        position: 2
       },
       {
         local_id: 2,
@@ -314,7 +316,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];
+    ];*/
   }
 }
 </script>

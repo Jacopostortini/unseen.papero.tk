@@ -49,12 +49,31 @@ const makeZoom = (state) => ({
     }
 });
 
-const renderer = ({ minScale, maxScale, element, scaleSensitivity = 10 }) => {
+const makeToDefault = (state) => ({
+   toDefault: () => {
+       state.element.style.transformOrigin = "0px 0px";
+       state.element.style.transform = getMatrix({
+           scale: state.defaultScale,
+           translateX: 0,
+           translateY: 0
+       });
+       state.transformation = {
+           originX: 0,
+           originY: 0,
+           translateX: 0,
+           translateY: 0,
+           scale: state.defaultScale
+       };
+   }
+});
+
+const renderer = ({ minScale, maxScale, element, scaleSensitivity = 10, defaultScale = 1 }) => {
     const state = {
         element,
         minScale,
         maxScale,
         scaleSensitivity,
+        defaultScale,
         transformation: {
             originX: 0,
             originY: 0,
@@ -63,7 +82,7 @@ const renderer = ({ minScale, maxScale, element, scaleSensitivity = 10 }) => {
             scale: 1
         },
     };
-    return Object.assign({}, makeZoom(state), makePan(state));
+    return Object.assign({}, makeZoom(state), makePan(state), makeToDefault(state));
 };
 
 export default renderer
