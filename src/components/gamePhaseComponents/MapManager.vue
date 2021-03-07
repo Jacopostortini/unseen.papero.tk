@@ -21,6 +21,7 @@ import stationsTilesetImage from "../../assets/tilesets/stationsTileset.png";
 import streetsTilesetImage from "../../assets/tilesets/streetsTileset.png";
 import buildingsTilesetImage from "../../assets/tilesets/buildingsTileset.png";
 import backgroundTilesetImage from "../../assets/tilesets/backgroundTileset.png";
+import pawnsTilesetImage from "../../assets/tilesets/pawnsTileset.png";
 import paths from "../../constants/paths";
 import streets from "../../constants/streets";
 import buildings from "../../constants/buildings";
@@ -51,6 +52,7 @@ export default {
         .add("streetsTileset", streetsTilesetImage)
         .add("buildingsTileset", buildingsTilesetImage)
         .add("backgroundTileset", backgroundTilesetImage)
+        .add("pawnsTileset", pawnsTilesetImage)
         .load((loader, resources) => {
 
           //crop tilesets to get tiles textures
@@ -59,7 +61,8 @@ export default {
             stations: [],
             streets: [],
             buildings: [],
-            backgrounds: []
+            backgrounds: [],
+            pawns: []
           }
 
           for (let i = 0; i < tilesetsDimension.paths.width * tilesetsDimension.paths.height; i++) {
@@ -104,6 +107,15 @@ export default {
             textures.backgrounds[i] = new PIXI.Texture(
                 resources.backgroundTileset.texture,
                 new PIXI.Rectangle(x * tileSize, y * tileSize, tileSize, tileSize)
+            );
+          }
+
+          for (let i = 0; i < tilesetsDimension.pawns.width * tilesetsDimension.pawns.height; i++) {
+            let x = i % tilesetsDimension.pawns.width;
+            let y = Math.floor(i / tilesetsDimension.pawns.width);
+            textures.pawns[i] = new PIXI.Texture(
+                resources.pawnsTileset.texture,
+                new PIXI.Rectangle(x * tileSize, y * tileSize * 2, tileSize, tileSize * 2)
             );
           }
 
@@ -174,12 +186,12 @@ export default {
 
           let pawnsContainer = new PIXI.Container();
           props.players.forEach(player => {
-            let texture = textures.stations[player.color+4];
+            let texture = textures.pawns[player.color];
             let sprite = new PIXI.Sprite(texture);
             if(player.position) {
               let point = stations[player.position - 1].point;
               sprite.x = point[0] * tileSize;
-              sprite.y = point[1] * tileSize;
+              sprite.y = (point[1]-1) * tileSize;
               sprite.interactive = true;
               sprite.on("mouseover", () => {
                 sprite.texture = textures.paths[70];

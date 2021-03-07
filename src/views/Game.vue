@@ -236,7 +236,7 @@ export default {
       this.messageReceived(data);
     });
 
-    /*this.status = 0;
+    this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: -1,
@@ -260,9 +260,9 @@ export default {
       this.currentPlayer,
       {
         local_id: 1,
-        color: -1,
-        is_mister_x: true,
-        is_admin: true,
+        color: 1,
+        is_mister_x: false,
+        is_admin: false,
         username: "matteo",
         online: true,
         position: 2
@@ -316,7 +316,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];*/
+    ];
   }
 }
 </script>

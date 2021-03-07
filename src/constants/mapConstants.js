@@ -15,7 +15,7 @@ const tilesetsDimension = {
     },
     stations: {
         width: 3,
-        height: 3
+        height: 1
     },
     streets: {
         width: 2,
@@ -28,8 +28,13 @@ const tilesetsDimension = {
     background: {
         width: 2,
         height: 10
+    },
+    pawns: {
+        width: 3,
+        height: 2
     }
 }
+
 const mapDimension = {
     width: 60,
     height: 40
