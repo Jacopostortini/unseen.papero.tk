@@ -1,5 +1,5 @@
 const colors = 5;
-const colorCorrispectives = ["red", "blue", "green", "pink", "gray"];
+const colorCorrispectives = ["black", "red", "blue", "green", "pink", "gray"];
 const gameConfig = {
     taxi: 12,
     bus: 8,

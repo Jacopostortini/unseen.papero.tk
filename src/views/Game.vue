@@ -131,7 +131,7 @@ export default {
       if(!message.fromYou) this.$toast.show(message.body, {
         duration: 2000,
         maxToasts: 4,
-        className: "toast color"+message.color
+        className: "toast "+message.color
       });
       setTimeout(()=>{
         let chat = document.getElementById("chat-container");
@@ -149,7 +149,7 @@ export default {
     findColorByLocalId(id){
       for(let i = 0; i < this.players.length; i++){
         if(this.players[i].local_id===id){
-          return colorCorrispectives[this.players[i].color];
+          return colorCorrispectives[this.players[i].color+1];
         }
       }
       return null;
@@ -231,7 +231,8 @@ export default {
     this.socket.on(events.CHAT, data => {
       this.appendMessage(data);
     });
-    this.status = 1;
+
+    /*this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: -1,
@@ -311,7 +312,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];
+    ];*/
   }
 }
 </script>
@@ -371,17 +372,17 @@ button {
     justify-content: start;
   }
 
-  &.color-1{background-color: gray(50);}
+  &.black{background-color: gray(50);}
 
-  &.color0{background-color: red;}
+  &.red{background-color: red;}
 
-  &.color1{background-color: blue;}
+  &.blue{background-color: blue;}
 
-  &.color2{background-color: green;}
+  &.green{background-color: green;}
 
-  &.color3{background-color: deeppink;}
+  &.pink{background-color: deeppink;}
 
-  &.color4{
+  &.gray{
     background-color: gray(200);
     color: black;
   }
