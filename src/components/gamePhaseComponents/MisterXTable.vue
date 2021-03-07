@@ -104,6 +104,7 @@ export default {
       }
 
       strong {
+        font-size: 2vh;
         position: absolute;
         color: black;
       }

@@ -29,6 +29,7 @@ import LoadingMap from "./gamePhaseComponents/LoadingMap";
 import {loaderParameters} from "../constants/mapConstants";
 import StatusChangedPanel from "./gamePhaseComponents/StatusChangedPanel";
 import ChoiceOfTransportPopup from "./gamePhaseComponents/ChoiceOfTransportPopup";
+import {gameConfig} from "../constants/constants";
 
 const MapManager = defineAsyncComponent({
   loader: () => new Promise((resolve) => {
@@ -88,7 +89,7 @@ export default {
           if(a) choices.push(index);
         });
         if(choices.length===0) return;
-        if(this.currentPlayer.is_mister_x) choices.push(3);
+        if(this.currentPlayer.is_mister_x && this.currentPlayer.used_secret_moves<gameConfig.secret_moves) choices.push(3);
         if(choices.length===1) {
           this.$emit("move", {
             _from: this.currentPlayer.position,

@@ -120,6 +120,7 @@ export default {
       window.mitt.emit("update-pawns", this.players);
     },
     appendMessage(data){
+      this.unreadMessages = true;
       let message = {};
       message.localId = data._from;
       message.username = this.findUsernameByLocalId(data._from);
@@ -127,10 +128,14 @@ export default {
       message.color = this.findColorByLocalId(data._from);
       message.fromYou = data._from === this.currentPlayer.local_id;
       this.messages.push(message);
-      let t = setInterval(()=>{
+      if(!message.fromYou) this.$toast.show(message.body, {
+        duration: 2000,
+        maxToasts: 4,
+        className: "toast color"+message.color
+      });
+      setTimeout(()=>{
         let chat = document.getElementById("chat-container");
         chat.scrollTop = chat.scrollHeight;
-        clearInterval(t);
       }, 100)
     },
     findUsernameByLocalId(id){
@@ -148,15 +153,6 @@ export default {
         }
       }
       return null;
-    },
-    messageReceived(data){
-      this.appendMessage(data);
-      this.unreadMessages = true;
-      this.$toast.show(data.message, {
-        duration: 2000,
-        maxToasts: 4,
-        className: "toast"
-      });
     },
     joinGame() {
       this.socket.emit(events.JOIN_GAME);
@@ -233,9 +229,8 @@ export default {
     });
 
     this.socket.on(events.CHAT, data => {
-      this.messageReceived(data);
+      this.appendMessage(data);
     });
-/*
     this.status = 1;
     this.currentPlayer = {
       local_id: 0,
@@ -246,10 +241,10 @@ export default {
       used_taxi: 0,
       used_bus: 0,
       used_underground: 0,
-      used_secret_moves: 0,
+      used_secret_moves: 2,
       used_double_turns: 0,
       online: true,
-      position: 8,
+      position: 1,
       available_moves: {
         taxi: [8],
         bus: [47, 59],
@@ -316,7 +311,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];*/
+    ];
   }
 }
 </script>
@@ -374,6 +369,21 @@ button {
     background-color: black;
     align-self: center;
     justify-content: start;
+  }
+
+  &.color-1{background-color: gray(50);}
+
+  &.color0{background-color: red;}
+
+  &.color1{background-color: blue;}
+
+  &.color2{background-color: green;}
+
+  &.color3{background-color: deeppink;}
+
+  &.color4{
+    background-color: gray(200);
+    color: black;
   }
 }
 </style>
