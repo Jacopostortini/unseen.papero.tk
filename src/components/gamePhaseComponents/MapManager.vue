@@ -209,14 +209,13 @@ export default {
           app.stage.addChild(pawnsContainer);
 
           let updatePawns = (players) => {
-            console.log("updating pawns using: ", players);
             players.forEach( (player, index) => {
               let sprite = pawnsContainer.children[index];
               if(player.position) {
                 sprite.visible = true;
                 let point = stations[player.position - 1].point;
                 sprite.x = point[0] * tileSize;
-                sprite.y = point[1] * tileSize;
+                sprite.y = (point[1]-1) * tileSize;
               } else {
                 sprite.visible = false;
               }
