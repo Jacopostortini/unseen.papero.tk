@@ -78,6 +78,9 @@ export default {
 
     button{
       font-size: 2vw;
+      @media (max-width: 500px) {
+        font-size: 4vw;
+      }
     }
   }
 

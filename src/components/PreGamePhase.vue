@@ -188,7 +188,7 @@ export default {
     padding-left: 5%;
     margin-right: 25%;
     @media (max-width: 700px) {
-      height: 100px;
+      height: 200px;
       margin: 10px 0 0 0;
       padding: 0;
     }
@@ -212,6 +212,9 @@ export default {
     .pregame-phase__admin-badge{
       color: white;
       font-size: 3vh;
+      @media (max-width: 700px) {
+        font-size: 4vw;
+      }
     }
   }
 

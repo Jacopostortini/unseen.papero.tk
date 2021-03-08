@@ -71,6 +71,9 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      @media (max-width: 500px) {
+        font-size: 4vw;
+      }
 
       &.mister-x-table__revelation-turn-number{
         border-color: white;
@@ -89,6 +92,9 @@ export default {
       justify-content: center;
       overflow: hidden;
       position: relative;
+      @media (max-width: 500px) {
+        width: 7vw;
+      }
 
       strong {
         font-size: 2vh;

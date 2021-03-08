@@ -49,8 +49,15 @@ export default {
 .post-game-phase__main-panel{
   user-select: none;
   display: grid;
-  grid-template-columns: #{"min(150vh, 80%)"} 1fr;
-  grid-template-areas: "map sidebar";
+  @media (max-width: 500px) {
+    grid-template-rows: 300px 300px;
+    grid-template-areas: "map" "sidebar";
+    overflow: scroll;
+  }
+  @media (min-width: 501px) {
+    grid-template-columns: #{"min(150vh, 80%)"} 1fr;
+    grid-template-areas: "map sidebar";
+  }
   width: 100%;
   height: 100%;
   color: white;

@@ -91,9 +91,6 @@ export default {
   flex-flow: row;
   transition: all 0.5s;
   z-index: 200;
-  @media (max-width: 700px) {
-    overflow: scroll;
-  }
 
   &.hidden{
     transform: translateX(calc(-25vw - 1px));
@@ -104,15 +101,18 @@ export default {
 
   .user-hamburger-menu__menu{
     width: 25vw;
-    @media (max-width: 700px) {
-      width: 70vw;
-    }
     height: 100vh;
     background: linear-gradient(-45deg, $papero-color-dark, $papero-color-light);
     overflow: hidden;
     display: flex;
     flex-flow: column;
     align-items: center;
+    @media (max-width: 700px) {
+      width: 70vw;
+      min-height: 100vh;
+      height: fit-content;
+      overflow: scroll;
+    }
 
     .home-button{
       height: 25vh;
@@ -134,6 +134,9 @@ export default {
         font-size: 2vw;
         flex-wrap: wrap;
         margin-bottom: 10px;
+        @media (max-width: 700px) {
+          font-size: 3vw;
+        }
 
         p{
           white-space: nowrap;
@@ -161,18 +164,19 @@ export default {
     position: relative;
     margin-top: 15px;
     margin-left: 15px;
-    width: 5vh;
+    width: 6vh;
     height: 5vh;
     transition: all 0.5s;
 
+
     img{
-      width: 100%;
+      width: 5vh;
       height: 100%;
     }
 
     div{
       position: absolute;
-      right: -1vh;
+      right: 0;
       top: 0;
       width: 2vh;
       height: 2vh;
