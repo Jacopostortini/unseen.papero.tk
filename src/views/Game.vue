@@ -279,7 +279,7 @@ export default {
       this.setupData(data);
     })
 
-    /*this.status = 2;
+    /*this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: 1,

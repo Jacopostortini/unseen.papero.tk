@@ -242,20 +242,19 @@ export default {
       });
 
       instance.toDefault();
-      const zoomToPawn = async (player) => {
+      const zoomToPawn = (player) => {
         if(!player.position) return;
         let x = tileSize * stations[player.position-1].point[0] * defaultScale;
         let y = tileSize * stations[player.position-1].point[1] * defaultScale;
-        let rep = 0;
-        let t = setInterval(() => {
-          instance.zoom({
-            x,
-            y,
-            deltaScale: 0.05
-          });
-          rep++;
-          if(rep > 200) clearInterval(t);
-        }, 5)
+        instance.panBy({
+          originX: window.innerHeight*1.5/2 - x,
+          originY: window.innerHeight/2 - y
+        })
+        instance.zoom({
+          x: window.innerHeight*1.5/2,
+          y: window.innerHeight/2,
+          deltaScale: 10
+        });
       }
       if (props.autoZoom) zoomToPawn(props.currentPlayer);
 
