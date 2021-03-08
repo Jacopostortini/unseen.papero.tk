@@ -141,9 +141,19 @@ export default {
   display: grid;
   justify-items: center;
   align-items: center;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: 20vh 50vh 30vh;
-  grid-template-areas: "header header" "players info" "footer footer";
+
+  @media (max-width: 700px) {
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas: "header" "players" "info" "footer";
+    overflow: scroll;
+  }
+
+  @media (min-width: 701px) {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 20vh 50vh 30vh;
+    grid-template-areas: "header header" "players info" "footer footer";
+  }
+
   height: 100%;
   padding-right: 5vw;
 
@@ -159,6 +169,10 @@ export default {
       font-family: Eutemia;
       font-size: 15vh;
       font-weight: normal;
+      @media (max-width: 700px) {
+        font-size: 10vw;
+        margin: 20px 0 0 0;
+      }
     }
   }
 
@@ -173,7 +187,11 @@ export default {
     height: 100%;
     padding-left: 5%;
     margin-right: 25%;
-
+    @media (max-width: 700px) {
+      height: 100px;
+      margin: 10px 0 0 0;
+      padding: 0;
+    }
 
     .pregame-phase__players-table{
       position: absolute;
@@ -206,6 +224,9 @@ export default {
 
     button{
       font-size: 5vh;
+      @media (max-width: 700px) {
+        font-size: 4vw;
+      }
 
       &:hover{
         animation-play-state: paused;

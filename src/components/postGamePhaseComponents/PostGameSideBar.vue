@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     backToLobby(){
-      if(this.gameRestarted) location.reload();
+      if(this.gameRestarted) this.$emit("restart-game", false);
       else {
         this.wantToGoBack = true;
         this.msg = null

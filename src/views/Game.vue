@@ -74,7 +74,7 @@ export default {
         description: null,
         show: false
       },
-      hamburgerMenuImage: require("@/assets/hamburger_icon_light.png"),
+      hamburgerMenuImage: require("@/assets/hamburger_icon_dark.png"),
       gameRestarted: null
     }
   },
@@ -279,12 +279,12 @@ export default {
       this.setupData(data);
     })
 
-    /*this.status = 2;
+    this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: -1,
       is_mister_x: true,
-      is_admin: false,
+      is_admin: true,
       username: "jacopo",
       used_taxi: 0,
       used_bus: 0,
@@ -360,7 +360,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];*/
+    ];
   }
 }
 </script>

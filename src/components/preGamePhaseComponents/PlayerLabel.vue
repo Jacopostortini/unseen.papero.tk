@@ -102,7 +102,7 @@ export default {
     flex-flow: column;
     align-items: center;
     justify-content: start;
-
+    font-size: 3vh;
 
     &>*{
       margin-bottom: 10%;

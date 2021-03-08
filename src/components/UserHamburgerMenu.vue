@@ -94,10 +94,16 @@ export default {
 
   &.hidden{
     transform: translateX(calc(-25vw - 1px));
+    @media (max-width: 700px) {
+      transform: translateX(calc(-70vw - 1px));
+    }
   }
 
   .user-hamburger-menu__menu{
     width: 25vw;
+    @media (max-width: 700px) {
+      width: 70vw;
+    }
     height: 100vh;
     background: linear-gradient(-45deg, $papero-color-dark, $papero-color-light);
     overflow: hidden;
@@ -139,7 +145,9 @@ export default {
       align-items: center;
       color: white;
       font-size: 1.5vw;
-
+      @media (max-width: 700px) {
+        font-size: 3vw;
+      }
       p{
         margin: 10px;
       }

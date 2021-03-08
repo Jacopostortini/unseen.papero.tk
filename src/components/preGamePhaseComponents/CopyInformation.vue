@@ -3,9 +3,9 @@
     <p class="label">{{ message }}</p>
     <div>
       <p class="copy-information__info">{{ info }}</p>
-      <button v-clipboard:copy="info" v-if="hover" @click="onCopied">
+      <button v-clipboard:copy="info" :style="{opacity: hover ? 1 : 0}" @click="onCopied">
         Copy
-        <span :class="{'copied': copied}" v-if="copied">Copied</span>
+        <span :class="{'copied': copied}" v-show="copied">Copied</span>
       </button>
     </div>
   </div>
@@ -46,6 +46,9 @@ export default {
   display: grid;
   grid-template-rows: 50% 50%;
   align-items: center;
+  @media (max-width: 700px) {
+    font-size: 4vw;
+  }
 
   .label{
     margin-bottom: 5%;
@@ -59,6 +62,7 @@ export default {
       margin: 0;
       border: 2px solid white;
       padding: 3%;
+      white-space: nowrap;
     }
 
     button{

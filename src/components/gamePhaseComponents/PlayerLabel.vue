@@ -47,6 +47,9 @@ export default {
   strong{
     font-size: 1.2vw;
     color: white;
+    @media (max-width: 500px) {
+      font-size: 5vw;
+    }
 
     &.underlined{
       text-decoration: underline;
@@ -55,6 +58,9 @@ export default {
     span{
       font-size: 1vw;
       font-weight: normal;
+      @media (max-width: 500px) {
+        font-size: 3vw;
+      }
     }
   }
 
