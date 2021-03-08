@@ -178,6 +178,7 @@ export default {
       this.socket.emit(events.USE_DOUBLE_TURN);
     },
     restartGame(){
+      console.log("game restarted")
       this.socket.emit(events.RESTART_GAME);
     },
     handleEvents (title, description, time){
