@@ -3,6 +3,7 @@
     <div class="status-changed__main-panel">
       <h1>{{title}}</h1>
       <p>{{description}}</p>
+      <strong @click="$emit('close-status-changed-panel')">&#xd7;</strong>
     </div>
   </div>
 </template>
@@ -39,6 +40,25 @@ export default {
     width: 100%;
     height: 50%;
     text-align: center;
+    position: relative;
+
+    h1{
+      font-family: Eutemia;
+      font-weight: normal;
+      font-size: 3em;
+    }
+
+    strong{
+      position: absolute;
+      top: 6%;
+      right: 2%;
+      font-size: 1.5em;
+      transition: all 0.3s;
+
+      &:hover{
+        transform: rotate(90deg);
+      }
+    }
   }
 }
 
