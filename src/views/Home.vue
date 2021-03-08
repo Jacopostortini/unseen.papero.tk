@@ -51,9 +51,16 @@ export default {
   display: grid;
   justify-items: center;
   align-items: center;
-  grid-template-rows: 20vh 80vh;
-  grid-template-columns: 40vw 60vw;
-  grid-template-areas: "header header" "my-games x";
+  @media (max-width: 700px) {
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "header" "x" "my-games";
+    overflow: scroll;
+  }
+  @media (min-width: 701px) {
+    grid-template-rows: 20vh 80vh;
+    grid-template-columns: 40vw 60vw;
+    grid-template-areas: "header header" "my-games x";
+  }
   height: 100%;
 }
 

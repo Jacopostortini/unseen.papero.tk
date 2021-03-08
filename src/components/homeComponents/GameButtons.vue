@@ -103,12 +103,21 @@ export default {
   justify-content: center;
   align-self: start;
   z-index: 100;
+  @media (max-width: 700px) {
+    grid-area: x;
+    width: fit-content;
+    height: fit-content;
+  }
 
-  button{
+  button {
     animation: fade-in 0.5s;
     font-size: 5vh;
     width: 25vw;
     margin: 1vh;
+    @media (max-width: 700px) {
+      font-size: 5vw;
+      width: 50vw;
+    }
   }
 
   .game-info__wrapper{

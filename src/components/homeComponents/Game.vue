@@ -91,6 +91,9 @@ export default {
         font-size: 1.5vw;
         font-weight: normal;
         width: fit-content;
+        @media (max-width: 700px) {
+          font-size: 5vw;
+        }
       }
 
       .overflows:hover{
@@ -106,6 +109,9 @@ export default {
     .game__date-container{
       font-size: 1.5vw;
       text-align: left;
+      @media (max-width: 700px) {
+        font-size: 5vw;
+      }
     }
   }
 

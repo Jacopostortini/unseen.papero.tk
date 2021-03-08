@@ -19,7 +19,6 @@ export default {
   width: 100%;
   height: 100%;
   text-align: center;
-  position: relative;
 
   h1{
     margin: 0;
@@ -27,6 +26,10 @@ export default {
     font-weight: normal;
     font-family: Eutemia;
     font-size: 20vh;
+    @media (max-width: 700px) {
+      font-size: 10vw;
+      margin-top: 20px;
+    }
   }
 }
 </style>

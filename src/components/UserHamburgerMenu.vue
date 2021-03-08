@@ -91,6 +91,9 @@ export default {
   flex-flow: row;
   transition: all 0.5s;
   z-index: 200;
+  @media (max-width: 700px) {
+    overflow: scroll;
+  }
 
   &.hidden{
     transform: translateX(calc(-25vw - 1px));

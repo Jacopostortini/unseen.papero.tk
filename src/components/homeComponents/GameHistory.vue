@@ -30,8 +30,11 @@ export default {
   text-align: right;
   z-index: 100;
   max-height: 60vh;
-  overflow-y: scroll;
-
+  @media (max-width: 700px) {
+    justify-self: center;
+    text-align: center;
+    margin: 0;
+  }
   span{
     color: white;
   }
