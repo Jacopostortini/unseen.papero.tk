@@ -34,7 +34,8 @@ export default {
   name: "MapManager",
   props: {
     players: Array,
-    currentPlayer: Object
+    currentPlayer: Object,
+    autoZoom: Boolean
   },
   setup(props, ctx) {
     const app = new PIXI.Application({
@@ -256,7 +257,7 @@ export default {
           if(rep > 200) clearInterval(t);
         }, 5)
       }
-      zoomToPawn(props.currentPlayer);
+      if (props.autoZoom) zoomToPawn(props.currentPlayer);
 
       window.mitt.on("zoom-to-default", instance.toDefault);
       window.mitt.on("zoom-to-pawn", zoomToPawn);

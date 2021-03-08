@@ -9,6 +9,7 @@
     <MapManager class="game-phase__map-manager"
                 :players="players"
                 :current-player="currentPlayer"
+                :auto-zoom="true"
                 @station-clicked="stationClicked"/>
     <GameSideBar class="game-phase__game-stats"
                  :players="players"

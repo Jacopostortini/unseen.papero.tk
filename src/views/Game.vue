@@ -1,5 +1,5 @@
 <template>
-  <div class="game__main-panel" @click="click">
+  <div class="game__main-panel">
     <UserHamburgerMenu :show-chat="true"
                        :messages="messages"
                        :disable-logout="true"
@@ -26,7 +26,12 @@
                @move="move"
                @close-status-changed-panel="changedStatusPanel.show=false"
                @use-double-turn="useDoubleTurn"/>
-    <PostGamePhase v-else-if="status===2"/>
+    <PostGamePhase v-else-if="status===2"
+                   :players="players"
+                   :current-player="currentPlayer"
+                   :game="game"
+                   :game-restarted="gameRestarted"
+                   @restart-game="restartGame"/>
   </div>
 </template>
 
@@ -69,7 +74,8 @@ export default {
         description: null,
         show: false
       },
-      hamburgerMenuImage: require("@/assets/hamburger_icon_light.png")
+      hamburgerMenuImage: require("@/assets/hamburger_icon_light.png"),
+      gameRestarted: null
     }
   },
   methods: {
@@ -93,7 +99,8 @@ export default {
         playingPlayer: data.players_turn,
         isRevelation: data.is_revelation_turn,
         lastMisterXKnownPosition: data.last_known_position,
-        misterXMoves: data.mister_x_moves
+        misterXMoves: data.mister_x_moves,
+        misterXWon: data.mister_x_won
       }
       if(this.currentPlayer) {
         let isYourTurn = this.game.playingPlayer === this.currentPlayer.local_id;
@@ -169,6 +176,9 @@ export default {
     },
     useDoubleTurn(){
       this.socket.emit(events.USE_DOUBLE_TURN);
+    },
+    restartGame(){
+      this.socket.emit(events.RESTART_GAME);
     },
     handleEvents (title, description, time){
       this.changedStatusPanel.title = title;
@@ -253,16 +263,23 @@ export default {
       this.appendMessage(data);
     });
 
-    this.socket.on(events.END_GAME, ()=>{
-      this.handleEvents("Game Over", "The game finished");
-    })
+    this.socket.on(events.END_GAME, (data)=>{
+      this.handleEvents("Game Over", "The game finished", 4000);
+      setTimeout(()=>{
+        this.setupData(data);
+      }, 4000)
+    });
 
-/*    this.status = 1;
+    this.socket.on(events.RESTART_GAME, ()=>{
+      this.gameRestarted = true;
+    });
+
+    /*this.status = 2;
     this.currentPlayer = {
       local_id: 0,
       color: -1,
       is_mister_x: true,
-      is_admin: true,
+      is_admin: false,
       username: "jacopo",
       used_taxi: 0,
       used_bus: 0,
@@ -308,24 +325,24 @@ export default {
       }
     ]
     this.game = {
-      playingPlayer: 0,
-      lastMisterXKnownPosition: 1,
+      playingPlayer: null,
+      lastMisterXKnownPosition: null,
       misterXMoves: [
         {
           transport: 0,
-          position: null
+          position: 20
         },
         {
           transport: 1,
-          position: null
+          position: 22
         },
         {
           transport: 2,
           position: 30
         },
         {
-          transport: 0,
-          position: null
+          transport: 3,
+          position: 55
         }
       ]
     }

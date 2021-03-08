@@ -56,11 +56,11 @@
 </template>
 
 <script>
-import PlayerLabel from "./pregamePhaseComponents/PlayerLabel";
+import PlayerLabel from "./preGamePhaseComponents/PlayerLabel";
 import {useRoute} from "vue-router";
-import ChangeColorPopup from "./pregamePhaseComponents/ChangeColorPopup";
-import ChangeMisterXPopup from "./pregamePhaseComponents/ChangeMisterXPopup";
-import CopyInformation from "./pregamePhaseComponents/CopyInformation";
+import ChangeColorPopup from "./preGamePhaseComponents/ChangeColorPopup";
+import ChangeMisterXPopup from "./preGamePhaseComponents/ChangeMisterXPopup";
+import CopyInformation from "./preGamePhaseComponents/CopyInformation";
 export default {
   name: "PreGamePhase",
   components: {CopyInformation, ChangeMisterXPopup, ChangeColorPopup, PlayerLabel},

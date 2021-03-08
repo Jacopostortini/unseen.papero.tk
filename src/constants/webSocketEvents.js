@@ -12,5 +12,6 @@ export default {
     GAME_MODIFIED: "game-modified",
     MOVE: "move",
     USE_DOUBLE_TURN: "use-double-turn",
-    END_GAME: "end-game"
+    END_GAME: "end-game",
+    RESTART_GAME: "restart-game"
 }
