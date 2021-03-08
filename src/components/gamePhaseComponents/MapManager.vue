@@ -193,7 +193,6 @@ export default {
               sprite.x = point[0] * tileSize;
               sprite.y = (point[1]-1) * tileSize;
               sprite.interactive = true;
-              console.log(texture)
               sprite.on("mouseover", () => {
                 sprite.texture = textures.paths[70];
               });
