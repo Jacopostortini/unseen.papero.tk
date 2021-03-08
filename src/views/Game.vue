@@ -97,25 +97,12 @@ export default {
       }
       if(this.currentPlayer) {
         let isYourTurn = this.game.playingPlayer === this.currentPlayer.local_id;
-        if ( !wasYourTurn && isYourTurn ) this.$toast.show(
-            "It's your turn",
-            {
-              duration: 4000,
-              maxToasts: 4,
-              className: "toast turn-notification",
-              position: "top"
-            }
-        );
+        if ( !wasYourTurn && isYourTurn ) this.handleYourTurn();
       }
 
       let isRevelation = this.game.isRevelation;
       if(!wasRevelation && isRevelation) {
-        this.handleEvents("Revelation",
-            "Mister X's position is " + this.game.lastMisterXKnownPosition+"! Go catch him!",
-            4000);
-        this.players.forEach(player => {
-          if(player.is_mister_x) player.position = this.game.lastMisterXKnownPosition;
-        })
+        this.handleRevelation();
       }
       window.mitt.emit("update-pawns", this.players);
     },
@@ -193,6 +180,48 @@ export default {
         }, time)
       }
       show();
+    },
+    handleYourTurn(){
+      this.$toast.show(
+          "It's your turn",
+          {
+            duration: 4000,
+            maxToasts: 4,
+            className: "toast turn-notification",
+            position: "top"
+          }
+      );
+    },
+    handleRevelation(){
+      let title = "Revelation";
+      let description;
+      if(this.currentPlayer.is_mister_x){
+        description = "Your position was revealed! Be careful!";
+      } else {
+        description = "Mister X's position is " + this.game.lastMisterXKnownPosition+"! Go catch him!";
+      }
+      this.handleEvents(title,
+          description,
+          4000);
+      window.mitt.emit("zoom-to-default");
+      this.players.forEach(player => {
+        if(player.is_mister_x) {
+          player.position = this.game.lastMisterXKnownPosition;
+          window.mitt.emit("zoom-to-pawn", player);
+        }
+      });
+    },
+    handleDoubleTurn(){
+      if(!this.currentPlayer.is_mister_x){
+        this.handleEvents("Double turn",
+            "Oh no! Mister X played a double turn card, you were close!",
+            4000);
+      } else {
+        this.currentPlayer.used_double_turns++;
+        this.handleEvents("Double turn",
+            "Well played! Now you can move twice, they will surely lose your track!",
+            4000);
+      }
     }
   },
   mounted() {
@@ -218,21 +247,17 @@ export default {
       this.setupData(data);
     });
 
-    this.socket.on(events.USE_DOUBLE_TURN, () => {
-      if(!this.currentPlayer.is_mister_x){
-        this.handleEvents("Double turn",
-            "Oh no! Mister X played a double turn card, you were close!",
-            4000);
-      } else {
-        this.currentPlayer.used_double_turns++;
-      }
-    });
+    this.socket.on(events.USE_DOUBLE_TURN, this.handleDoubleTurn);
 
     this.socket.on(events.CHAT, data => {
       this.appendMessage(data);
     });
 
-    /*this.status = 1;
+    this.socket.on(events.END_GAME, ()=>{
+      this.handleEvents("Game Over", "The game finished");
+    })
+
+/*    this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: -1,
@@ -284,6 +309,7 @@ export default {
     ]
     this.game = {
       playingPlayer: 0,
+      lastMisterXKnownPosition: 1,
       misterXMoves: [
         {
           transport: 0,
