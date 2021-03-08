@@ -177,9 +177,9 @@ export default {
     useDoubleTurn(){
       this.socket.emit(events.USE_DOUBLE_TURN);
     },
-    restartGame(){
-      this.socket.emit(events.RESTART_GAME);
-      location.reload();
+    restartGame(event){
+      if(event) this.socket.emit(events.RESTART_GAME);
+      this.socket.emit(events.GET_GAME);
     },
     handleEvents (title, description, time){
       this.changedStatusPanel.title = title;
@@ -274,6 +274,10 @@ export default {
     this.socket.on(events.RESTART_GAME, ()=>{
       this.gameRestarted = true;
     });
+
+    this.socket.on(events.GET_GAME, (data)=>{
+      this.setupData(data);
+    })
 
     /*this.status = 2;
     this.currentPlayer = {

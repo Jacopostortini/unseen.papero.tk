@@ -7,7 +7,7 @@ export default {
     CHANGE_COLOR: "change-color",
     CHANGE_MISTER_X: "change-mister-x",
     CHAT: "chat",
-
+    GET_GAME: "get-game",
     START_GAME: "start-game",
     GAME_MODIFIED: "game-modified",
     MOVE: "move",

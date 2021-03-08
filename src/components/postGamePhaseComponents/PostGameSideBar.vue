@@ -1,7 +1,7 @@
 <template>
   <div class="post-game-sidebar__main-panel">
     <div class="post-game-sidebar__title">
-      <button v-if="currentPlayer.is_admin" @click="$emit('restart-game')">Restart game</button>
+      <button v-if="currentPlayer.is_admin" @click="$emit('restart-game', true)">Restart game</button>
       <button v-else @click="backToLobby" v-is="element">{{ msg }}</button>
     </div>
 
@@ -52,7 +52,7 @@ export default {
   watch: {
     gameRestarted: function(val){
       console.log(val);
-      if(this.wantToGoBack && val) location.reload();
+      if(this.wantToGoBack && val) this.$emit("restart-game", false);
     }
   }
 }

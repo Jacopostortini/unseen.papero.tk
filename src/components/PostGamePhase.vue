@@ -8,7 +8,7 @@
                      :game="game"
                      :current-player="currentPlayer"
                      :game-restarted="gameRestarted"
-                     @restart-game="$emit('restart-game')"/>
+                     @restart-game="$emit('restart-game', $event)"/>
   </div>
 </template>
 
