@@ -178,8 +178,8 @@ export default {
       this.socket.emit(events.USE_DOUBLE_TURN);
     },
     restartGame(){
-      console.log("game restarted")
       this.socket.emit(events.RESTART_GAME);
+      location.reload();
     },
     handleEvents (title, description, time){
       this.changedStatusPanel.title = title;
