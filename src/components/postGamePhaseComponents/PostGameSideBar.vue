@@ -50,8 +50,9 @@ export default {
     }
   },
   watch: {
-    gameRestarted(){
-      if(this.wantToGoBack) location.reload();
+    gameRestarted: function(val){
+      console.log(val);
+      if(this.wantToGoBack && val) location.reload();
     }
   }
 }
