@@ -235,7 +235,7 @@ export default {
     this.socket.on(events.CHAT, data => {
       this.messageReceived(data);
     });
-/*
+
     this.status = 1;
     this.currentPlayer = {
       local_id: 0,
@@ -316,7 +316,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];*/
+    ];
   }
 }
 </script>

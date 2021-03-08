@@ -26,7 +26,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next)=>{
-    //next();
+    next();
   if(store.state.username === "" && store.state.logged === -1){ //se non è ancora stato trovato il logged
     axios
         .get(getLoginInfoUrl)
