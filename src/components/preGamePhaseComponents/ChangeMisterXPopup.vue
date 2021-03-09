@@ -64,7 +64,6 @@ export default {
   }
 
   .change-popup__available-pawns{
-    z-index: 1000;
     display: flex;
     flex-flow: row;
     justify-content: center;

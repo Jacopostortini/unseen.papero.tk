@@ -50,7 +50,7 @@ export default {
   user-select: none;
   display: grid;
   @media (max-width: 500px) {
-    grid-template-rows: 300px 300px;
+    grid-template-rows: 80vw auto;
     grid-template-areas: "map" "sidebar";
     overflow: scroll;
   }

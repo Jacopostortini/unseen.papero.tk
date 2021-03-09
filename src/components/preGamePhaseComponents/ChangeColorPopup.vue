@@ -62,7 +62,7 @@ export default {
   }
 
   .change-popup__available-pawns{
-    z-index: 1000;
+    z-index: 2;
     padding-bottom: 2%;
 
     img{

@@ -67,6 +67,9 @@ export default {
   img {
     margin: 0 2% 0 5%;
     width: 1.2vw;
+    @media (max-width: 500px) {
+      width: 3vw;
+    }
   }
 }
 </style>

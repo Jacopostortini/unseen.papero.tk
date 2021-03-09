@@ -28,7 +28,7 @@ export default {
   },
   data(){
     return {
-      games: null,
+      games: /*null*/[{game_id: "jkkj", date: "seconds ago"}],
       showHamburgerMenu: false
     }
   },

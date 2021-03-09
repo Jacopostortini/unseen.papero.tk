@@ -47,7 +47,7 @@ export default {
   align-items: center;
   justify-content: center;
   background-color: rgba(0,0,0,0.8);
-  z-index: 10;
+  z-index: 3;
 
   .choice-popup__main-panel{
     display: flex;

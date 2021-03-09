@@ -152,10 +152,9 @@ export default {
     grid-template-columns: 1fr auto;
     grid-template-rows: 20vh 50vh 30vh;
     grid-template-areas: "header header" "players info" "footer footer";
+    padding-right: 5vw;
+    height: 100%;
   }
-
-  height: 100%;
-  padding-right: 5vw;
 
   .pregame-phase__header{
     grid-area: header;
@@ -189,7 +188,7 @@ export default {
     margin-right: 25%;
     @media (max-width: 700px) {
       height: 200px;
-      margin: 10px 0 0 0;
+      margin: 10px 10% 0 0;
       padding: 0;
     }
 
@@ -282,7 +281,7 @@ export default {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
-    z-index: 100;
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;

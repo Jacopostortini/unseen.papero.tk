@@ -21,7 +21,7 @@ export default {
 <style lang="scss" scoped>
 
 .status-changed-panel__wrapper{
-  z-index: 2;
+  z-index: 4;
   position: fixed;
   top: 0;
   left: 0;
@@ -41,11 +41,31 @@ export default {
     height: 50%;
     text-align: center;
     position: relative;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    @media (max-height: 700px) {
+      @media (min-height: 400px) {
+        height: 30%;
+      }
+    }
 
     h1{
       font-family: Eutemia;
       font-weight: normal;
       font-size: 3em;
+      @media (max-width: 700px) {
+        margin: 0;
+        font-size: 2.5em;
+      }
+
+
+    }
+
+    p{
+      @media (max-width: 700px) {
+        font-size: 0.5em;
+      }
     }
 
     strong{

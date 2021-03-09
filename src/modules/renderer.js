@@ -15,19 +15,32 @@ const getScale = ({ scale, minScale, maxScale, scaleSensitivity, deltaScale }) =
 
 const getMatrix = ({ scale, translateX, translateY }) => `matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})`;
 
-const pan = ({ state, originX, originY }) => {
-    state.transformation.translateX += originX;
-    state.transformation.translateY += originY;
-    state.element.style.transform =
-        getMatrix({ scale: state.transformation.scale, translateX: state.transformation.translateX, translateY: state.transformation.translateY });
+const pan = ({ state, originX, originY, controls=true }) => {
+    let {left, top, width, height} = state.element.getBoundingClientRect();
+    let parentWidth = state.containerDimension.width;
+    let parentHeight = state.containerDimension.height;
+    const {minScale, maxScale, scale} = state;
+    const translate = getTranslate({minScale, maxScale, scale});
+    if( ( ( left+originX<=0 || originX<0 ) && ( left+width+originX>=parentWidth || originX>0 ) ) || !controls){
+        state.transformation.translateX += originX;
+    } else {
+        state.transformation.translateX = translate({pos: 0, prevPos: state.transformation.originX, translate: state.transformation.translateX});
+    }
+    if( ( ( top+originY<=0 || originY<0 ) && ( top+height+originY>=parentHeight || originY>0 ) ) || !controls) {
+        state.transformation.translateY += originY;
+    } else {
+        state.transformation.translateY = translate({pos: 0, prevPos: state.transformation.originY, translate: state.transformation.translateY});
+    }
+    state.element.style.transform = getMatrix({
+        scale: state.transformation.scale,
+        translateX: state.transformation.translateX,
+        translateY: state.transformation.translateY
+    });
 };
 
 const makePan = (state) => ({
     panBy: ({ originX, originY }) => pan({ state, originX, originY }),
-    panTo: ({ originX, originY, scale }) => {
-        state.transformation.scale = scale;
-        pan({ state, originX: originX - state.transformation.translateX, originY: originY - state.transformation.translateY });
-    },
+    panNoControls: ({ originX, originY }) => pan({ state, originX, originY, controls: false }),
 });
 
 const makeZoom = (state) => ({
@@ -67,13 +80,14 @@ const makeToDefault = (state) => ({
    }
 });
 
-const renderer = ({ minScale, maxScale, element, scaleSensitivity = 10, defaultScale = 1 }) => {
+const renderer = ({ minScale, maxScale, element, scaleSensitivity = 10, defaultScale = 1 , containerDimension}) => {
     const state = {
         element,
         minScale,
         maxScale,
         scaleSensitivity,
         defaultScale,
+        containerDimension,
         transformation: {
             originX: 0,
             originY: 0,

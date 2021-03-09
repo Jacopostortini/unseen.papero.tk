@@ -240,14 +240,18 @@ export default {
         maxScale: maxZoom,
         element: container.children[0],
         scaleSensitivity: zoomSensibility,
-        defaultScale: defaultScale
+        defaultScale: defaultScale,
+        containerDimension: {
+          width: container.clientWidth,
+          height: container.clientHeight
+        }
       });
 
       const zoomToPawn = (player) => {
         if(!player.position) return;
         let x = tileSize * stations[player.position-1].point[0] * defaultScale;
         let y = tileSize * stations[player.position-1].point[1] * defaultScale;
-        instance.panBy({
+        instance.panNoControls({
           originX: width/2 - x,
           originY: height/2 - y
         });
@@ -342,7 +346,7 @@ export default {
     height: 300px;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 2;
   }
 }
 </style>

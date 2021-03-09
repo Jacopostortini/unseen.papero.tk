@@ -124,12 +124,14 @@ export default {
 
 .game-phase__main-panel{
   user-select: none;
+  display: grid;
   @media (max-width: 500px) {
+    grid-template-rows: 80vw auto;
+    grid-template-areas: "map" "sidebar";
     overflow: scroll;
   }
 
   @media (min-width: 501px) {
-    display: grid;
     grid-template-columns: #{"min(150vh, 80%)"} 1fr;
     grid-template-areas: "map sidebar";
   }
@@ -144,11 +146,11 @@ export default {
 }
 
 .status-changed-panel-transition-enter-from{
-  transform: translateX(-2000px);
+  transform: translateX(-101vw);
 }
 
 .status-changed-panel-transition-leave-to{
-  transform: translateX(2000px);
+  transform: translateX(101vw);
 }
 
 </style>

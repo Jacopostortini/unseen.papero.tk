@@ -87,10 +87,8 @@ export default {
   left: 0;
   width: fit-content;
   height: fit-content;
-  display: flex;
-  flex-flow: row;
   transition: all 0.5s;
-  z-index: 200;
+  z-index: 5;
 
   &.hidden{
     transform: translateX(calc(-25vw - 1px));
@@ -161,16 +159,20 @@ export default {
   }
 
   .user-hamburger-menu__icon{
-    position: relative;
     margin-top: 15px;
-    margin-left: 15px;
-    width: 6vh;
+    width: 5vh;
     height: 5vh;
     transition: all 0.5s;
+    position: absolute;
+    top: 0;
+    right: -5vw;
+    z-index: 5;
+    @media (max-width: 700px) {
+      right: calc(-10% - 5vw);
+    }
 
-
-    img{
-      width: 5vh;
+      img{
+      width: 100%;
       height: 100%;
     }
 
