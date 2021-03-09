@@ -124,15 +124,12 @@ export default {
 
 .game-phase__main-panel{
   user-select: none;
-  display: grid;
   @media (max-width: 500px) {
     overflow: scroll;
-    grid-template-rows: 500px 500px;
-    grid-template-areas: "map" "sidebar";
-    align-items: start;
   }
 
   @media (min-width: 501px) {
+    display: grid;
     grid-template-columns: #{"min(150vh, 80%)"} 1fr;
     grid-template-areas: "map sidebar";
   }

@@ -46,6 +46,9 @@ export default {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 
   .change-popup__table-panel {
     position: absolute;
@@ -55,6 +58,9 @@ export default {
     height: 12%;
     background-color: white;
     transform: skewX(80deg);
+    @media (max-width: 700px) {
+      height: 10%;
+    }
   }
 
   .change-popup__available-pawns{

@@ -231,38 +231,39 @@ export default {
     onMounted(() => {
       document.getElementById("map-manager__main-panel").appendChild(app.view);
       const dragging = ref(false);
-      const defaultScale = window.innerHeight * 1.5 / 60 / 64;
+      const height = window.innerWidth<501 ? window.innerWidth/1.5 : window.innerHeight
+      const width = window.innerWidth<501 ? window.innerWidth : window.innerHeight*1.5
+      const defaultScale = width / 60 / 64;
       const container = document.getElementById("map-manager__main-panel");
       const instance = renderer({
-        minScale: minZoom,
+        minScale: Math.min(minZoom, defaultScale),
         maxScale: maxZoom,
         element: container.children[0],
         scaleSensitivity: zoomSensibility,
         defaultScale: defaultScale
       });
 
-      instance.toDefault();
       const zoomToPawn = (player) => {
         if(!player.position) return;
         let x = tileSize * stations[player.position-1].point[0] * defaultScale;
         let y = tileSize * stations[player.position-1].point[1] * defaultScale;
         instance.panBy({
-          originX: window.innerHeight*1.5/2 - x,
-          originY: window.innerHeight/2 - y
-        })
+          originX: width/2 - x,
+          originY: height/2 - y
+        });
         instance.zoom({
-          x: window.innerHeight*1.5/2,
-          y: window.innerHeight/2,
+          x: width/2,
+          y: height/2,
           deltaScale: 10
         });
       }
+      instance.toDefault();
       if (props.autoZoom) zoomToPawn(props.currentPlayer);
 
       window.mitt.on("zoom-to-default", instance.toDefault);
       window.mitt.on("zoom-to-pawn", zoomToPawn);
 
       container.addEventListener("wheel", (event) => {
-        if (event.ctrlKey) return;
         event.preventDefault();
         instance.zoom({
           deltaScale: Math.sign(event.deltaY),
@@ -336,5 +337,12 @@ export default {
   overflow: hidden;
   width: 100%;
   height: 100%;
+  @media (max-width: 500px) {
+    width: 100%;
+    height: 300px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 }
 </style>

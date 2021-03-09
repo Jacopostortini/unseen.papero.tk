@@ -279,7 +279,7 @@ export default {
       this.setupData(data);
     })
 
-    /*this.status = 1;
+    /*this.status = 2;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -292,7 +292,7 @@ export default {
       used_secret_moves: 2,
       used_double_turns: 0,
       online: true,
-      position: 1,
+      position: 53,
       available_moves: {
         taxi: [8],
         bus: [47, 59],
@@ -330,7 +330,7 @@ export default {
       }
     ]
     this.game = {
-      playingPlayer: null,
+      playingPlayer: 0,
       lastMisterXKnownPosition: null,
       misterXMoves: [
         {

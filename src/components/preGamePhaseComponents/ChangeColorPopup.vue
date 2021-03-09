@@ -47,6 +47,10 @@ export default {
   flex-flow: column;
   justify-content: space-between;
 
+  @media (max-width: 700px) {
+    width: 80%;
+  }
+
   .change-popup__table-panel {
     position: absolute;
     bottom: 0;
@@ -65,6 +69,11 @@ export default {
       width: 10%;
       margin-right: 5%;
       transition: transform 0.25s;
+
+
+      @media (max-width: 700px) {
+        width: 15%;
+      }
 
       &:hover{
         transform: scale(1.1);

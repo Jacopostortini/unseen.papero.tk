@@ -102,7 +102,6 @@ export default {
   align-items: center;
   justify-content: center;
   align-self: start;
-  z-index: 100;
   @media (max-width: 700px) {
     grid-area: x;
     width: fit-content;
@@ -133,6 +132,7 @@ export default {
       grid-template-rows: 50% 50%;
       position: relative;
 
+
       .back-arrow-wrapper{
         position: absolute;
         top: 0;
@@ -150,6 +150,11 @@ export default {
           border-left: 2px solid white;
           border-top: 2px solid white;
           transform: rotate(-42deg);
+          @media (max-width: 700px) {
+            width: 3vw;
+            height: 3vw;
+            transform: translateX(-20px) rotate(-42deg);
+          }
         }
 
         &:hover{
@@ -164,6 +169,10 @@ export default {
         padding: 3%;
         text-align: center;
         border: 2px solid white;
+        @media (max-width: 700px) {
+          font-size: 5vw;
+          max-width: 45vw;
+        }
 
         &:focus{
           outline: none;
@@ -173,6 +182,10 @@ export default {
       button{
         width: 15vw;
         font-size: 2vw;
+        @media (max-width: 700px) {
+          font-size: 5vw;
+          width: 20vw;
+        }
       }
     }
   }
@@ -197,6 +210,10 @@ export default {
       flex-flow: column;
       align-items: center;
       justify-content: space-evenly;
+      @media (max-width: 700px) {
+        width: 70%;
+        height: 20%;
+      }
     }
 
     h1{
