@@ -56,6 +56,9 @@ export default {
 
     .transport-card__main-panel{
       transition: all 0.2s;
+      @media (max-width: 500px) {
+        width: 20%;
+      }
 
       &:hover {
         transform: scale(1.2) translateY(-10px);

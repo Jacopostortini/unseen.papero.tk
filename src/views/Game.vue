@@ -279,7 +279,7 @@ export default {
       this.setupData(data);
     })
 
-    /*this.status = 1;
+    this.status = 0;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -360,7 +360,8 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];*/
+    ];
+    //this.handleRevelation()
   }
 }
 </script>
@@ -376,7 +377,9 @@ export default {
 
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  @media (max-width: 700px) {
+    overflow: scroll;
+  }
 }
 
 button {

@@ -42,9 +42,9 @@ export default {
 @import "../../styles/global";
 
 .chat__main-panel{
+  grid-area: chat;
   width: 100%;
-  height: 50vh;
-  justify-self: flex-end;
+  height: 80%;
   display: flex;
   flex-flow: column;
 

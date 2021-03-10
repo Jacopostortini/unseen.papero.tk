@@ -1,23 +1,23 @@
 <template>
   <div class="user-hamburger-menu__main-panel" @click.stop="" :class="{'hidden': !show}">
+    <div class="user-hamburger-menu__icon" @click="toggleMenu" :class="{'rotated': show}">
+      <img :src="src" alt="menu">
+      <div class="notification-badge" v-if="showChat && !show && unreadMessages"/>
+    </div>
     <div class="user-hamburger-menu__menu">
-      <img class="home-button" src="@/assets/logo.png" @click="redirectToHome">
-      <div class="logged-menu" v-if="username">
+      <img class="home-button" src="@/assets/logo.png" @click="redirectToHome" alt="Home">
+      <div class="user-menu" v-if="username">
         <div>
           <p>Username: <strong>{{decodeURIComponent(username)}}</strong></p>
           <button @click="logout" v-if="!disableLogout">Logout</button>
         </div>
-        <button class="procede-with-google" v-if="!logged" @click="redirectToGoogle">Activate sync with google</button>
+        <button class="proceed-with-google" v-if="!logged" @click="redirectToGoogle">Activate sync with google</button>
       </div>
-      <div class="not-logged-menu" v-else>
+      <div class="user-menu" v-else>
         <p>You are currently not logged in</p>
-        <button class="procede-with-google" @click="redirectToGoogle">Sign in now with google</button>
+        <button class="proceed-with-google" @click="redirectToGoogle">Sign in now with google</button>
       </div>
       <ChatContainer v-if="showChat" :messages="messages" @send-message="$emit('send-message', $event)"/>
-    </div>
-    <div class="user-hamburger-menu__icon" @click="toggleMenu" :class="{'rotated': show}">
-      <img :src="src">
-      <div class="notification-badge" v-if="showChat && !show && unreadMessages"/>
     </div>
   </div>
 </template>
@@ -82,102 +82,83 @@ export default {
 @import "../styles/global";
 
 .user-hamburger-menu__main-panel{
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: fit-content;
-  height: fit-content;
+  padding: 0;
   transition: all 0.5s;
   z-index: 5;
+  width: 25vw;
+  height: 100vh;
+  background: $papero-color-dark;
+  @media (max-width: 500px) {
+    width: 70vw;
+  }
+  @media (max-width: 700px) {
+    width: 40vw;
+  }
 
   &.hidden{
     transform: translateX(calc(-25vw - 1px));
-    @media (max-width: 700px) {
+    @media (max-width: 500px) {
       transform: translateX(calc(-70vw - 1px));
+    }
+
+    @media (max-width: 700px) {
+      transform: translateX(calc(-40vw - 1px));
     }
   }
 
   .user-hamburger-menu__menu{
-    width: 25vw;
-    height: 100vh;
-    background: linear-gradient(-45deg, $papero-color-dark, $papero-color-light);
-    overflow: hidden;
-    display: flex;
-    flex-flow: column;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas: "logo" "user" "chat";
     align-items: center;
-    @media (max-width: 700px) {
-      width: 70vw;
-      min-height: 100vh;
-      height: fit-content;
-      overflow: scroll;
-    }
+    justify-items: center;
 
     .home-button{
-      height: 25vh;
+      margin-top: 5%;
+      grid-area: logo;
+      width: 50%;
     }
 
-    .logged-menu{
-      height: 20vh;
-      display: flex;
-      flex-flow: column;
-      align-items: center;
+    .user-menu{
+      margin-top: 5%;
+      text-align: center;
       color: white;
-      width: 100%;
+      grid-area: user;
 
-      div{
-        width: 100%;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        font-size: 2vw;
-        flex-wrap: wrap;
-        margin-bottom: 10px;
-        @media (max-width: 700px) {
-          font-size: 3vw;
-        }
-
-        p{
-          white-space: nowrap;
-        }
-      }
-    }
-
-    .not-logged-menu{
-      height: 20vh;
-      display: flex;
-      flex-flow: column;
-      align-items: center;
-      color: white;
-      font-size: 1.5vw;
-      @media (max-width: 700px) {
-        font-size: 3vw;
-      }
       p{
-        margin: 10px;
+        font-size: 0.7em;
+      }
+
+      button:hover{
+        color: $papero-color-dark;
       }
     }
   }
 
   .user-hamburger-menu__icon{
-    margin-top: 15px;
-    width: 5vh;
-    height: 5vh;
     transition: all 0.5s;
     position: absolute;
-    top: 0;
-    right: -5vw;
+    right: calc(-3vw - 10px);
+    top: 10px;
+    width: 3vw;
     z-index: 5;
-    @media (max-width: 700px) {
-      right: calc(-10% - 5vw);
+    @media (max-width: 500px) {
+      width: 5vw;
+      right: calc(-5vw - 10px);
     }
 
-      img{
+    img{
       width: 100%;
       height: 100%;
     }
 
     div{
-      position: absolute;
+      position: relative;
       right: 0;
       top: 0;
       width: 2vh;
