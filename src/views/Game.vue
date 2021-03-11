@@ -278,7 +278,6 @@ export default {
     this.socket.on(events.GET_GAME, (data)=>{
       this.setupData(data);
     })
-    /*
     this.status = 1;
     this.currentPlayer = {
       local_id: 0,
@@ -360,7 +359,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];*/
+    ];
     //this.handleRevelation()
   }
 }
@@ -377,6 +376,10 @@ export default {
 
   width: 100%;
   height: 100%;
+
+  @media (max-width: 700px) {
+    overflow-y: scroll;
+  }
 }
 
 button {
