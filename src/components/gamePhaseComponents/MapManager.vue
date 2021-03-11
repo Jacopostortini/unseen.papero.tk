@@ -296,7 +296,8 @@ export default {
       });
 
       let previousTouch;
-      let lastTapTimeStamp;
+      //let lastTapTimeStamp;
+      let lastMiddlePoint;
       let lastDistance;
       const getDistanceFromTouches = (touches) => Math.sqrt( Math.pow(touches[0].pageX-touches[1].pageX, 2) + Math.pow(touches[0].pageY-touches[1].pageY, 2) )
       const getMiddlePointFromTouches = (touches) => {
@@ -308,36 +309,46 @@ export default {
       container.addEventListener("touchstart", (event) => {
         if(event.touches.length <= 2) {
           previousTouch = event;
-          if (event.touches.length === 2) lastDistance = getDistanceFromTouches(event.touches);
+          if (event.touches.length === 2) {
+            lastDistance = getDistanceFromTouches(event.touches);
+            lastMiddlePoint = getMiddlePointFromTouches(event.touches);
+          }
         }
       });
 
       container.addEventListener("touchmove", (event) => {
-        if(event.touches.length <= 2){
+        if(event.touches.length === 1){
           let dx = event.touches[0].pageX-previousTouch.touches[0].pageX;
           let dy = event.touches[0].pageY-previousTouch.touches[0].pageY;
           instance.panBy({
             originX: dx,
             originY: dy
           });
-          if(event.touches.length === 2) {
-            let distance = getDistanceFromTouches(event.touches);
-            let deltaScale = distance/lastDistance - 1;
-            let {x, y} = getMiddlePointFromTouches(event.touches);
-            instance.zoom({x, y, deltaScale});
-            lastDistance = distance;
-          }
           previousTouch = event;
+        }else if(event.touches.length === 2) {
+          let distance = getDistanceFromTouches(event.touches);
+          let deltaScale = Math.sign(distance/lastDistance - 1) / 2;
+
+          let {x, y} = getMiddlePointFromTouches(event.touches);
+          instance.zoom({x, y, deltaScale});
+          instance.panBy({
+            originX: x - lastMiddlePoint.x,
+            originY: y - lastMiddlePoint.y
+          });
+          lastMiddlePoint = {x, y};
+          lastDistance = distance;
+
         }
       });
 
-      container.addEventListener("touchend", (event) => {
+
+      /*container.addEventListener("touchend", (event) => {
         if (event.changedTouches.length === 1){
           previousTouch = null;
           if(event.timeStamp - lastTapTimeStamp < 500) instance.toDefault();
           lastTapTimeStamp = event.timeStamp;
         }
-      });
+      });*/
 
       window.addEventListener("keydown", (event) => keyPressed(event, instance));
     });
