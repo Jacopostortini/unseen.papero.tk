@@ -231,7 +231,6 @@ export default {
     onMounted(() => {
       document.getElementById("map-manager__main-panel").appendChild(app.view);
       const dragging = ref(false);
-      const height = window.innerWidth<501 ? window.innerWidth/1.5 : window.innerHeight
       const width = window.innerWidth<501 ? window.innerWidth : window.innerHeight*1.5
       const defaultScale = width / 60 / 64;
       const container = document.getElementById("map-manager__main-panel");
@@ -251,13 +250,9 @@ export default {
         if(!player.position) return;
         let x = tileSize * stations[player.position-1].point[0] * defaultScale;
         let y = tileSize * stations[player.position-1].point[1] * defaultScale;
-        instance.panNoControls({
-          originX: width/2 - x,
-          originY: height/2 - y
-        });
         instance.zoom({
-          x: width/2,
-          y: height/2,
+          x: x,
+          y: y,
           deltaScale: 10
         });
       }
@@ -302,22 +297,36 @@ export default {
 
       let previousTouch;
       let lastTapTimeStamp;
+      let lastDistance;
+      const getDistanceFromTouches = (touches) => Math.sqrt( Math.pow(touches[0].pageX-touches[1].pageX, 2) + Math.pow(touches[0].pageY-touches[1].pageY, 2) )
+      const getMiddlePointFromTouches = (touches) => {
+        return {
+          x: (touches[0].pageX+touches[1].pageX)/2,
+          y: (touches[0].pageY+touches[1].pageY)/2
+        }
+      }
       container.addEventListener("touchstart", (event) => {
-        console.log(event)
-        if(event.touches.length === 1) {
+        if(event.touches.length <= 2) {
           previousTouch = event;
+          if (event.touches.length === 2) lastDistance = getDistanceFromTouches(event.touches);
         }
       });
 
       container.addEventListener("touchmove", (event) => {
-        console.log(event)
-        if(event.touches.length === 1){
+        if(event.touches.length <= 2){
           let dx = event.touches[0].pageX-previousTouch.touches[0].pageX;
           let dy = event.touches[0].pageY-previousTouch.touches[0].pageY;
           instance.panBy({
             originX: dx,
             originY: dy
           });
+          if(event.touches.length === 2) {
+            let distance = getDistanceFromTouches(event.touches);
+            let deltaScale = distance/lastDistance - 1;
+            let {x, y} = getMiddlePointFromTouches(event.touches);
+            instance.zoom({x, y, deltaScale});
+            lastDistance = distance;
+          }
           previousTouch = event;
         }
       });
