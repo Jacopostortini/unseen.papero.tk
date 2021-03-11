@@ -1,5 +1,5 @@
 <template>
-  <div class="user-hamburger-menu__main-panel" @click.stop="" :class="{'hidden': !show}">
+  <div class="user-hamburger-menu__main-panel" @click.stop="">
     <div class="user-hamburger-menu__icon" @click="toggleMenu" :class="{'rotated': show}">
       <img :src="src" alt="menu">
       <div class="notification-badge" v-if="showChat && !show && unreadMessages"/>
@@ -82,14 +82,9 @@ export default {
 @import "../styles/global";
 
 .user-hamburger-menu__main-panel{
-  transition: all 0.5s;
   height: 100%;
   width: 100%;
   background: $papero-color-dark;
-
-  &.hidden{
-    transform: translateX(-100%);
-  }
 
   .user-hamburger-menu__menu{
     width: 100%;

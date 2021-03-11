@@ -3,8 +3,8 @@
   <Header/>
   <GameHistory :games="games"/>
   <GameButtons/>
-  <div class="hamburger-menu__wrapper">
-    <UserHamburgerMenu :src="require('@/assets/hamburger_icon_light.png')"
+  <div class="hamburger-menu__wrapper" :class="{'hidden': !showHamburgerMenu}">
+    <UserHamburgerMenu :src="require('@/assets/hamburger_icon_dark.png')"
                        :show="showHamburgerMenu"
                        @toggle-show="showHamburgerMenu=$event"/>
   </div>
@@ -66,6 +66,7 @@ export default {
   height: 100%;
 
   .hamburger-menu__wrapper{
+    transition: all 0.5s;
     height: 100%;
     position: absolute;
     z-index: 5;
@@ -75,6 +76,10 @@ export default {
     }
     @media (max-width: 700px) {
       width: 40%;
+    }
+
+    &.hidden{
+      transform: translateX(-100%);
     }
   }
 }

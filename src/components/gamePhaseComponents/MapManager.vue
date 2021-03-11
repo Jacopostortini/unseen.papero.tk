@@ -275,6 +275,7 @@ export default {
       })
 
       const zoomToPawn = (player) => {
+        instance.toDefault();
         if(!player.position) return;
         let x = tileSize * stations[player.position-1].point[0] * defaultScale;
         let y = tileSize * stations[player.position-1].point[1] * defaultScale;
@@ -324,7 +325,6 @@ export default {
       });
 
       let previousTouch;
-      //let lastTapTimeStamp;
       let lastMiddlePoint;
       let lastDistance;
       const getDistanceFromTouches = (touches) => Math.sqrt( Math.pow(touches[0].pageX-touches[1].pageX, 2) + Math.pow(touches[0].pageY-touches[1].pageY, 2) )
@@ -368,15 +368,6 @@ export default {
 
         }
       });
-
-
-      /*container.addEventListener("touchend", (event) => {
-        if (event.changedTouches.length === 1){
-          previousTouch = null;
-          if(event.timeStamp - lastTapTimeStamp < 500) instance.toDefault();
-          lastTapTimeStamp = event.timeStamp;
-        }
-      });*/
 
       window.addEventListener("keydown", (event) => keyPressed(event, instance));
     });

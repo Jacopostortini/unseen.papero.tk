@@ -1,6 +1,6 @@
 <template>
   <div class="game__main-panel">
-    <div class="hamburger-menu__wrapper">
+    <div class="hamburger-menu__wrapper" :class="{'hidden': !showHamburgerMenu}">
       <UserHamburgerMenu :show-chat="true"
                          :messages="messages"
                          :disable-logout="true"
@@ -279,8 +279,8 @@ export default {
 
     this.socket.on(events.GET_GAME, (data)=>{
       this.setupData(data);
-    })
-/*    this.status = 0;
+    });
+    /*this.status = 0;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -510,6 +510,7 @@ export default {
 
 
   .hamburger-menu__wrapper{
+    transition: all 0.5s;
     height: 100%;
     position: absolute;
     z-index: 5;
@@ -520,6 +521,11 @@ export default {
     @media (max-width: 700px) {
       width: 40%;
     }
+
+    &.hidden{
+      transform: translateX(-100%);
+    }
+
   }
 }
 
