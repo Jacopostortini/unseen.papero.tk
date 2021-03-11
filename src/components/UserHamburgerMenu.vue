@@ -83,11 +83,9 @@ export default {
 
 .user-hamburger-menu__main-panel{
   transition: all 0.5s;
-  z-index: 5;
   width: 25vw;
-  height: 100vh;
+  height: 100%;
   background: $papero-color-dark;
-  //overflow-y: hidden;
   @media (max-width: 500px) {
     width: 70vw !important;
   }

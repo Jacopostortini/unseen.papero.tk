@@ -283,7 +283,7 @@ export default {
     this.socket.on(events.GET_GAME, (data)=>{
       this.setupData(data);
     })
-    this.status = 0;
+/*    this.status = 0;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -364,7 +364,7 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];
+    ];*/
     //this.handleRevelation()
   }
 }
@@ -381,10 +381,6 @@ export default {
 
   width: 100%;
   height: 100%;
-  overflow-y: hidden;
-  @media (max-width: 700px) {
-
-  }
 
   .game-phase__wrapper{
     width: 100%;
@@ -395,6 +391,7 @@ export default {
   .hamburger-menu__wrapper{
     height: 100%;
     position: absolute;
+    z-index: 5;
   }
 }
 
