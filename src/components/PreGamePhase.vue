@@ -145,7 +145,6 @@ export default {
   @media (max-width: 700px) {
     grid-template-rows: auto auto auto auto;
     grid-template-areas: "header" "players" "info" "footer";
-    overflow: scroll;
   }
 
   @media (min-width: 701px) {

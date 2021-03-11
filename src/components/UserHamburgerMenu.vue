@@ -117,6 +117,7 @@ export default {
     grid-template-areas: "logo" "user" "chat";
     align-items: center;
     justify-items: center;
+    overflow-y: scroll;
 
     .home-button{
       margin-top: 5%;

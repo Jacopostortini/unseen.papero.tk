@@ -1,37 +1,42 @@
 <template>
   <div class="game__main-panel">
-    <UserHamburgerMenu :show-chat="true"
-                       :messages="messages"
-                       :disable-logout="true"
-                       :unread-messages="unreadMessages"
-                       :src="hamburgerMenuImage"
-                       :show="showHamburgerMenu"
-                       @chat-opened="unreadMessages=false"
-                       @send-message="sendMessage"
-                       @toggle-show="showHamburgerMenu=$event"/>
-    <PreGamePhase v-if="status===0"
-                  :players="players"
-                  :current-player="currentPlayer"
-                  @joingame="joinGame"
-                  @quitgame="quitGame"
-                  @kickplayer="kickPlayer"
-                  @changecolor="changeColor"
-                  @changemisterx="changeMisterX"
-                  @startgame="startGame"/>
-    <GamePhase v-else-if="status===1"
-               :players="players"
-               :current-player="currentPlayer"
-               :game="game"
-               :changed-status-panel="changedStatusPanel"
-               @move="move"
-               @close-status-changed-panel="changedStatusPanel.show=false"
-               @use-double-turn="useDoubleTurn"/>
-    <PostGamePhase v-else-if="status===2"
-                   :players="players"
-                   :current-player="currentPlayer"
-                   :game="game"
-                   :game-restarted="gameRestarted"
-                   @restart-game="restartGame"/>
+    <div class="hamburger-menu__wrapper">
+      <UserHamburgerMenu :show-chat="true"
+                         :messages="messages"
+                         :disable-logout="true"
+                         :unread-messages="unreadMessages"
+                         :src="hamburgerMenuImage"
+                         :show="showHamburgerMenu"
+                         @chat-opened="unreadMessages=false"
+                         @send-message="sendMessage"
+                         @toggle-show="showHamburgerMenu=$event"/>
+    </div>
+    <div class="game-phase__wrapper" v-if="status===0">
+      <PreGamePhase :players="players"
+                    :current-player="currentPlayer"
+                    @joingame="joinGame"
+                    @quitgame="quitGame"
+                    @kickplayer="kickPlayer"
+                    @changecolor="changeColor"
+                    @changemisterx="changeMisterX"
+                    @startgame="startGame"/>
+    </div>
+    <div class="game-phase__wrapper" v-else-if="status===1">
+      <GamePhase :players="players"
+                 :current-player="currentPlayer"
+                 :game="game"
+                 :changed-status-panel="changedStatusPanel"
+                 @move="move"
+                 @close-status-changed-panel="changedStatusPanel.show=false"
+                 @use-double-turn="useDoubleTurn"/>
+    </div>
+    <div class="game-phase__wrapper" v-else-if="status===2">
+      <PostGamePhase :players="players"
+                     :current-player="currentPlayer"
+                     :game="game"
+                     :game-restarted="gameRestarted"
+                     @restart-game="restartGame"/>
+    </div>
   </div>
 </template>
 
@@ -278,7 +283,7 @@ export default {
     this.socket.on(events.GET_GAME, (data)=>{
       this.setupData(data);
     })
-    this.status = 1;
+    this.status = 0;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -378,7 +383,21 @@ export default {
   height: 100%;
 
   @media (max-width: 700px) {
-    overflow-y: scroll;
+    overflow-y: hidden;
+  }
+
+  .game-phase__wrapper{
+    @media (max-width: 700px) {
+      width: 100%;
+      height: 100%;
+      overflow-y: scroll;
+    }
+  }
+
+  .hamburger-menu__wrapper{
+    @media (max-width: 700px) {
+
+    }
   }
 }
 
