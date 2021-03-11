@@ -82,15 +82,12 @@ export default {
 @import "../styles/global";
 
 .user-hamburger-menu__main-panel{
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 0;
   transition: all 0.5s;
   z-index: 5;
   width: 25vw;
   height: 100vh;
   background: $papero-color-dark;
+  //overflow-y: hidden;
   @media (max-width: 500px) {
     width: 70vw !important;
   }

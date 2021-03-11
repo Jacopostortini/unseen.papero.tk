@@ -149,7 +149,7 @@ export default {
 
   @media (min-width: 701px) {
     grid-template-columns: 1fr auto;
-    grid-template-rows: 20vh 50vh 30vh;
+    grid-template-rows: 20% 50% 30%;
     grid-template-areas: "header header" "players info" "footer footer";
     padding-right: 5vw;
     height: 100%;

@@ -72,7 +72,7 @@ export default {
       players: [],
       game: {},
       messages: [],
-      unreadMessages: true,
+      unreadMessages: false,
       showHamburgerMenu: false,
       changedStatusPanel: {
         title: null,
@@ -381,23 +381,20 @@ export default {
 
   width: 100%;
   height: 100%;
-
+  overflow-y: hidden;
   @media (max-width: 700px) {
-    overflow-y: hidden;
+
   }
 
   .game-phase__wrapper{
-    @media (max-width: 700px) {
-      width: 100%;
-      height: 100%;
-      overflow-y: scroll;
-    }
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
   }
 
   .hamburger-menu__wrapper{
-    @media (max-width: 700px) {
-
-    }
+    height: 100%;
+    position: absolute;
   }
 }
 
