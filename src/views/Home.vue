@@ -3,9 +3,11 @@
   <Header/>
   <GameHistory :games="games"/>
   <GameButtons/>
-  <UserHamburgerMenu :src="require('@/assets/hamburger_icon_light.png')"
-                     :show="showHamburgerMenu"
-                     @toggle-show="showHamburgerMenu=$event"/>
+  <div class="hamburger-menu__wrapper">
+    <UserHamburgerMenu :src="require('@/assets/hamburger_icon_light.png')"
+                       :show="showHamburgerMenu"
+                       @toggle-show="showHamburgerMenu=$event"/>
+  </div>
 </div>
 </template>
 
@@ -28,7 +30,7 @@ export default {
   },
   data(){
     return {
-      games: /*null*/[{game_id: "jkkj", date: "seconds ago"}],
+      games: null,
       showHamburgerMenu: false
     }
   },
@@ -62,6 +64,19 @@ export default {
     grid-template-areas: "header header" "my-games x";
   }
   height: 100%;
+
+  .hamburger-menu__wrapper{
+    height: 100%;
+    position: absolute;
+    z-index: 5;
+    width: 25%;
+    @media (max-width: 500px) {
+      width: 70% !important;
+    }
+    @media (max-width: 700px) {
+      width: 40%;
+    }
+  }
 }
 
 button {

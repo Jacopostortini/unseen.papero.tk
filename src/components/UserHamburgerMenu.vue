@@ -83,44 +83,32 @@ export default {
 
 .user-hamburger-menu__main-panel{
   transition: all 0.5s;
-  width: 25vw;
   height: 100%;
+  width: 100%;
   background: $papero-color-dark;
-  @media (max-width: 500px) {
-    width: 70vw !important;
-  }
-  @media (max-width: 700px) {
-    width: 40vw;
-  }
 
   &.hidden{
-    transform: translateX(calc(-25vw - 1px));
-    @media (max-width: 500px) {
-      transform: translateX(calc(-70vw - 1px)) !important;
-    }
-
-    @media (max-width: 700px) {
-      transform: translateX(calc(-40vw - 1px));
-    }
+    transform: translateX(-100%);
   }
 
   .user-hamburger-menu__menu{
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: 20% 20% 60%;
     grid-template-areas: "logo" "user" "chat";
     align-items: center;
     justify-items: center;
     overflow-y: scroll;
 
     .home-button{
-      margin-top: 5%;
+      margin-top: 2%;
       grid-area: logo;
-      width: 50%;
+      height: 90%;
     }
 
     .user-menu{
+      align-self: start;
       margin-top: 5%;
       text-align: center;
       color: white;
@@ -137,36 +125,29 @@ export default {
   }
 
   .user-hamburger-menu__icon{
-    transition: all 0.5s;
     position: absolute;
-    right: calc(-3vw - 10px);
-    top: 10px;
-    width: 3vw;
-    height: 3vw;
+    width: 10%;
+    height: min-content;
+    right: calc(-10% - 20px);
+    top: 20px;
+
+    transition: all 0.5s;
     z-index: 5;
-    @media (max-width: 500px) {
-      width: 5vw;
-      height: 5vw;
-      right: calc(-5vw - 10px);
-    }
 
     img{
+      float: left;
       width: 100%;
-      height: 100%;
+      height: auto;
     }
 
     div{
       position: absolute;
-      right: 0;
-      top: 5%;
       border-radius: 50%;
       background-color: red;
-      width: 30%;
-      height: 30%;
-      @media (max-width: 700px) {
-        top: 20%;
-        right: -10%;
-      }
+      width: 40%;
+      height: 40%;
+      top: -20%;
+      right: -20%;
     }
 
     &.rotated{

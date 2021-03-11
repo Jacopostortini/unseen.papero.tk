@@ -85,20 +85,6 @@ export default {
     }
   },
   methods: {
-    onCopiedUrl(){
-      this.copiedUrl=true;
-      const sleep = (s) => {
-        return new Promise(resolve => setTimeout(resolve, (s*1000)))
-      }
-      sleep(1).then(()=>{this.copiedUrl=false});
-    },
-    onCopiedTag(){
-      this.copiedTag=true;
-      const sleep = (s) => {
-        return new Promise(resolve => setTimeout(resolve, (s*1000)))
-      }
-      sleep(1).then(()=>{this.copiedTag=false});
-    },
     startGame(){
       if(this.misterXUsername){
         this.$emit("startgame");

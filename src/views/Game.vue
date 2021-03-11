@@ -11,32 +11,29 @@
                          @send-message="sendMessage"
                          @toggle-show="showHamburgerMenu=$event"/>
     </div>
-    <div class="game-phase__wrapper" v-if="status===0">
-      <PreGamePhase :players="players"
-                    :current-player="currentPlayer"
-                    @joingame="joinGame"
-                    @quitgame="quitGame"
-                    @kickplayer="kickPlayer"
-                    @changecolor="changeColor"
-                    @changemisterx="changeMisterX"
-                    @startgame="startGame"/>
-    </div>
-    <div class="game-phase__wrapper" v-else-if="status===1">
-      <GamePhase :players="players"
-                 :current-player="currentPlayer"
-                 :game="game"
-                 :changed-status-panel="changedStatusPanel"
-                 @move="move"
-                 @close-status-changed-panel="changedStatusPanel.show=false"
-                 @use-double-turn="useDoubleTurn"/>
-    </div>
-    <div class="game-phase__wrapper" v-else-if="status===2">
-      <PostGamePhase :players="players"
-                     :current-player="currentPlayer"
-                     :game="game"
-                     :game-restarted="gameRestarted"
-                     @restart-game="restartGame"/>
-    </div>
+    <PreGamePhase v-if="status===0"
+                  :players="players"
+                  :current-player="currentPlayer"
+                  @joingame="joinGame"
+                  @quitgame="quitGame"
+                  @kickplayer="kickPlayer"
+                  @changecolor="changeColor"
+                  @changemisterx="changeMisterX"
+                  @startgame="startGame"/>
+    <GamePhase v-else-if="status===1"
+               :players="players"
+               :current-player="currentPlayer"
+               :game="game"
+               :changed-status-panel="changedStatusPanel"
+               @move="move"
+               @close-status-changed-panel="changedStatusPanel.show=false"
+               @use-double-turn="useDoubleTurn"/>
+    <PostGamePhase v-else-if="status===2"
+                   :players="players"
+                   :current-player="currentPlayer"
+                   :game="game"
+                   :game-restarted="gameRestarted"
+                   @restart-game="restartGame"/>
   </div>
 </template>
 
@@ -363,6 +360,131 @@ export default {
         fromYou: true,
         username: "jacopo",
         color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },{
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
+      },
+      {
+        body: "ciaooo",
+        local_id: 0,
+        fromYou: true,
+        username: "jacopo",
+        color: "gray"
       }
     ];*/
     //this.handleRevelation()
@@ -382,17 +504,22 @@ export default {
   width: 100%;
   height: 100%;
   overflow-y: hidden;
-
-  .game-phase__wrapper{
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
+  @media (max-width: 700px) {
+    overflow: scroll;
   }
+
 
   .hamburger-menu__wrapper{
     height: 100%;
     position: absolute;
     z-index: 5;
+    width: 25%;
+    @media (max-width: 500px) {
+      width: 70% !important;
+    }
+    @media (max-width: 700px) {
+      width: 40%;
+    }
   }
 }
 

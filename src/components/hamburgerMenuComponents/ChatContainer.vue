@@ -44,7 +44,8 @@ export default {
 .chat__main-panel{
   grid-area: chat;
   width: 100%;
-  height: 80%;
+  height: 90%;
+  align-self: start;
   display: flex;
   flex-flow: column;
 
