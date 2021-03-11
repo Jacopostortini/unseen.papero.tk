@@ -303,12 +303,14 @@ export default {
       let previousTouch;
       let lastTapTimeStamp;
       container.addEventListener("touchstart", (event) => {
+        console.log(event)
         if(event.touches.length === 1) {
           previousTouch = event;
         }
       });
 
       container.addEventListener("touchmove", (event) => {
+        console.log(event)
         if(event.touches.length === 1){
           let dx = event.touches[0].pageX-previousTouch.touches[0].pageX;
           let dy = event.touches[0].pageY-previousTouch.touches[0].pageY;
