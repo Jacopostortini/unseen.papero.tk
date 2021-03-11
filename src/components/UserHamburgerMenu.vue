@@ -146,9 +146,11 @@ export default {
     right: calc(-3vw - 10px);
     top: 10px;
     width: 3vw;
+    height: 3vw;
     z-index: 5;
     @media (max-width: 500px) {
       width: 5vw;
+      height: 5vw;
       right: calc(-5vw - 10px);
     }
 
@@ -158,13 +160,17 @@ export default {
     }
 
     div{
-      position: relative;
+      position: absolute;
       right: 0;
-      top: 0;
-      width: 2vh;
-      height: 2vh;
+      top: 5%;
       border-radius: 50%;
       background-color: red;
+      width: 30%;
+      height: 30%;
+      @media (max-width: 700px) {
+        top: 20%;
+        right: -10%;
+      }
     }
 
     &.rotated{

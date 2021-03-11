@@ -127,29 +127,41 @@ export default {
 
           for (let row = 0; row < mapDimension.height; row++){
             for (let col = 0; col < mapDimension.width; col++){
-              let pathTexture = textures.paths[paths[row][col]];
-              let pathSprite = new PIXI.Sprite(pathTexture);
-              pathSprite.x = tileSize * col;
-              pathSprite.y = tileSize * row;
-              pathsContainer.addChild(pathSprite);
+              let pathCode = paths[row][col];
+              if(pathCode>=0) {
+                let pathTexture = textures.paths[pathCode];
+                let pathSprite = new PIXI.Sprite(pathTexture);
+                pathSprite.x = tileSize * col;
+                pathSprite.y = tileSize * row;
+                pathsContainer.addChild(pathSprite);
+              }
 
-              let streetsTexture = textures.streets[streets[row][col]];
-              let streetsSprite = new PIXI.Sprite(streetsTexture);
-              streetsSprite.x = tileSize * col;
-              streetsSprite.y = tileSize * row;
-              streetsContainer.addChild(streetsSprite);
+              let streetCode = streets[row][col];
+              if(streetCode>=0){
+                let streetsTexture = textures.streets[streetCode];
+                let streetsSprite = new PIXI.Sprite(streetsTexture);
+                streetsSprite.x = tileSize * col;
+                streetsSprite.y = tileSize * row;
+                streetsContainer.addChild(streetsSprite);
+              }
 
-              let buildingsTexture = textures.buildings[buildings[row][col]];
-              let buildingsSprite = new PIXI.Sprite(buildingsTexture);
-              buildingsSprite.x = tileSize * col;
-              buildingsSprite.y = tileSize * row;
-              buildingsContainer.addChild(buildingsSprite);
+              let buildingCode = buildings[row][col];
+              if(buildingCode>=0) {
+                let buildingsTexture = textures.buildings[buildingCode];
+                let buildingsSprite = new PIXI.Sprite(buildingsTexture);
+                buildingsSprite.x = tileSize * col;
+                buildingsSprite.y = tileSize * row;
+                buildingsContainer.addChild(buildingsSprite);
+              }
 
-              let backgroundTexture = textures.backgrounds[background[row][col]];
-              let backgroundSprite = new PIXI.Sprite(backgroundTexture);
-              backgroundSprite.x = tileSize * col;
-              backgroundSprite.y = tileSize * row;
-              backgroundContainer.addChild(backgroundSprite);
+              let backgroundCode = background[row][col];
+              if(backgroundCode>=0) {
+                let backgroundTexture = textures.backgrounds[backgroundCode];
+                let backgroundSprite = new PIXI.Sprite(backgroundTexture);
+                backgroundSprite.x = tileSize * col;
+                backgroundSprite.y = tileSize * row;
+                backgroundContainer.addChild(backgroundSprite);
+              }
             }
           }
 
@@ -231,10 +243,10 @@ export default {
     onMounted(() => {
       document.getElementById("map-manager__main-panel").appendChild(app.view);
       const dragging = ref(false);
-      const width = window.innerWidth<501 ? window.innerWidth : window.innerHeight*1.5
-      const defaultScale = width / 60 / 64;
+      let width = window.innerWidth<501 ? window.innerWidth : window.innerHeight*1.5;
+      let defaultScale = width / 60 / 64;
       const container = document.getElementById("map-manager__main-panel");
-      const instance = renderer({
+      let instance = renderer({
         minScale: Math.min(minZoom, defaultScale),
         maxScale: maxZoom,
         element: container.children[0],
@@ -245,6 +257,22 @@ export default {
           height: container.clientHeight
         }
       });
+
+      window.addEventListener("resize", ()=>{
+        width = window.innerWidth<501 ? window.innerWidth : window.innerHeight*1.5;
+        defaultScale = width / 60 / 64;
+        instance = renderer({
+          minScale: Math.min(minZoom, defaultScale),
+          maxScale: maxZoom,
+          element: container.children[0],
+          scaleSensitivity: zoomSensibility,
+          defaultScale: defaultScale,
+          containerDimension: {
+            width: container.clientWidth,
+            height: container.clientHeight
+          }
+        });
+      })
 
       const zoomToPawn = (player) => {
         if(!player.position) return;
