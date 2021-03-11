@@ -92,7 +92,7 @@ export default {
   height: 100vh;
   background: $papero-color-dark;
   @media (max-width: 500px) {
-    width: 70vw;
+    width: 70vw !important;
   }
   @media (max-width: 700px) {
     width: 40vw;
@@ -101,7 +101,7 @@ export default {
   &.hidden{
     transform: translateX(calc(-25vw - 1px));
     @media (max-width: 500px) {
-      transform: translateX(calc(-70vw - 1px));
+      transform: translateX(calc(-70vw - 1px)) !important;
     }
 
     @media (max-width: 700px) {
