@@ -33,7 +33,7 @@ export default {
 
 
   .status-changed__main-panel{
-    background-image: url("../../assets/events_backgroung.png");
+    background-image: url("../../assets/events_backgroung.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
