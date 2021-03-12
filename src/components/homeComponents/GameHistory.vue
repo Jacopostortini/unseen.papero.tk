@@ -28,7 +28,7 @@ export default {
   justify-self: start;
   width: 60%;
   text-align: right;
-
+  overflow: scroll;
   max-height: 60vh;
   @media (max-width: 700px) {
     justify-self: center;

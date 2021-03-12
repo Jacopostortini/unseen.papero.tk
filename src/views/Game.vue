@@ -280,7 +280,7 @@ export default {
     this.socket.on(events.GET_GAME, (data)=>{
       this.setupData(data);
     });
-    /*this.status = 0;
+    /*this.status = 1;
     this.currentPlayer = {
       local_id: 0,
       color: 1,

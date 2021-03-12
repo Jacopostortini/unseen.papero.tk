@@ -33,10 +33,10 @@ export default {
 
 
   .status-changed__main-panel{
-    background-image: url("../../assets/background_image.jpg");
+    background-image: url("../../assets/events_backgroung.png");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: bottom;
+    background-position: top;
     width: 100%;
     height: 50%;
     text-align: center;
@@ -44,25 +44,26 @@ export default {
     display: flex;
     flex-flow: column;
     justify-content: space-evenly;
-    @media (max-height: 700px) {
-      @media (min-height: 400px) {
-        height: 30%;
+    color: white;
+    @media (max-width: 700px) {
+      height: 30%;
+      @media (min-width: 400px) {
+        height: 50%;
       }
     }
 
     h1{
       font-family: Eutemia;
       font-weight: normal;
-      font-size: 3em;
+      font-size: 3.5em;
+      margin: 0;
       @media (max-width: 700px) {
-        margin: 0;
         font-size: 2.5em;
       }
-
-
     }
 
     p{
+      font-weight: bold;
       @media (max-width: 700px) {
         font-size: 0.5em;
       }

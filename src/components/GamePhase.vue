@@ -146,11 +146,11 @@ export default {
 }
 
 .status-changed-panel-transition-enter-from{
-  transform: translateX(-101vw);
+  transform: translateX(-100%);
 }
 
 .status-changed-panel-transition-leave-to{
-  transform: translateX(101vw);
+  transform: translateX(100%);
 }
 
 </style>

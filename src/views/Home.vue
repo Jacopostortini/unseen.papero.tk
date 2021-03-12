@@ -30,7 +30,60 @@ export default {
   },
   data(){
     return {
-      games: null,
+      games: [
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        },
+        {
+          game_id: "ciao",
+          date: "seconds ago"
+        }
+      ],
       showHamburgerMenu: false
     }
   },
@@ -53,6 +106,7 @@ export default {
   display: grid;
   justify-items: center;
   align-items: center;
+  overflow: hidden;
   @media (max-width: 700px) {
     grid-template-rows: auto auto auto;
     grid-template-areas: "header" "x" "my-games";
