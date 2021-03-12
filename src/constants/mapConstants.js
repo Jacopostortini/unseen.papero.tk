@@ -3,10 +3,15 @@ const loaderParameters = {
     delay: 0,
     timeout: 3000
 }
-const minZoom = 0.15;
-const maxZoom = 1;
-const zoomSensibility = 15;
-const keyScrollSpeed = 5;
+const zoomAndPanParams = {
+    minZoom: 0.15,
+    maxZoom: 1,
+    zoomSensibility: 15,
+    keyScrollSpeed: 5,
+    defaultZoom: 10,
+    doubleTapDistanceTolerance: 10,
+    doubleTapTimeTolerance: 500
+}
 const tileSize = 64;
 const tilesetsDimension = {
     paths: {
@@ -45,48 +50,48 @@ function keyPressed(event, instance) {
         case "w":
             instance.panBy({
                 originX: 0,
-                originY: keyScrollSpeed
+                originY: zoomAndPanParams.keyScrollSpeed
             });
             break;
         case "arrowup":
             instance.panBy({
                 originX: 0,
-                originY: keyScrollSpeed
+                originY: zoomAndPanParams.keyScrollSpeed
             });
             break;
         case "a":
             instance.panBy({
-                originX: keyScrollSpeed,
+                originX: zoomAndPanParams.keyScrollSpeed,
                 originY: 0
             });
             break;
         case "arrowleft":
             instance.panBy({
-                originX: keyScrollSpeed,
+                originX: zoomAndPanParams.keyScrollSpeed,
                 originY: 0
             });
             break;
         case "s":
             instance.panBy({
                 originX: 0,
-                originY: -keyScrollSpeed
+                originY: -zoomAndPanParams.keyScrollSpeed
             });
             break;
         case "arrowdown":
             instance.panBy({
                 originX: 0,
-                originY: -keyScrollSpeed
+                originY: -zoomAndPanParams.keyScrollSpeed
             });
             break;
         case "d":
             instance.panBy({
-                originX: -keyScrollSpeed,
+                originX: -zoomAndPanParams.keyScrollSpeed,
                 originY: 0
             });
             break;
         case "arrowright":
             instance.panBy({
-                originX: -keyScrollSpeed,
+                originX: -zoomAndPanParams.keyScrollSpeed,
                 originY: 0
             });
             break;
@@ -109,10 +114,7 @@ function keyPressed(event, instance) {
 
 export {
     loaderParameters,
-    minZoom,
-    maxZoom,
-    zoomSensibility,
-    keyScrollSpeed,
+    zoomAndPanParams,
     tileSize,
     tilesetsDimension,
     mapDimension,

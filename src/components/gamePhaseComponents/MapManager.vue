@@ -9,10 +9,8 @@ import {
   keyPressed,
   tilesetsDimension,
   mapDimension,
-  maxZoom,
-  minZoom,
   tileSize,
-  zoomSensibility
+  zoomAndPanParams
 } from "../../constants/mapConstants";
 import stations from "../../constants/stations";
 import {onMounted, ref} from "vue";
@@ -247,10 +245,10 @@ export default {
       let defaultScale = width / 60 / 64;
       const container = document.getElementById("map-manager__main-panel");
       let instance = renderer({
-        minScale: Math.min(minZoom, defaultScale),
-        maxScale: maxZoom,
+        minScale: Math.min(zoomAndPanParams.minZoom, defaultScale),
+        maxScale: zoomAndPanParams.maxZoom,
         element: container.children[0],
-        scaleSensitivity: zoomSensibility,
+        scaleSensitivity: zoomAndPanParams.zoomSensibility,
         defaultScale: defaultScale,
         containerDimension: {
           width: container.clientWidth,
@@ -262,10 +260,10 @@ export default {
         width = window.innerWidth<501 ? window.innerWidth : window.innerHeight*1.5;
         defaultScale = width / 60 / 64;
         instance = renderer({
-          minScale: Math.min(minZoom, defaultScale),
-          maxScale: maxZoom,
+          minScale: Math.min(zoomAndPanParams.minZoom, defaultScale),
+          maxScale: zoomAndPanParams.maxZoom,
           element: container.children[0],
-          scaleSensitivity: zoomSensibility,
+          scaleSensitivity: zoomAndPanParams.zoomSensibility,
           defaultScale: defaultScale,
           containerDimension: {
             width: container.clientWidth,
@@ -282,7 +280,7 @@ export default {
         instance.zoom({
           x: x,
           y: y,
-          deltaScale: 10
+          deltaScale: zoomAndPanParams.defaultZoom
         });
       }
       instance.toDefault();
@@ -307,7 +305,12 @@ export default {
 
       container.addEventListener("dblclick", (event) => {
         event.preventDefault();
-        instance.toDefault();
+        if(!instance.isToDefault()) instance.toDefault();
+        else instance.zoom({
+          x: event.pageX,
+          y: event.pageY,
+          deltaScale: zoomAndPanParams.defaultZoom
+        });
       })
 
       container.addEventListener("mousemove", (event) => {
@@ -368,6 +371,30 @@ export default {
 
         }
       });
+
+      let lastTimestamp;
+      let lastPositions;
+      container.addEventListener("touchend", (event)=>{
+        if(lastTimestamp && lastPositions){
+          if(event.timeStamp-lastTimestamp<zoomAndPanParams.doubleTapTimeTolerance){
+            if(event.changedTouches.length===1){
+              if(Math.abs(event.changedTouches[0].pageX-lastPositions.pageX)<zoomAndPanParams.doubleTapDistanceTolerance){
+                if(Math.abs(event.changedTouches[0].pageY-lastPositions.pageY)<zoomAndPanParams.doubleTapDistanceTolerance){
+                  event.preventDefault();
+                  if(!instance.isToDefault()) instance.toDefault();
+                  else instance.zoom({
+                    x: event.changedTouches[0].pageX,
+                    y: event.changedTouches[0].pageY,
+                    deltaScale: zoomAndPanParams.defaultZoom
+                  });
+                }
+              }
+            }
+          }
+        }
+        lastTimestamp = event.timeStamp;
+        lastPositions = {pageX: event.changedTouches[0].pageX, pageY: event.changedTouches[0].pageY}
+      })
 
       window.addEventListener("keydown", (event) => keyPressed(event, instance));
     });

@@ -487,7 +487,6 @@ export default {
         color: "gray"
       }
     ];*/
-    //this.handleRevelation()
   }
 }
 </script>

@@ -36,6 +36,7 @@ const pan = ({ state, originX, originY, controls=true }) => {
         translateX: state.transformation.translateX,
         translateY: state.transformation.translateY
     });
+    state.toDefault = false;
 };
 
 const makePan = (state) => ({
@@ -59,6 +60,7 @@ const makeZoom = (state) => ({
         state.element.style.transformOrigin = `${newOriginX}px ${newOriginY}px`;
         state.element.style.transform = getMatrix({ scale: newScale, translateX, translateY });
         state.transformation = { originX: newOriginX, originY: newOriginY, translateX, translateY, scale: newScale };
+        state.toDefault = false;
     }
 });
 
@@ -77,6 +79,7 @@ const makeToDefault = (state) => ({
            translateY: 0,
            scale: state.defaultScale
        };
+       state.toDefault = true;
    }
 });
 
@@ -95,8 +98,9 @@ const renderer = ({ minScale, maxScale, element, scaleSensitivity = 10, defaultS
             translateY: 0,
             scale: 1
         },
+        toDefault: false
     };
-    return Object.assign({}, makeZoom(state), makePan(state), makeToDefault(state));
+    return Object.assign({}, makeZoom(state), makePan(state), makeToDefault(state), {isToDefault: ()=>state.toDefault});
 };
 
 export default renderer

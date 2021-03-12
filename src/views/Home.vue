@@ -30,60 +30,7 @@ export default {
   },
   data(){
     return {
-      games: [
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        },
-        {
-          game_id: "ciao",
-          date: "seconds ago"
-        }
-      ],
+      games: null,
       showHamburgerMenu: false
     }
   },
