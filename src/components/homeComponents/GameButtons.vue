@@ -7,7 +7,7 @@
         <div class="back-arrow-wrapper" @click="choice=null">
           <div class="back-arrow"/>
         </div>
-        <input placeholder="Insert game name" v-model="gameToJoin">
+        <input placeholder="Insert game name" v-model="gameToJoin" @input="checkInput(gameToJoin, true)">
         <button>Join</button>
       </form>
     </div>
@@ -16,7 +16,7 @@
         <div class="back-arrow-wrapper" @click="choice=null">
           <div class="back-arrow"/>
         </div>
-        <input placeholder="Insert game name" v-model="gameToCreate">
+        <input placeholder="Insert game name" v-model="gameToCreate" @input="checkInput(gameToCreate, false)">
         <button>Create</button>
       </form>
     </div>
@@ -86,6 +86,14 @@ export default {
     },
     redirectToGame(game){
       this.router.push({name: "Game", params: {gameId: game}})
+    },
+    checkInput(input, toJoin){
+      const regex = RegExp("[$&+,:;=?@#|'<>.-^*()%!àèéìòù°\"/£ç§{}¹²³¼½¬\\s]", "g");
+      if(regex.test(input)){
+        let i = input.replaceAll(regex, "");
+        if(toJoin) this.gameToJoin = i;
+        else this.gameToCreate = i;
+      }
     }
   }
 }
@@ -169,6 +177,7 @@ export default {
         padding: 3%;
         text-align: center;
         border: 2px solid white;
+        text-transform: uppercase;
         @media (max-width: 700px) {
           font-size: 5vw;
           max-width: 45vw;
