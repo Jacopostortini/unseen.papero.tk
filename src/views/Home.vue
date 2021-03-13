@@ -58,7 +58,7 @@ export default {
             }
           })
           .catch(()=>{
-            next({name: "Error"});
+            location.href = location.origin+"/error?from="+location.pathname;
           });
     } else next();
   }

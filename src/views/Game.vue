@@ -500,7 +500,7 @@ export default {
             next();
           })
           .catch(() => {
-            next({name: "Error"});
+            location.href = location.origin+"/error?from="+location.pathname;
           });
     }
     if(store.state.username === "" && store.state.logged === -1) { //se non è ancora stato trovato il logged
@@ -518,7 +518,7 @@ export default {
             }
           })
           .catch(() => {
-            next({name: "Error"});
+            location.href = location.origin+"/error?from="+location.pathname;
           });
     } else {
       if(store.state.username === null){ //se non è loggato
