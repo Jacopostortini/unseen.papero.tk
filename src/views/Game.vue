@@ -39,7 +39,7 @@
 
 <script>
 import mitt from "mitt";
-import {colorCorrispectives, webSocketUrl} from "../constants/constants";
+import {colorCorrispectives, createLocalAccountUrl, getLoginInfoUrl, webSocketUrl} from "../constants/constants";
 import events from "../constants/webSocketEvents";
 import {useRoute} from "vue-router";
 import io from "socket.io-client";
@@ -47,6 +47,8 @@ import {defineAsyncComponent} from "vue";
 import PreGamePhase from "../components/PreGamePhase";
 import GamePhase from "../components/GamePhase";
 import PostGamePhase from "../components/PostGamePhase";
+import store from "../store";
+import axios from "axios";
 
 window.mitt = window.mitt || new mitt();
 
@@ -487,6 +489,42 @@ export default {
         color: "gray"
       }
     ];*/
+  },
+  beforeRouteEnter(to, from, next){
+    const createLocalAccount = ()=>{
+      axios
+          .get(createLocalAccountUrl)
+          .then((response) => {
+            store.dispatch("setUsername", response.data.username);
+            store.dispatch("setLogged", false);
+            next();
+          })
+          .catch(() => {
+            next({name: "Error"});
+          });
+    }
+    if(store.state.username === "" && store.state.logged === -1) { //se non è ancora stato trovato il logged
+      axios
+          .get(getLoginInfoUrl)
+          .then((response) => {
+            if (response.data) { //se è loggato in qualche modo
+              store.dispatch("setLogged", response.data.google_signed_in);
+              store.dispatch("setUsername", decodeURIComponent(response.data.username));
+
+              next(); //se è loggato in qualche modo può andare dove vuole
+
+            } else { //se non è loggato
+              createLocalAccount();
+            }
+          })
+          .catch(() => {
+            next({name: "Error"});
+          });
+    } else {
+      if(store.state.username === null){ //se non è loggato
+        createLocalAccount();
+      } else next(); //se è loggato
+    }
   }
 }
 </script>

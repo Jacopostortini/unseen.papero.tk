@@ -1,22 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import axios from "axios";
-import {createLocalAccountUrl, getLoginInfoUrl} from "../constants/constants";
-import store from "../store";
 
+const Error = () => import("../views/Error" /* webpackChunkName: "error" */);
 const Home = () => import("../views/Home" /* webpackChunkName: "home" */);
 const Game = () => import("../views/Game" /* webpackChunkName: "game" */);
 
 const routes = [
-  {
-    path: '/unseen',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/unseen/:gameId',
-    name: 'Game',
-    component: Game
-  }
+    {
+        path: '/unseen',
+        name: 'Home',
+        component: Home
+    },
+    {
+        path: '/unseen/:gameId',
+        name: 'Game',
+        component: Game
+    },
+    {
+        path: '/error/',
+        name: 'Error',
+        component: Error
+    }
 ];
 
 const router = createRouter({
@@ -25,9 +28,10 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next)=>{
+/*router.beforeEach(async (to, from, next)=>{
     //next();
-  if(store.state.username === "" && store.state.logged === -1){ //se non è ancora stato trovato il logged
+    next({name: "Error"});
+    if(store.state.username === "" && store.state.logged === -1){ //se non è ancora stato trovato il logged
     axios
         .get(getLoginInfoUrl)
         .then((response)=>{
@@ -48,10 +52,16 @@ router.beforeEach(async (to, from, next)=>{
                       store.dispatch("setUsername", response.data.username);
                       store.dispatch("setLogged", false);
                       next();
+                  })
+                  .catch(()=>{
+                      next({name: "Error"});
                   });
             } else next(); //se non sta andando in una partita non c'è bisogno dell'account
 
           }
+        })
+        .catch(()=>{
+            next({name: "Error"});
         });
   } else {
       if(store.state.username === null && to.name === "Game"){ //se non è loggato e sta andando in partita
@@ -61,9 +71,12 @@ router.beforeEach(async (to, from, next)=>{
                   store.dispatch("setUsername", response.data.username);
                   store.dispatch("setLogged", false);
                   next();
+              })
+              .catch(()=>{
+                  next({name: "Error"});
               });
-      } else next();
+      } else next(); //se è loggato
   }
-})
+})*/
 
 export default router

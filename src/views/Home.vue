@@ -15,9 +15,10 @@
 import Header from "@/components/homeComponents/Header";
 import GameButtons from "@/components/homeComponents/GameButtons";
 import axios from "axios";
-import {getAllGamesUrl} from "../constants/constants";
+import {getAllGamesUrl, getLoginInfoUrl} from "../constants/constants";
 import GameHistory from "../components/homeComponents/GameHistory";
 import {defineAsyncComponent} from "vue";
+import store from "../store";
 
 const UserHamburgerMenu = defineAsyncComponent(() => import("../components/UserHamburgerMenu" /* webpackChunkName: "userHamburgerMenu" */));
 export default {
@@ -38,6 +39,28 @@ export default {
     axios
         .get(getAllGamesUrl)
         .then((response)=>{this.games = response.data})
+  },
+  beforeRouteEnter(to, from, next) {
+    if(store.state.username === "" && store.state.logged === -1) { //se non è ancora stato cercato il logged
+      axios
+          .get(getLoginInfoUrl)
+          .then((response) => {
+            if (response.data) { //se è loggato in qualche modo
+              store.dispatch("setLogged", response.data.google_signed_in);
+              store.dispatch("setUsername", decodeURIComponent(response.data.username));
+
+              next(); //se è loggato in qualche modo può andare dove vuole
+
+            } else { //se non è loggato
+              store.dispatch("setUsername", null);
+              store.dispatch("setLogged", false);
+              next();
+            }
+          })
+          .catch(()=>{
+            next({name: "Error"});
+          });
+    } else next();
   }
 }
 </script>
