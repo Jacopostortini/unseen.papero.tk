@@ -284,19 +284,18 @@ export default {
         });
       }
       instance.toDefault();
-      if (props.autoZoom) zoomToPawn(props.currentPlayer);
+      if (props.autoZoom && props.currentPlayer) zoomToPawn(props.currentPlayer);
 
       window.mitt.on("zoom-to-default", instance.toDefault);
       window.mitt.on("zoom-to-pawn", zoomToPawn);
 
       container.addEventListener("wheel", (event) => {
-        event.preventDefault();
         instance.zoom({
           deltaScale: Math.sign(event.deltaY),
           x: event.pageX,
           y: event.pageY
         });
-      });
+      }, {passive: true});
 
       container.addEventListener("mousedown", () => {
         dragging.value = true;
@@ -304,7 +303,6 @@ export default {
       });
 
       container.addEventListener("dblclick", (event) => {
-        event.preventDefault();
         if(!instance.isToDefault()) instance.toDefault();
         else instance.zoom({
           x: event.pageX,
@@ -315,7 +313,6 @@ export default {
 
       container.addEventListener("mousemove", (event) => {
         if (!dragging.value) return;
-        event.preventDefault();
         instance.panBy({
           originX: event.movementX,
           originY: event.movementY
@@ -345,7 +342,7 @@ export default {
             lastMiddlePoint = getMiddlePointFromTouches(event.touches);
           }
         }
-      });
+      }, {passive: true});
 
       container.addEventListener("touchmove", (event) => {
         if(event.touches.length === 1){
@@ -370,7 +367,7 @@ export default {
           lastDistance = distance;
 
         }
-      });
+      }, {passive: true});
 
       let lastTimestamp;
       let lastPositions;

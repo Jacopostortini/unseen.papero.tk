@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     stationClicked(number){
-      if (this.currentPlayer.local_id === this.game.playingPlayer){
+      if (this.currentPlayer && this.currentPlayer.local_id === this.game.playingPlayer){
         let available = [];
         let taxiAvailable = this.currentPlayer.available_moves.taxi.includes(number);
         let busAvailable = this.currentPlayer.available_moves.bus.includes(number);
