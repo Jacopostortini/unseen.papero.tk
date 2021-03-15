@@ -239,15 +239,21 @@ export default {
   },
   mounted() {
     this.socket = io(webSocketUrl, {
-      path: "/unseen/socket.io/"
+      path: "/unseen/socket.io/",
+      onclose(e) {
+        console.log('Socket is closed1. Reconnect will be attempted in 1 second.', e.reason);
+        setTimeout(function() {
+          this.socket.open();
+        }, 1000);
+      }
     });
 
     this.socket.emit(events.CONNECT_TO_GAME, {game_id: this.gameId});
 
     console.log(this.socket)
 
-    this.socket.on("close", function(e) {
-      console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+    this.socket.on("disconnect", function(e) {
+      console.log('Socket is closed2. Reconnect will be attempted in 1 second.', e.reason);
       setTimeout(function() {
         this.socket.open();
       }, 1000);
