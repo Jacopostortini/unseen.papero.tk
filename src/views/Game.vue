@@ -245,11 +245,11 @@ export default {
 
     let reconnectInterval;
 
-    this.socket.emit(events.CONNECT_TO_GAME, {game_id: this.gameId});
-
     this.socket.on("connect", ()=>{
       console.log("connected");
       clearInterval(reconnectInterval);
+
+      this.socket.emit(events.CONNECT_TO_GAME, {game_id: this.gameId});
 
       this.socket.on("disconnect", () => {
         console.log("disconnected");
