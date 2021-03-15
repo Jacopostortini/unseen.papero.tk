@@ -248,54 +248,57 @@ export default {
     this.socket.emit(events.CONNECT_TO_GAME, {game_id: this.gameId});
 
     this.socket.on("connect", ()=>{
-      console.log("reconnected");
+      console.log("connected");
       clearInterval(reconnectInterval);
+
+      this.socket.on("disconnect", () => {
+        console.log("context of disconnect callback:", this);
+        reconnectInterval = setInterval(()=>{
+          console.log("trying to reconnect...")
+          console.log("context of interval handler: ", this);
+          this.socket.open();
+        }, 1000);
+      });
+
+      this.socket.on(events.CONNECT_TO_GAME, (data) => {
+        this.setupData(data);
+      });
+
+      this.socket.on(events.LOBBY_MODIFIED, data => {
+        this.setupData(data);
+      });
+
+      this.socket.on(events.START_GAME, data => {
+        this.setupData(data);
+      });
+
+      this.socket.on(events.GAME_MODIFIED, data => {
+        this.setupData(data);
+      });
+
+      this.socket.on(events.USE_DOUBLE_TURN, this.handleDoubleTurn);
+
+      this.socket.on(events.CHAT, data => {
+        this.appendMessage(data);
+      });
+
+      this.socket.on(events.END_GAME, (data)=>{
+        this.handleEvents("Game Over", "The game finished", 4000);
+        setTimeout(()=>{
+          this.setupData(data);
+        }, 4000)
+      });
+
+      this.socket.on(events.RESTART_GAME, ()=>{
+        this.gameRestarted = true;
+      });
+
+      this.socket.on(events.GET_GAME, (data)=>{
+        this.setupData(data);
+      });
+
     })
 
-    let that = this;
-    this.socket.on("disconnect", () => {
-       reconnectInterval = setInterval(()=>{
-         console.log("trying to reconnect...")
-        that.socket.open();
-      }, 1000);
-    });
-
-    this.socket.on(events.CONNECT_TO_GAME, (data) => {
-      this.setupData(data);
-    });
-
-    this.socket.on(events.LOBBY_MODIFIED, data => {
-      this.setupData(data);
-    });
-
-    this.socket.on(events.START_GAME, data => {
-      this.setupData(data);
-    });
-
-    this.socket.on(events.GAME_MODIFIED, data => {
-      this.setupData(data);
-    });
-
-    this.socket.on(events.USE_DOUBLE_TURN, this.handleDoubleTurn);
-
-    this.socket.on(events.CHAT, data => {
-      this.appendMessage(data);
-    });
-
-    this.socket.on(events.END_GAME, (data)=>{
-      this.handleEvents("Game Over", "The game finished", 4000);
-      setTimeout(()=>{
-        this.setupData(data);
-      }, 4000)
-    });
-
-    this.socket.on(events.RESTART_GAME, ()=>{
-      this.gameRestarted = true;
-    });
-
-    this.socket.on(events.GET_GAME, (data)=>{
-      this.setupData(data);
-    });
     /*this.status = 2;
     this.currentPlayer = null/!*{
       local_id: 0,
