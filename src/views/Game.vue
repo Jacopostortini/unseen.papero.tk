@@ -163,7 +163,7 @@ export default {
       this.socket.emit(events.CHANGE_COLOR, newColor);
     },
     startGame(){
-      console.log(this.socket);
+      console.log("start game event emitted");
       this.socket.emit(events.START_GAME);
     },
     changeMisterX(newMisterX){
@@ -251,11 +251,13 @@ export default {
       console.log("connected");
       clearInterval(reconnectInterval);
 
+      this.socket.on("error", (...args)=>{
+        console.log(args);
+      });
+
       this.socket.on("disconnect", () => {
-        console.log("context of disconnect callback:", this);
         reconnectInterval = setInterval(()=>{
           console.log("trying to reconnect...")
-          console.log("context of interval handler: ", this);
           this.socket.open();
         }, 1000);
       });
@@ -269,6 +271,7 @@ export default {
       });
 
       this.socket.on(events.START_GAME, data => {
+        console.log("start game event received")
         this.setupData(data);
       });
 
