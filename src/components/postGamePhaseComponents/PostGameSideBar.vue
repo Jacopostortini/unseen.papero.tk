@@ -51,8 +51,6 @@ export default {
   },
   watch: {
     gameRestarted: function(val){
-      console.log("new value for game restarted: ", val);
-      console.log("postgame sidebar component", this);
       if((this.wantToGoBack || (this.currentPlayer && this.currentPlayer.is_admin)) && val)
         this.$emit("restart-game", false);
     }
