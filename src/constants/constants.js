@@ -1,6 +1,7 @@
 const colors = {
     numberOfNonMisterX: 5,
-    cssColors: ["black", "red", "blue", "green", "pink", "gray"]
+    cssColors: ["#323232", "#ff3c00", "#0073ff", "#00c600", "#ff1493", "#ffbf00"],
+    cssToastClass: ["t0", "t1", "t2", "t3", "t4", "t5"]
 };
 const gameConfig = {
     taxi: 12,

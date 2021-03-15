@@ -121,36 +121,34 @@ export default {
       this.unreadMessages = true;
       let message = {};
       message.localId = data._from;
-      message.username = this.findUsernameByLocalId(data._from);
+      let {username, color, cssToastClass} = this.findInfoByLocalId(data._from);
+      message.username = username;
       message.body = data.message;
-      message.color = this.findColorByLocalId(data._from);
+      message.color = color;
+      message.cssToastClass = cssToastClass;
       message.fromYou = data._from === this.currentPlayer.local_id;
       this.messages.push(message);
       if(!message.fromYou) this.$toast.show(message.body, {
         duration: 2000,
         maxToasts: 4,
-        className: "toast "+message.color
+        className: "toast "+message.cssToastClass
       });
       setTimeout(()=>{
         let chat = document.getElementById("chat-container");
         chat.scrollTop = chat.scrollHeight;
       }, 100)
     },
-    findUsernameByLocalId(id){
+    findInfoByLocalId(id){
       for(let i = 0; i < this.players.length; i++){
         if(this.players[i].local_id===id){
-          return this.players[i].username;
+          return {
+            username: this.players[i].username,
+            color: colors.cssColors[this.players[i].color+1],
+            cssToastClass: colors.cssToastClass[this.players[i].color+1]
+          }
         }
       }
-      return null;
-    },
-    findColorByLocalId(id){
-      for(let i = 0; i < this.players.length; i++){
-        if(this.players[i].local_id===id){
-          return colors.cssColors[this.players[i].color+1];
-        }
-      }
-      return null;
+      return {};
     },
     joinGame() {
       this.socket.emit(events.JOIN_GAME);
@@ -490,19 +488,16 @@ button {
     justify-content: start;
   }
 
-  &.black{background-color: #323232;}
+  &.t0{background-color: #323232;}
 
-  &.red{background-color: red;}
+  &.t1{background-color: #ff3c00;}
 
-  &.blue{background-color: blue;}
+  &.t2{background-color: #0073ff;}
 
-  &.green{background-color: green;}
+  &.t3{background-color: #00c600;}
 
-  &.pink{background-color: deeppink;}
+  &.t4{background-color: #ff1493;}
 
-  &.gray{
-    background-color: #c8c8c8;
-    color: black;
-  }
+  &.t5{background-color: #ffbf00;}
 }
 </style>
