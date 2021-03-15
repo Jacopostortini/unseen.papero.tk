@@ -246,10 +246,12 @@ export default {
 
     this.socket.emit(events.CONNECT_TO_GAME, {game_id: this.gameId});
 
-    this.socket.on("disconnect", ()=>{
-      console.log("socketdisconnected")
-      this.socket.connect();
-    })
+    this.socket.onclose = function(e) {
+      console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+      setTimeout(function() {
+        this.socket.open();
+      }, 1000);
+    };
 
     this.socket.on(events.CONNECT_TO_GAME, (data) => {
       this.setupData(data);
