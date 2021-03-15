@@ -2,8 +2,8 @@
   <div class="pregame-phase__main-panel">
 
 
-    <header class="pregame-phase__header" @click="redirectToHome">
-      <h1>Unseen</h1>
+    <header class="pregame-phase__header">
+      <h1 @click="redirectToHome">Unseen</h1>
     </header>
 
 
@@ -148,11 +148,14 @@ export default {
     grid-area: header;
     width: 100%;
     height: 100%;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     h1{
       margin: 0;
       color: white;
+      width: fit-content;
       font-family: Eutemia;
       font-size: 15vh;
       font-weight: normal;
