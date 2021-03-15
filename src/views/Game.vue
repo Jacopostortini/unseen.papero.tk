@@ -39,7 +39,7 @@
 
 <script>
 import mitt from "mitt";
-import {colorCorrispectives, createLocalAccountUrl, getLoginInfoUrl, webSocketUrl} from "../constants/constants";
+import {colors, createLocalAccountUrl, getLoginInfoUrl, webSocketUrl} from "../constants/constants";
 import events from "../constants/webSocketEvents";
 import {useRoute} from "vue-router";
 import io from "socket.io-client";
@@ -147,7 +147,7 @@ export default {
     findColorByLocalId(id){
       for(let i = 0; i < this.players.length; i++){
         if(this.players[i].local_id===id){
-          return colorCorrispectives[this.players[i].color+1];
+          return colors.cssColors[this.players[i].color+1];
         }
       }
       return null;
@@ -284,7 +284,7 @@ export default {
     this.socket.on(events.GET_GAME, (data)=>{
       this.setupData(data);
     });
-    this.status = 0;
+/*    this.status = 0;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -364,133 +364,8 @@ export default {
         fromYou: true,
         username: "jacopo",
         color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },{
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
-      },
-      {
-        body: "ciaooo",
-        local_id: 0,
-        fromYou: true,
-        username: "jacopo",
-        color: "gray"
       }
-    ];
+    ];*/
   },
   beforeRouteEnter(to, from, next){
     let id = to.params.gameId;

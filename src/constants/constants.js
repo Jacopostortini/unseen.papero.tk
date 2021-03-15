@@ -1,5 +1,7 @@
-const colors = 5;
-const colorCorrispectives = ["black", "red", "blue", "green", "pink", "gray"];
+const colors = {
+    numberOfNonMisterX: 5,
+    cssColors: ["black", "red", "blue", "green", "pink", "gray"]
+};
 const gameConfig = {
     taxi: 12,
     bus: 8,
@@ -19,7 +21,6 @@ const quitGameUrl = "https://papero.tk/server/unseen/games/quit";
 
 export {
     colors,
-    colorCorrispectives,
     gameConfig,
     webSocketUrl,
     getLoginInfoUrl,
