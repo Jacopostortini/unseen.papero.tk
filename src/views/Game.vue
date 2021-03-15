@@ -246,6 +246,10 @@ export default {
 
     this.socket.emit(events.CONNECT_TO_GAME, {game_id: this.gameId});
 
+    this.socket.on("disconnect", ()=>{
+      this.socket.connect();
+    })
+
     this.socket.on(events.CONNECT_TO_GAME, (data) => {
       this.setupData(data);
     });
