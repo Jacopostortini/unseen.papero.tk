@@ -182,8 +182,10 @@ export default {
       this.socket.emit(events.USE_DOUBLE_TURN);
     },
     restartGame(event){
-      if(event) this.socket.emit(events.RESTART_GAME);
-      this.socket.emit(events.GET_GAME);
+      if(event) this.socket.emit(events.RESTART_GAME, ()=>{
+        this.socket.emit(events.GET_GAME);
+      });
+      else this.socket.emit(events.GET_GAME);
     },
     handleEvents (title, description, time){
       this.changedStatusPanel.title = title;
@@ -282,7 +284,7 @@ export default {
     this.socket.on(events.GET_GAME, (data)=>{
       this.setupData(data);
     });
-    /*this.status = 1;
+    this.status = 0;
     this.currentPlayer = {
       local_id: 0,
       color: 1,
@@ -488,9 +490,15 @@ export default {
         username: "jacopo",
         color: "gray"
       }
-    ];*/
+    ];
   },
   beforeRouteEnter(to, from, next){
+    let id = to.params.gameId;
+    const regex = RegExp("[$&+,:;=?@#|'<>.-^*()%!àèéìòù°\"/£ç§{}¹²³¼½¬\\s]", "g");
+    if(regex.test(id.toLowerCase())) {
+      next({name: to.name, params: {gameId: id.replaceAll(regex, "").toLowerCase()}});
+      return;
+    }
     const createLocalAccount = ()=>{
       axios
           .get(createLocalAccountUrl)

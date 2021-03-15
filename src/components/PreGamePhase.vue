@@ -102,7 +102,7 @@ export default {
       return window.location;
     },
     id: function() {
-      return useRoute().params.gameId;
+      return useRoute().params.gameId.toUpperCase();
     },
     adminUsername: function() {
       for (let i=0; i<this.players.length; i++){
