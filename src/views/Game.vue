@@ -244,6 +244,8 @@ export default {
 
     this.socket.emit(events.CONNECT_TO_GAME, {game_id: this.gameId});
 
+    console.log(this.socket)
+
     this.socket.on("close", function(e) {
       console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
       setTimeout(function() {
