@@ -163,6 +163,7 @@ export default {
       this.socket.emit(events.CHANGE_COLOR, newColor);
     },
     startGame(){
+      console.log(this.socket);
       this.socket.emit(events.START_GAME);
     },
     changeMisterX(newMisterX){
