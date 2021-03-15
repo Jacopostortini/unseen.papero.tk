@@ -135,7 +135,7 @@ export default {
       });
       setTimeout(()=>{
         let chat = document.getElementById("chat-container");
-        chat.scrollTop = chat.scrollHeight;
+        if(chat) chat.scrollTop = chat.scrollHeight;
       }, 100)
     },
     findInfoByLocalId(id){
@@ -242,21 +242,9 @@ export default {
       path: "/unseen/socket.io/"
     });
 
-    //let reconnectInterval;
-
     this.socket.on("connect", ()=>{
       console.log("connected");
-      //clearInterval(reconnectInterval);
-
       this.socket.emit(events.CONNECT_TO_GAME, {game_id: this.gameId});
-
-      /*this.socket.on("disconnect", () => {
-        console.log("disconnected");
-        reconnectInterval = setInterval(()=>{
-          console.log("trying to reconnect...")
-          this.socket.open();
-        }, 1000);
-      });*/
     });
 
     this.socket.on(events.CONNECT_TO_GAME, (data) => {
