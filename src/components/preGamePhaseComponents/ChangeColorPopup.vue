@@ -25,7 +25,7 @@ export default {
         colorsUnavailable.push(this.players[i].color);
       }
       let colorsAvailable = [];
-      for (let i=0; i<colors; i++){
+      for (let i=0; i<colors.numberOfNonMisterX; i++){
         if(!colorsUnavailable.includes(i)) colorsAvailable.push(i);
       }
       return colorsAvailable;

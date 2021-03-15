@@ -2,7 +2,7 @@
   <div class="pregame-phase__main-panel">
 
 
-    <header class="pregame-phase__header">
+    <header class="pregame-phase__header" @click="redirectToHome">
       <h1>Unseen</h1>
     </header>
 
@@ -95,6 +95,9 @@ export default {
         }
         sleep(1).then(()=>{this.pulseMisterXButton = false});
       }
+    },
+    redirectToHome(){
+      this.$router.push({name: "Home"});
     }
   },
   computed: {
