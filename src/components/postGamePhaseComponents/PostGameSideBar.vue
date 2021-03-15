@@ -52,7 +52,8 @@ export default {
   watch: {
     gameRestarted: function(val){
       console.log(val);
-      if(this.wantToGoBack && val) this.$emit("restart-game", false);
+      if((this.wantToGoBack || (this.currentPlayer && this.currentPlayer.is_admin)) && val)
+        this.$emit("restart-game", false);
     }
   }
 }

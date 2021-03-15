@@ -180,9 +180,7 @@ export default {
       this.socket.emit(events.USE_DOUBLE_TURN);
     },
     restartGame(event){
-      if(event) this.socket.emit(events.RESTART_GAME, ()=>{
-        this.socket.emit(events.GET_GAME);
-      });
+      if(event) this.socket.emit(events.RESTART_GAME);
       else this.socket.emit(events.GET_GAME);
     },
     handleEvents (title, description, time){
