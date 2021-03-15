@@ -251,11 +251,8 @@ export default {
       console.log("connected");
       clearInterval(reconnectInterval);
 
-      this.socket.on("error", (...args)=>{
-        console.log(args);
-      });
-
       this.socket.on("disconnect", () => {
+        console.log("disconnected");
         reconnectInterval = setInterval(()=>{
           console.log("trying to reconnect...")
           this.socket.open();
