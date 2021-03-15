@@ -126,7 +126,7 @@ export default {
       message.body = data.message;
       message.color = color;
       message.cssToastClass = cssToastClass;
-      message.fromYou = data._from === this.currentPlayer.local_id;
+      message.fromYou = this.currentPlayer ? data._from === this.currentPlayer.local_id : false;
       this.messages.push(message);
       if(!message.fromYou) this.$toast.show(message.body, {
         duration: 2000,
@@ -247,6 +247,7 @@ export default {
     this.socket.emit(events.CONNECT_TO_GAME, {game_id: this.gameId});
 
     this.socket.on("disconnect", ()=>{
+      console.log("socketdisconnected")
       this.socket.connect();
     })
 
