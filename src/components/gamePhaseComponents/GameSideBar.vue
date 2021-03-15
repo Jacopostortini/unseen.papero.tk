@@ -13,7 +13,7 @@
     </div>
 
 
-    <div class="game-sidebar-normal__transport-cards" v-if="!currentPlayer.is_mister_x">
+    <div class="game-sidebar-normal__transport-cards" v-if="currentPlayer && !currentPlayer.is_mister_x">
       <div class="game-sidebar-normal__transport-wrapper" v-if="remainingTaxis">
         <TransportCard v-for="n in remainingTaxis"
                       :key="n"
@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <div class="double-turn-cards" v-if="currentPlayer.is_mister_x">
+    <div class="double-turn-cards" v-if="currentPlayer && currentPlayer.is_mister_x">
       <div class="double-turn-cards__wrapper" v-if="remainingDoubleTurn">
         <div v-for="n in remainingDoubleTurn"
                        :key="n">
@@ -86,19 +86,19 @@ export default {
   },
   computed: {
     remainingTaxis: function (){
-      return gameConfig.taxi-this.currentPlayer.used_taxi;
+      return this.currentPlayer ? gameConfig.taxi-this.currentPlayer.used_taxi : null;
     },
     remainingBuses: function (){
-      return gameConfig.bus-this.currentPlayer.used_bus;
+      return this.currentPlayer ? gameConfig.bus-this.currentPlayer.used_bus: null;
     },
     remainingUndergrounds: function (){
-      return gameConfig.underground-this.currentPlayer.used_underground;
+      return this.currentPlayer ? gameConfig.underground-this.currentPlayer.used_underground : null;
     },
     remainingSecretMoves: function (){
-      return gameConfig.secret_moves-this.currentPlayer.used_secret_moves;
+      return this.currentPlayer ? gameConfig.secret_moves-this.currentPlayer.used_secret_moves : null;
     },
     remainingDoubleTurn: function (){
-      return gameConfig.double_turns-this.currentPlayer.used_double_turns;
+      return this.currentPlayer ? gameConfig.double_turns-this.currentPlayer.used_double_turns : null;
     }
   },
   methods: {
@@ -106,7 +106,7 @@ export default {
       this.router.push({name: "Home"})
     },
     useDoubleTurn(){
-      if(this.currentPlayer.local_id === this.game.playingPlayer && this.currentPlayer.is_mister_x){
+      if(this.currentPlayer && this.currentPlayer.local_id === this.game.playingPlayer && this.currentPlayer.is_mister_x){
         this.$emit("use-double-turn");
 
       }

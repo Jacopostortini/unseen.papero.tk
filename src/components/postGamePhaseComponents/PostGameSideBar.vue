@@ -1,7 +1,7 @@
 <template>
   <div class="post-game-sidebar__main-panel">
     <div class="post-game-sidebar__title">
-      <button v-if="currentPlayer.is_admin" @click="$emit('restart-game', true)">Restart game</button>
+      <button v-if="currentPlayer && currentPlayer.is_admin" @click="$emit('restart-game', true)">Restart game</button>
       <button v-else @click="backToLobby" v-is="element">{{ msg }}</button>
     </div>
 

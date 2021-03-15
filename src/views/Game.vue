@@ -1,7 +1,7 @@
 <template>
   <div class="game__main-panel">
     <div class="hamburger-menu__wrapper" :class="{'hidden': !showHamburgerMenu}">
-      <UserHamburgerMenu :show-chat="true"
+      <UserHamburgerMenu :show-chat="!!currentPlayer"
                          :messages="messages"
                          :disable-logout="true"
                          :unread-messages="unreadMessages"
@@ -282,8 +282,8 @@ export default {
     this.socket.on(events.GET_GAME, (data)=>{
       this.setupData(data);
     });
-/*    this.status = 0;
-    this.currentPlayer = {
+    /*this.status = 2;
+    this.currentPlayer = null/!*{
       local_id: 0,
       color: 1,
       is_mister_x: false,
@@ -301,14 +301,14 @@ export default {
         bus: [47, 59],
         underground: [47]
       }
-    }
+    }*!/
     this.players = [
-      this.currentPlayer,
+      //this.currentPlayer,
       {
         local_id: 1,
         color: -1,
         is_mister_x: true,
-        is_admin: false,
+        is_admin: true,
         username: "matteo",
         online: true,
         position: 2
@@ -359,7 +359,7 @@ export default {
       {
         body: "ciaooo",
         local_id: 0,
-        fromYou: true,
+        fromYou: false,
         username: "jacopo",
         color: "gray"
       }
@@ -372,6 +372,7 @@ export default {
       next({name: to.name, params: {gameId: id.replaceAll(regex, "").toLowerCase()}});
       return;
     }
+    //next();
     const createLocalAccount = ()=>{
       axios
           .get(createLocalAccountUrl)
