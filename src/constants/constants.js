@@ -12,14 +12,14 @@ const gameConfig = {
     number_of_total_turns: 24,
     mister_x_is_visible_turns: [3, 8, 13, 18, 23]
 }
+const baseUrl = "https://papero.me";
 const urls = {
-    baseUrl: "https://papero.me",
-    getLoginInfoUrl: this.baseUrl+"/user/get_info",
-    getAllGamesUrl: this.baseUrl+"/server/unseen/games/all",
-    getGameStatusUrl: this.baseUrl+"/server/unseen/games/status_by_id",
-    createLocalAccountUrl: this.baseUrl+"/auth/local",
-    logoutUrl: this.baseUrl+"/auth/logout",
-    quitGameUrl: this.baseUrl+"/server/unseen/games/quit"
+    getLoginInfoUrl: baseUrl+"/user/get_info",
+    getAllGamesUrl: baseUrl+"/server/unseen/games/all",
+    getGameStatusUrl: baseUrl+"/server/unseen/games/status_by_id",
+    createLocalAccountUrl: baseUrl+"/auth/local",
+    logoutUrl: baseUrl+"/auth/logout",
+    quitGameUrl: baseUrl+"/server/unseen/games/quit"
 }
 
 export {
