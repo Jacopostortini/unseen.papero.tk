@@ -52,11 +52,25 @@ export default {
 
 $icon-right: 20px;
 $icon-top: 20px;
+$width: 70%;
+$height: 80%;
+$padding: 5%;
+$top: 5%;
+$right: 10%;
+
+@media (max-width: 700px) {
+  $width: 90%;
+  $height: 92.5%;
+  $padding: 2.5%;
+  $top: 2.5%;
+  $right: 2.5%;
+}
 
 .rules__main-panel{
   position: fixed;
   top: $icon-top;
   right: $icon-right;
+  z-index: 6;
 
   .toggle-show-button{
     text-align: center;
@@ -65,17 +79,23 @@ $icon-top: 20px;
     cursor: pointer;
     font-size: 200%;
     transition: all 0.5s;
+
+    @media (max-width: 700px){
+      font-size: 150%;
+    }
   }
 
   .popup{
     position: fixed;
-    top: 5%;
-    right: 10%;
-    width: 70%;
-    height: 80%;
+    top: $top;
+    right: $right;
+    width: $width;
+    height: $height;
     background-color: white;
     overflow-y: scroll;
-    padding: 0 5% 5% 5%;
+    padding: 0 $padding $padding $padding;
+    transition: all 1s ease;
+    transform-origin: top right;
 
     strong{
       position: sticky;
@@ -91,6 +111,7 @@ $icon-top: 20px;
     }
 
     h1{
+      margin: 10px 0 20px 0;
       text-align: center;
       font-family: Eutemia;
       font-weight: normal;
@@ -103,17 +124,11 @@ $icon-top: 20px;
     }
   }
 
-  .rules-transition-enter-active,
-  .rules-transition-leave-active {
-    transition: all 1s ease;
-    transform-origin: top right;
-  }
-
   .rules-transition-enter-from,
   .rules-transition-leave-to{
     transform: scale(0);
-    top: $icon-top;
-    right: $icon-right;
+    top: calc(#{$icon-top} + 16px);
+    right: calc(#{$icon-right} + 16px);
   }
 }
 </style>
