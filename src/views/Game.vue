@@ -286,7 +286,7 @@ export default {
     });
 
 
-    /*this.status = 2;
+/*    this.status = 0;
     this.currentPlayer = null/!*{
       local_id: 0,
       color: 1,

@@ -51,7 +51,7 @@
       <ChangeMisterXPopup :players="players" :current-player="currentPlayer" @changemisterx="$emit('changemisterx', $event)"/>
     </div>
 
-
+    <Rules/>
   </div>
 </template>
 
@@ -61,9 +61,10 @@ import {useRoute} from "vue-router";
 import ChangeColorPopup from "./preGamePhaseComponents/ChangeColorPopup";
 import ChangeMisterXPopup from "./preGamePhaseComponents/ChangeMisterXPopup";
 import CopyInformation from "./preGamePhaseComponents/CopyInformation";
+import Rules from "./Rules";
 export default {
   name: "PreGamePhase",
-  components: {CopyInformation, ChangeMisterXPopup, ChangeColorPopup, PlayerLabel},
+  components: {Rules, CopyInformation, ChangeMisterXPopup, ChangeColorPopup, PlayerLabel},
   props: {
     players: {
       type: Array,
