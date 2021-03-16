@@ -24,7 +24,7 @@
 
 <script>
 import {useStore} from "vuex";
-import {logoutUrl} from "../constants/constants";
+import {urls} from "../constants/constants";
 import axios from "axios";
 import ChatContainer from "./hamburgerMenuComponents/ChatContainer";
 
@@ -70,7 +70,7 @@ export default {
       window.location.href = '/auth/google?from_location='+from_location;
     },
     logout(){
-      axios.get(logoutUrl);
+      axios.get(urls.logoutUrl);
       this.store.dispatch("setLogged", false);
       this.store.dispatch("setUsername", null);
     }

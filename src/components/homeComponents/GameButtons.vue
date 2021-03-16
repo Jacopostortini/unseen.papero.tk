@@ -34,7 +34,7 @@
 
 <script>
 import {useRouter} from "vue-router";
-import {getGameStatusUrl} from "../../constants/constants";
+import {urls} from "../../constants/constants";
 import axios from "axios";
 
 export default {
@@ -55,7 +55,7 @@ export default {
     joinGame(){
       if (this.gameToJoin) {
         axios
-            .get(getGameStatusUrl, {params: {game_id: this.gameToJoin}})
+            .get(urls.getGameStatusUrl, {params: {game_id: this.gameToJoin}})
             .then((response) => {
               if (response.data) {
                 this.router.push({name: "Game", params: {gameId: this.gameToJoin}})
@@ -71,7 +71,7 @@ export default {
     createGame(){
       if(this.gameToCreate) {
         axios
-            .get(getGameStatusUrl, {params: {game_id: this.gameToCreate}})
+            .get(urls.getGameStatusUrl, {params: {game_id: this.gameToCreate}})
             .then((response) => {
               if (response.data) {
                 this.popupMessage = "This game already exists";

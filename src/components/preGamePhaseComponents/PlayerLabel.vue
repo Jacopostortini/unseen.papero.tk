@@ -101,7 +101,7 @@ export default {
     display: flex;
     flex-flow: column;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     font-size: 3vh;
 
     &>*{

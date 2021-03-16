@@ -12,22 +12,18 @@ const gameConfig = {
     number_of_total_turns: 24,
     mister_x_is_visible_turns: [3, 8, 13, 18, 23]
 }
-const webSocketUrl = "https://papero.tk";
-const getLoginInfoUrl = "https://papero.tk/user/get_info";
-const getAllGamesUrl = "https://papero.tk/server/unseen/games/all";
-const getGameStatusUrl = "https://papero.tk/server/unseen/games/status_by_id";
-const createLocalAccountUrl = "https://papero.tk/auth/local";
-const logoutUrl = "https://papero.tk/auth/logout";
-const quitGameUrl = "https://papero.tk/server/unseen/games/quit";
+const urls = {
+    baseUrl: "https://papero.me",
+    getLoginInfoUrl: this.baseUrl+"/user/get_info",
+    getAllGamesUrl: this.baseUrl+"/server/unseen/games/all",
+    getGameStatusUrl: this.baseUrl+"/server/unseen/games/status_by_id",
+    createLocalAccountUrl: this.baseUrl+"/auth/local",
+    logoutUrl: this.baseUrl+"/auth/logout",
+    quitGameUrl: this.baseUrl+"/server/unseen/games/quit"
+}
 
 export {
     colors,
     gameConfig,
-    webSocketUrl,
-    getLoginInfoUrl,
-    getAllGamesUrl,
-    getGameStatusUrl,
-    createLocalAccountUrl,
-    logoutUrl,
-    quitGameUrl
+    urls
 };

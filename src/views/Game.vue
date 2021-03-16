@@ -37,7 +37,7 @@
 
 <script>
 import mitt from "mitt";
-import {colors, createLocalAccountUrl, getLoginInfoUrl, webSocketUrl} from "../constants/constants";
+import {colors, urls} from "../constants/constants";
 import events from "../constants/webSocketEvents";
 import {useRoute} from "vue-router";
 import io from "socket.io-client";
@@ -239,7 +239,7 @@ export default {
     }
   },
   mounted() {
-    this.socket = io(webSocketUrl, {
+    this.socket = io(urls.webSocketUrl, {
       path: "/unseen/socket.io/"
     });
 
@@ -379,7 +379,7 @@ export default {
     //next();
     const createLocalAccount = ()=>{
       axios
-          .get(createLocalAccountUrl)
+          .get(urls.createLocalAccountUrl)
           .then((response) => {
             store.dispatch("setUsername", response.data.username);
             store.dispatch("setLogged", false);
@@ -391,7 +391,7 @@ export default {
     }
     if(store.state.username === "" && store.state.logged === -1) { //se non è ancora stato trovato il logged
       axios
-          .get(getLoginInfoUrl)
+          .get(urls.getLoginInfoUrl)
           .then((response) => {
             if (response.data) { //se è loggato in qualche modo
               store.dispatch("setLogged", response.data.google_signed_in);
