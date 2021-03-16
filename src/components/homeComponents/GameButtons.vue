@@ -88,12 +88,13 @@ export default {
       this.router.push({name: "Game", params: {gameId: game}})
     },
     checkInput(input, toJoin){
-      const regex = RegExp("[$&+,:;=?@#|'<>.-^*()%!àèéìòù°\"/£ç§{}¹²³¼½¬\\s]", "g");
+      const regex = RegExp("[^a-zA-Z]", "g");
+      let i = input;
       if(regex.test(input)){
-        let i = input.replaceAll(regex, "");
-        if(toJoin) this.gameToJoin = i;
-        else this.gameToCreate = i;
+        i = input.replaceAll(regex, "");
       }
+      if(toJoin) this.gameToJoin = i.toUpperCase();
+      else this.gameToCreate = i.toUpperCase();
     }
   }
 }
@@ -177,7 +178,6 @@ export default {
         padding: 3%;
         text-align: center;
         border: 2px solid white;
-        text-transform: uppercase;
         @media (max-width: 700px) {
           font-size: 5vw;
           max-width: 45vw;

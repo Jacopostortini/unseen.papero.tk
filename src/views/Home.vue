@@ -3,11 +3,9 @@
   <Header/>
   <GameHistory :games="games"/>
   <GameButtons/>
-  <div class="hamburger-menu__wrapper" :class="{'hidden': !showHamburgerMenu}">
-    <UserHamburgerMenu :src="require('@/assets/hamburger_icon_dark.png')"
-                       :show="showHamburgerMenu"
-                       @toggle-show="showHamburgerMenu=$event"/>
-  </div>
+  <UserHamburgerMenu :src="require('@/assets/hamburger_icon_dark.png')"
+                     :show="showHamburgerMenu"
+                     @toggle-show="showHamburgerMenu=$event"/>
 </div>
 </template>
 
@@ -41,6 +39,7 @@ export default {
         .then((response)=>{this.games = response.data})
   },
   beforeRouteEnter(to, from, next) {
+    //next();
     if(store.state.username === "" && store.state.logged === -1) { //se non è ancora stato cercato il logged
       axios
           .get(getLoginInfoUrl)
@@ -88,24 +87,6 @@ export default {
     grid-template-areas: "header header" "my-games x";
   }
   height: 100%;
-
-  .hamburger-menu__wrapper{
-    transition: all 0.5s;
-    height: 100%;
-    position: absolute;
-    z-index: 5;
-    width: 25%;
-    @media (max-width: 500px) {
-      width: 70% !important;
-    }
-    @media (max-width: 700px) {
-      width: 40%;
-    }
-
-    &.hidden{
-      transform: translateX(-100%);
-    }
-  }
 }
 
 button {

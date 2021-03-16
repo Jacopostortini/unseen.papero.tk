@@ -17,9 +17,4 @@
   font-size: 150%;
 }
 
-/* width */
-::-webkit-scrollbar {
-  width: 0;
-}
-
 </style>

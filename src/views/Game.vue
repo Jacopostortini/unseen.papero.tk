@@ -1,16 +1,14 @@
 <template>
   <div class="game__main-panel">
-    <div class="hamburger-menu__wrapper" :class="{'hidden': !showHamburgerMenu}">
-      <UserHamburgerMenu :show-chat="!!currentPlayer"
-                         :messages="messages"
-                         :disable-logout="true"
-                         :unread-messages="unreadMessages"
-                         :src="hamburgerMenuImage"
-                         :show="showHamburgerMenu"
-                         @chat-opened="unreadMessages=false"
-                         @send-message="sendMessage"
-                         @toggle-show="showHamburgerMenu=$event"/>
-    </div>
+    <UserHamburgerMenu :show-chat="!!currentPlayer"
+                       :messages="messages"
+                       :disable-logout="true"
+                       :unread-messages="unreadMessages"
+                       :src="hamburgerMenuImage"
+                       :show="showHamburgerMenu"
+                       @chat-opened="unreadMessages=false"
+                       @send-message="sendMessage"
+                       @toggle-show="showHamburgerMenu=$event"/>
     <PreGamePhase v-if="status===0"
                   :players="players"
                   :current-player="currentPlayer"
@@ -208,7 +206,9 @@ export default {
     handleRevelation(){
       let title = "Revelation";
       let description;
-      if(this.currentPlayer.is_mister_x){
+      if(!this.currentPlayer){
+        description = "Mister X's position is " + this.game.lastMisterXKnownPosition+"!";
+      } else if(this.currentPlayer.is_mister_x){
         description = "Your position was revealed! Be careful!";
       } else {
         description = "Mister X's position is " + this.game.lastMisterXKnownPosition+"! Go catch him!";
@@ -216,25 +216,26 @@ export default {
       this.handleEvents(title,
           description,
           4000);
-      window.mitt.emit("zoom-to-default");
       this.players.forEach(player => {
         if(player.is_mister_x) {
           player.position = this.game.lastMisterXKnownPosition;
+          window.mitt.emit("zoom-to-default");
           window.mitt.emit("zoom-to-pawn", player);
         }
       });
     },
     handleDoubleTurn(){
-      if(!this.currentPlayer.is_mister_x){
-        this.handleEvents("Double turn",
-            "Oh no! Mister X played a double turn card, you were close!",
-            4000);
+      let title = "Double turn";
+      let description;
+      if(!this.currentPlayer){
+        description = "Mister X played a double turn card";
+      } else if(!this.currentPlayer.is_mister_x){
+        description = "Oh no! Mister X played a double turn card, you were close!";
       } else {
         this.currentPlayer.used_double_turns++;
-        this.handleEvents("Double turn",
-            "Well played! Now you can move twice, they will surely lose your track!",
-            4000);
+        description = "Well played! Now you can move twice, they will surely lose your track!";
       }
+      this.handleEvents(title, description, 4000);
     }
   },
   mounted() {
@@ -428,26 +429,6 @@ export default {
   overflow-y: hidden;
   @media (max-width: 700px) {
     overflow: scroll;
-  }
-
-
-  .hamburger-menu__wrapper{
-    transition: all 0.5s;
-    height: 100%;
-    position: absolute;
-    z-index: 5;
-    width: 25%;
-    @media (max-width: 500px) {
-      width: 70% !important;
-    }
-    @media (max-width: 700px) {
-      width: 40%;
-    }
-
-    &.hidden{
-      transform: translateX(-100%);
-    }
-
   }
 }
 
