@@ -88,7 +88,7 @@ export default {
       this.router.push({name: "Game", params: {gameId: game.toLowerCase()}})
     },
     checkInput(input, toJoin){
-      const regex = RegExp("[^a-zA-Z]", "g");
+      const regex = RegExp("[^a-zA-Z0-9]", "g");
       let i = input;
       if(regex.test(input)){
         i = input.replaceAll(regex, "");
