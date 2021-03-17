@@ -18,13 +18,12 @@
           <br>
           After MisterX's move, the mean of transport he uses is placed on the blackboard. There are, however, what are called "Revelation Turns". That's when MisterX position is revealed (these turns are circled on the black board).
           <br>
-          MisterX has unlimited tickets of each type, in addition to some special tickets.
-          <br>
-          2X DoubleTurn: MisterX can play twice in a row.
-          <br>
-          2X SecretMove: MisterX can decide not to reveal the mean of transport he used, and use a secret move.
-          <br>
-          <br>
+          MisterX has unlimited tickets of each type, in addition to some special tickets:<br>
+          <ul>
+            <li>2 "Double Turn" tickets: MisterX can play twice in a row.</li>
+            <li>2 "Secret Move" tickets: MisterX can decide not to reveal the mean of transport he used, and use a secret move.</li>
+          </ul>
+          <br><br>
           Some further rules:<br>
           <ul>
             <li>It is not possible to place yourself on the same station as another detective at the same time;</li>
