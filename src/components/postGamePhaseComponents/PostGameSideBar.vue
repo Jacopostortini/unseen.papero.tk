@@ -17,7 +17,7 @@
     </div>
 
     <div class="winning-badge">
-      <strong>{{game.misterXWon ? "Mister X won!" : "The detectives won!"}}</strong>
+      <strong>{{winningMessage}}</strong>
     </div>
   </div>
 </template>
@@ -51,6 +51,11 @@ export default {
         this.msg = null
         this.element = "LoadingBackToLobby"
       }
+    }
+  },
+  computed: {
+    winningMessage: function () {
+      return this.game.misterXWon ? "Mister X won!" : "The detectives won!";
     }
   },
   watch: {
