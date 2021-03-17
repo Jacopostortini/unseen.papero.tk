@@ -12,13 +12,13 @@
           <br>
           Each turn begins with MisterX's move. The players move around the map, using the chosen public transport.
           <br>
-          The colours of the station indicate what means of transport stop at that station.
+          The colours of the station indicate the type of transport which you can use in order to reach the station.
           <br>
-          Everytime you move, you use a ticket. Once you have finished a certain type of ticket, you can no longer use that mean of transport.
+          Everytime you move, you use a ticket. Once you finish a certain type of ticket, you can no longer use that mean of transport.
           <br>
           After MisterX's move, the mean of transport he uses is placed on the blackboard. There are, however, what are called "Revelation Turns". That's when MisterX position is revealed (these turns are circled on the black board).
           <br>
-          MisterX has unlimited tickets of every type, in addition to some special tickets.
+          MisterX has unlimited tickets of each type, in addition to some special tickets.
           <br>
           2X DoubleTurn: MisterX can play twice in a row.
           <br>
@@ -28,8 +28,8 @@
           Some further rules:<br>
           <ul>
             <li>It is not possible to place yourself on the same station as another detective at the same time;</li>
-            <li>During your turn  you can not decide whether to move or not;</li>
-            <li>the game ends when MisterX is caught (a detective is at the same stop as MisterX's), or MisterX outplays the detectives by not being caught until the end of the match (24 turns).</li>
+            <li>You cannot decide not to move during your turn;</li>
+            <li>The game ends when MisterX is caught (a detective is at the same stop as MisterX's), or MisterX outplays the detectives by not being caught until the end of the match (24 turns).</li>
           </ul>
         </div>
       </div>
