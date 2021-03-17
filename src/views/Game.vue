@@ -271,7 +271,13 @@ export default {
     });
 
     this.socket.on(events.END_GAME, (data)=>{
-      this.handleEvents("Game Over", "The game finished", 4000);
+      let description;
+      if(data.mister_x_won){
+        description = this.currentPlayer && this.currentPlayer.is_mister_x ? "You won!" : "Oh no! Mister X won!"
+      } else {
+        description = this.currentPlayer && this.currentPlayer.is_mister_x ? "Oh no! The detectives won!" : "You won!"
+      }
+      this.handleEvents("Game Over",  description, 4000);
       setTimeout(()=>{
         this.setupData(data);
       }, 4000)
