@@ -285,8 +285,8 @@ export default {
       this.setupData(data);
     });
 
-
-/*    this.status = 0;
+/*
+    this.status = 1;
     this.currentPlayer = null/!*{
       local_id: 0,
       color: 1,

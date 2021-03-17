@@ -14,6 +14,7 @@ const gameConfig = {
 }
 const baseUrl = "https://papero.me";
 const urls = {
+    webSocketUrl: baseUrl,
     getLoginInfoUrl: baseUrl+"/user/get_info",
     getAllGamesUrl: baseUrl+"/server/unseen/games/all",
     getGameStatusUrl: baseUrl+"/server/unseen/games/status_by_id",
