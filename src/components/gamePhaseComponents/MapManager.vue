@@ -209,12 +209,6 @@ export default {
               sprite.x = point[0] * tileSize;
               sprite.y = (point[1]-1) * tileSize;
               sprite.interactive = true;
-              sprite.on("mouseover", () => {
-                sprite.texture = textures.paths[70];
-              });
-              sprite.on("mouseout", () => {
-                sprite.texture = texture;
-              });
             } else {
               sprite.visible = false;
             }

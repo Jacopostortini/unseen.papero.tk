@@ -127,8 +127,8 @@ export default {
       message.fromYou = this.currentPlayer ? data._from === this.currentPlayer.local_id : false;
       this.messages.push(message);
       if(!message.fromYou) this.$toast.show(message.body, {
-        duration: 2000,
-        maxToasts: 4,
+        duration: 4000,
+        maxToasts: 5,
         className: "toast "+message.cssToastClass
       });
       setTimeout(()=>{
