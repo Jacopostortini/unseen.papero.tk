@@ -209,6 +209,16 @@ export default {
               sprite.x = point[0] * tileSize;
               sprite.y = (point[1]-1) * tileSize;
               sprite.interactive = true;
+              let clickStarts = () => {
+                sprite.clickStartedDate = new Date().getTime();
+              }
+              let clickEnds = () => {
+                if(new Date().getTime() - sprite.clickStartedDate < 1000) ctx.emit("station-clicked", player.position);
+              }
+              sprite.on("mousedown", clickStarts);
+              sprite.on("touchstart", clickStarts);
+              sprite.on("mouseup", clickEnds);
+              sprite.on("touchend", clickEnds);
             } else {
               sprite.visible = false;
             }
