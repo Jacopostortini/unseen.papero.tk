@@ -154,6 +154,7 @@ export default {
     align-items: center;
 
     h1{
+      cursor: pointer;
       margin: 0;
       color: white;
       width: fit-content;

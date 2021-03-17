@@ -103,6 +103,7 @@ $right: 10%;
       top: 5%;
       transition: all 0.5s;
       font-size: 150%;
+      user-select: none;
       cursor: pointer;
 
       &:hover{

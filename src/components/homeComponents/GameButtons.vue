@@ -55,10 +55,10 @@ export default {
     joinGame(){
       if (this.gameToJoin) {
         axios
-            .get(urls.getGameStatusUrl, {params: {game_id: this.gameToJoin}})
+            .get(urls.getGameStatusUrl, {params: {game_id: this.gameToJoin.toLowerCase()}})
             .then((response) => {
               if (response.data) {
-                this.router.push({name: "Game", params: {gameId: this.gameToJoin}})
+                this.router.push({name: "Game", params: {gameId: this.gameToJoin.toLowerCase()}})
               } else {
                 this.popupMessage = "This game does not exist";
                 this.popupConfirmButton = "Create it now";
@@ -71,7 +71,7 @@ export default {
     createGame(){
       if(this.gameToCreate) {
         axios
-            .get(urls.getGameStatusUrl, {params: {game_id: this.gameToCreate}})
+            .get(urls.getGameStatusUrl, {params: {game_id: this.gameToCreate.toLowerCase()}})
             .then((response) => {
               if (response.data) {
                 this.popupMessage = "This game already exists";
@@ -79,13 +79,13 @@ export default {
                 this.popupGame = this.gameToCreate;
                 this.showPopup = true;
               } else {
-                this.router.push({name: "Game", params: {gameId: this.gameToCreate}})
+                this.router.push({name: "Game", params: {gameId: this.gameToCreate.toLowerCase()}})
               }
             });
       }
     },
     redirectToGame(game){
-      this.router.push({name: "Game", params: {gameId: game}})
+      this.router.push({name: "Game", params: {gameId: game.toLowerCase()}})
     },
     checkInput(input, toJoin){
       const regex = RegExp("[^a-zA-Z]", "g");

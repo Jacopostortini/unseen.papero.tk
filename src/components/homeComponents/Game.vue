@@ -2,7 +2,7 @@
   <div class="game__main-panel" @click="toggleClicked">
     <div class="game__not-clicked-main-panel">
       <div class="name-container" :id="game.game_id+'container'">
-        <h1 :id="game.game_id+'name'" :class="{'overflows': overflows}">{{game.game_id}}</h1>
+        <h1 :id="game.game_id+'name'" :class="{'overflows': overflows}">{{game.game_id.toUpperCase()}}</h1>
       </div>
       <div class="game__date-container">{{game.date}}</div>
     </div>
