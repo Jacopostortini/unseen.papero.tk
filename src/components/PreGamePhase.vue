@@ -98,7 +98,7 @@ export default {
       }
     },
     redirectToHome(){
-      this.$router.push({name: "Home"});
+      location.href = "/unseen";
     }
   },
   computed: {

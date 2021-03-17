@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     redirectHome(){
-      this.router.push({name: "Home"})
+      location.href = "/unseen";
     },
     useDoubleTurn(){
       if(this.currentPlayer && this.currentPlayer.local_id === this.game.playingPlayer && this.currentPlayer.is_mister_x){

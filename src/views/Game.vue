@@ -411,6 +411,9 @@ export default {
         createLocalAccount();
       } else next(); //se è loggato
     }
+  },
+  unmounted() {
+    this.socket.close();
   }
 }
 </script>
