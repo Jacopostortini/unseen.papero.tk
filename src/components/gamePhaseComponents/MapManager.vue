@@ -207,7 +207,7 @@ export default {
             if(player.position) {
               let point = stations[player.position - 1].point;
               sprite.x = point[0] * tileSize;
-              sprite.y = (point[1]-1) * tileSize;
+              sprite.y = point[1] * tileSize;
               sprite.interactive = true;
               let clickStarts = () => {
                 sprite.clickStartedDate = new Date().getTime();
