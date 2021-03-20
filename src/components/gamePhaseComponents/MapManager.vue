@@ -114,7 +114,7 @@ export default {
             let y = Math.floor(i / tilesetsDimension.pawns.width);
             textures.pawns[i] = new PIXI.Texture(
                 resources.pawnsTileset.texture,
-                new PIXI.Rectangle(x * tileSize, y * tileSize * 2, tileSize, tileSize * 2)
+                new PIXI.Rectangle(x * tileSize, y * tileSize , tileSize, tileSize)
             );
           }
 
