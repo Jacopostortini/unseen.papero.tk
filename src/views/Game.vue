@@ -127,8 +127,8 @@ export default {
       message.fromYou = this.currentPlayer ? data._from === this.currentPlayer.local_id : false;
       this.messages.push(message);
       if(!message.fromYou) this.$toast.show(message.body, {
-        duration: 2000,
-        maxToasts: 4,
+        duration: 4000,
+        maxToasts: 5,
         className: "toast "+message.cssToastClass
       });
       setTimeout(()=>{
@@ -271,7 +271,13 @@ export default {
     });
 
     this.socket.on(events.END_GAME, (data)=>{
-      this.handleEvents("Game Over", "The game finished", 4000);
+      let description;
+      if(data.mister_x_won){
+        description = this.currentPlayer && this.currentPlayer.is_mister_x ? "You won!" : "Oh no! Mister X won!"
+      } else {
+        description = this.currentPlayer && this.currentPlayer.is_mister_x ? "Oh no! The detectives won!" : "You won!"
+      }
+      this.handleEvents("Game Over",  description, 4000);
       setTimeout(()=>{
         this.setupData(data);
       }, 4000)
@@ -285,8 +291,8 @@ export default {
       this.setupData(data);
     });
 
-
-/*    this.status = 0;
+/*
+    this.status = 1;
     this.currentPlayer = null/!*{
       local_id: 0,
       color: 1,
@@ -411,6 +417,9 @@ export default {
         createLocalAccount();
       } else next(); //se è loggato
     }
+  },
+  unmounted() {
+    this.socket.close();
   }
 }
 </script>

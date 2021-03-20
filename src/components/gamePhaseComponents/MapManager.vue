@@ -43,6 +43,10 @@ export default {
       antialias: false
     });
 
+    let ticker = PIXI.Ticker.shared;
+    ticker.autoStart = false;
+    ticker.stop();
+
     PIXI.settings.ROUND_PIXELS = true;
 
     app.loader
@@ -118,10 +122,10 @@ export default {
             );
           }
 
-          let pathsContainer = new PIXI.Container();
-          let streetsContainer = new PIXI.Container();
-          let buildingsContainer = new PIXI.Container();
-          let backgroundContainer = new PIXI.Container();
+          let pathsContainer = new PIXI.ParticleContainer(2500);
+          let streetsContainer = new PIXI.ParticleContainer(2500);
+          let buildingsContainer = new PIXI.ParticleContainer(2500);
+          let backgroundContainer = new PIXI.ParticleContainer(2500);
 
           for (let row = 0; row < mapDimension.height; row++){
             for (let col = 0; col < mapDimension.width; col++){
@@ -162,6 +166,7 @@ export default {
               }
             }
           }
+
 
           let stationsContainer = new PIXI.Container();
           for(let i = 0; i < stations.length; i++){
@@ -204,12 +209,16 @@ export default {
               sprite.x = point[0] * tileSize;
               sprite.y = (point[1]-1) * tileSize;
               sprite.interactive = true;
-              sprite.on("mouseover", () => {
-                sprite.texture = textures.paths[70];
-              });
-              sprite.on("mouseout", () => {
-                sprite.texture = texture;
-              });
+              let clickStarts = () => {
+                sprite.clickStartedDate = new Date().getTime();
+              }
+              let clickEnds = () => {
+                if(new Date().getTime() - sprite.clickStartedDate < 1000) ctx.emit("station-clicked", player.position);
+              }
+              sprite.on("mousedown", clickStarts);
+              sprite.on("touchstart", clickStarts);
+              sprite.on("mouseup", clickEnds);
+              sprite.on("touchend", clickEnds);
             } else {
               sprite.visible = false;
             }

@@ -15,6 +15,10 @@
     <div class="mister-x-table__wrapper">
       <MisterXTable :mister-x-moves="game.misterXMoves"/>
     </div>
+
+    <div class="winning-badge">
+      <strong>{{winningMessage}}</strong>
+    </div>
   </div>
 </template>
 
@@ -49,6 +53,11 @@ export default {
       }
     }
   },
+  computed: {
+    winningMessage: function () {
+      return this.game.misterXWon ? "Mister X won!" : "The detectives won!";
+    }
+  },
   watch: {
     gameRestarted: function(val){
       if((this.wantToGoBack || (this.currentPlayer && this.currentPlayer.is_admin)) && val)
@@ -64,9 +73,9 @@ export default {
   grid-area: sidebar;
   overflow-y: scroll;
   display: grid;
-  grid-template-rows: auto auto auto auto 1fr;
+  grid-template-rows: auto auto auto 1fr;
   grid-template-columns: 1fr;
-  grid-template-areas: "title" "labels" "transports" "double-turns" "mister-x-table";
+  grid-template-areas: "title" "labels" "mister-x-table" "winning-badge";
 
   justify-content: left;
   padding-top: 10px;
@@ -98,6 +107,14 @@ export default {
     align-items: center;
     justify-content: center;
     align-self: start;
+  }
+
+  .winning-badge{
+    grid-area: winning-badge;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
   }
 }
 
