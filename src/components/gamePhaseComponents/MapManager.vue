@@ -209,7 +209,7 @@ export default {
               sprite.x = point[0] * tileSize;
               sprite.y = point[1] * tileSize;
               sprite.interactive = true;
-              sprite.alpha = 0.9;
+              sprite.alpha = 0.8;
               const clickStarts = () => {
                 sprite.clickStartedDate = new Date().getTime();
               }
