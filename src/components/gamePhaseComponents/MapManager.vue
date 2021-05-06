@@ -220,11 +220,11 @@ export default {
               sprite.on("mouseup", clickEnds);
               sprite.on("touchend", clickEnds);
               sprite.on("mouseover", () => {
-                sprite.visible = false;
+                sprite.texture = textures.paths[70];
               });
-              sprite.on("mouseleave", ()=>{
-                sprite.visible = true;
-              })
+              sprite.on("mouseout", () => {
+                sprite.texture = texture;
+              });
             } else {
               sprite.visible = false;
             }
