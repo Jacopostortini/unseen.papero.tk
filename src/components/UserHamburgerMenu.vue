@@ -85,6 +85,7 @@ export default {
   transition: all 0.5s;
   height: 100%;
   position: absolute;
+  font-family: "Comic Sans MS", sans-serif;
   top: 0;
   left: 0;
   z-index: 5;
@@ -115,7 +116,7 @@ export default {
     .home-button{
       margin-top: 2%;
       grid-area: logo;
-      height: 90%;
+      height: 100%;
     }
 
     .user-menu{
@@ -126,11 +127,24 @@ export default {
       grid-area: user;
 
       p{
-        font-size: 0.7em;
+        font-size: 135%;
       }
 
-      button:hover{
-        color: $papero-color-dark;
+      button{
+        font-size: 100%;
+        padding: 2%;
+        border-radius: 10px;
+        outline: none;
+        color: white;
+        background: none;
+        border: 2px solid white;
+        transition: all 0.5s;
+        margin: 10px;
+
+        &:hover{
+          background-color: white;
+          color: $papero-color-dark;
+        }
       }
     }
   }
