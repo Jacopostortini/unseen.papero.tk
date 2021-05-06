@@ -219,10 +219,10 @@ export default {
               sprite.on("touchstart", clickStarts);
               sprite.on("mouseup", clickEnds);
               sprite.on("touchend", clickEnds);
-              sprite.on("mouseover", () => {
+              sprite.on("mouseenter", () => {
                 sprite.visible = false;
               });
-              sprite.on("mouseout", ()=>{
+              sprite.on("mouseleave", ()=>{
                 sprite.visible = true;
               })
             } else {
