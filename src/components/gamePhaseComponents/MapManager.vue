@@ -205,20 +205,26 @@ export default {
             let texture = textures.pawns[player.color+1];
             let sprite = new PIXI.Sprite(texture);
             if(player.position) {
-              let point = stations[player.position - 1].point;
+              const point = stations[player.position - 1].point;
               sprite.x = point[0] * tileSize;
               sprite.y = point[1] * tileSize;
               sprite.interactive = true;
-              let clickStarts = () => {
+              const clickStarts = () => {
                 sprite.clickStartedDate = new Date().getTime();
               }
-              let clickEnds = () => {
+              const clickEnds = () => {
                 if(new Date().getTime() - sprite.clickStartedDate < 1000) ctx.emit("station-clicked", player.position);
               }
               sprite.on("mousedown", clickStarts);
               sprite.on("touchstart", clickStarts);
               sprite.on("mouseup", clickEnds);
               sprite.on("touchend", clickEnds);
+              sprite.on("mouseover", () => {
+                sprite.visible = false;
+              });
+              sprite.on("mouseout", ()=>{
+                sprite.visible = true;
+              })
             } else {
               sprite.visible = false;
             }
