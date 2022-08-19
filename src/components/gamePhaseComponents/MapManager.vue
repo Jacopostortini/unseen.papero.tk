@@ -318,7 +318,7 @@ export default {
           y: event.pageY,
           deltaScale: zoomAndPanParams.defaultZoom
         });
-      })
+      });
 
       container.addEventListener("mousemove", (event) => {
         if (!dragging.value) return;
